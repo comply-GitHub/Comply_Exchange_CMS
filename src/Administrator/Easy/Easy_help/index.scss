@@ -1,0 +1,31 @@
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}
+table{
+    a{
+        text-align: center;
+    }
+       .MuiSelect-select{
+        background: none;
+    }
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+.tableRoww{
+    padding: 0.1rem 0.5rem  !important;
+    background-color: var(--bs-table-bg);
+      border-bottom-width: 1px;
+      box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+  }
+.previewClass p{
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}

@@ -1,0 +1,66 @@
+.Label{
+    margin-top: 0.5rem !important;
+    font-size: 25px !important;
+    font-weight: 550;
+   
+    color: #24608a !important;
+    margin-bottom: 0.5rem !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+  }
+  .textClass{
+    margin-top: 0.5rem !important;
+    font-size: 20px !important;
+    font-weight: 500;
+   
+    color: #0b0b0b !important;
+    margin-bottom: 0.5rem !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+  }
+  .textClassLabel{
+    margin-top: 0.5rem !important;
+    font-size: 15px !important;
+    font-weight: 530;
+   
+    color: #070707 !important;
+    margin-bottom: 0.5rem !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+
+  }
+  .btn-primary {
+    color: #fff;
+    background-color: #2171ae !important;
+    border-color: #2171ae !important;
+  }
+  .btn-link{
+    color: #2171ae !important;
+  }
+
+  .btn-link a{
+    color: #2171ae !important;
+}
+  .text-primary {
+    color: #2171ae !important;
+    cursor: pointer;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    
+  }
+  .text-primaryclass{
+  
+    cursor: pointer;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    
+  }
+  .form-control input{
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.5;
+    height: 2.25em !important;
+    border-radius: 0.25rem;
+  }
+  .form-check-input:checked{
+    background-color: #2171ae !important;
+    border-color: #2171ae !important;
+  }

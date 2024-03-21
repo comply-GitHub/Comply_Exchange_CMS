@@ -1,0 +1,25 @@
+.btn-cstm{
+    color:  #f0f0f0 !important;
+    opacity: 0.8 !important;
+}
+table{
+    a{
+        text-align: center;
+    }
+ 
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+
+.addSubpage{
+    cursor:pointer;
+    text-decoration: underline;
+    color:#16639e;
+  }

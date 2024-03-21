@@ -1,0 +1,81 @@
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+.overflow-x-auto{
+    overflow-x:auto ;
+}
+.overflow-y-auto{
+    overflow-y:auto ;
+}
+
+table{
+    border: 1px solid gray;
+    a{
+        text-align: center;
+    }
+    .MuiSelect-select{
+        background: none !important;
+        min-height: 1.43em !important;
+    }
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+.table > :not(caption) > * > * {
+    padding: 0.2rem 0.5rem;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+.headings{
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 12px !important;
+    font-weight: 530;
+    margin-bottom: 5px;
+}
+.table_content input{ 
+    font-size: 12px !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    
+  
+  }
+  .selectBox{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    height: 2rem !important ;
+    min-height: 0.05 !important;
+    width: 55% !important;
+    padding: 4.5px 16px !important;
+    font-size: 12px !important;
+     background-color: inherit !important; 
+
+   
+}
+.selectBox input{
+   text-align: left;
+
+   
+}
+
+.table_header{
+    color: #145a8d !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+  align-items: center !important; 
+  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  }
+  .tableField{
+    padding: 0.001rem 0.002rem !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+
+.setting {
+    margin-left: 15px;
+}

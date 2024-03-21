@@ -1,0 +1,140 @@
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+.overflow-x-auto{
+    overflow-x:auto !important;
+}
+.overflow-y-auto{
+    overflow-y:auto  !important;
+}
+table{
+    label{
+        width: min-content;
+        min-width: 150px;
+    }
+    th{
+        vertical-align: middle;
+    }
+    td{
+        vertical-align: middle;
+    }
+    border: 1px solid gray;
+    a{
+        text-align: center;
+    }
+  
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+.min-width-max{
+    min-width: max-content;
+}
+.css-q0jhri-MuiInputBase-root-MuiInput-root:after , .css-q0jhri-MuiInputBase-root-MuiInput-root:before{
+    display: none;
+}
+.maxdiv{
+    overflow-y: hidden;
+    border: 1px solid gray;
+    table{
+        label{
+            width: 100%;
+        }
+    }
+}
+.maxdiv:hover{
+    overflow-y: auto !important;
+}
+
+@media(max-width:1000px){
+    .maxdiv{
+        overflow-y: auto !important;
+    }
+}
+.table > :not(caption) > * > * {
+    padding: 0.2rem 0.4rem;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    background-color: none !important;
+    align-items: center !important;
+}
+
+
+.tableField{
+    padding: 0.0rem 0.002rem !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+ 
+    
+
+}
+
+.table_textt{
+    font-size: 12px !important;
+    color: #16639e !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    
+  
+  }
+.headings{
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 12px !important;
+    font-weight: 550 !important;
+}
+
+.radioClass{
+    border-style: none;
+    display: contents !important;
+        label{
+            width: max-content;
+            max-width: 600px;
+        }
+        th{
+            vertical-align: middle;
+        }
+        td{
+            vertical-align: middle;
+        }
+        border: 1px solid gray;
+        a{
+            text-align: center;
+        }
+        .MuiSelect-select{
+            background: white;
+        }
+        a:hover{
+            cursor: pointer;
+         }
+        thead{
+            background: #f0f0f0;
+            a{
+                color: inherit !important;
+            } 
+        }
+        tr{
+            border-style: none !important;
+        }
+    }
+    .textFieldClass input{
+        height:0.075em !important;
+        font-size: 12px !important;
+       
+      }
+      .textFieldClass div{
+        width: 85% !important;
+      }
+      .actionBtn{
+        justify-content: flex-end !important;
+        align-items: end;
+      }
+
+ .row1{
+    padding-top: none !important;
+ }     

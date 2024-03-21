@@ -1,0 +1,124 @@
+
+
+.expend-card{
+    border: 1px solid #80808099 ;
+    border-radius: 10px;
+    padding: 0;
+    
+    .MuiCollapse-vertical{
+        padding: 0 0 10px 0;
+    }
+    input , .MuiSelect-select{
+        height: 1rem;
+    }
+    p{
+        opacity: .5;
+    }
+  
+  
+    .card-box{
+        border: 1px solid #80808099 ;
+        box-shadow: none;
+        .MuiCardContent-root{
+            padding: 0;
+            .heading{
+                padding: 5px;
+                background-color: rgb(190, 190, 190);
+            }
+            p{
+                padding: 5px;
+            }
+        }
+     
+    }
+  }
+  .table_content input{ 
+    width: 80%;
+    font-size: 12px !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    
+  
+  }
+
+  .table_contentBox input{ 
+    width: 100% !important;
+    font-size: 12px !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    
+  
+  }
+
+  .selectBox{
+    height: 2.2rem !important ;
+    min-height: 0.05 !important;
+    width: 15% !important;
+   
+}
+  
+  .inner-scroll-div{
+    border: 1px solid #80808099 ;
+    max-height: 250px;
+    overflow-y:auto ;
+  }
+  .btn-cstm{
+  
+    color: white !important;
+    opacity: 0.8;
+  }
+  .card-box {
+    border: 1px solid #80808099;
+    box-shadow: none;
+    .MuiCardContent-root {
+      padding: 0;
+      .heading {
+        padding: 5px;
+        background-color: rgb(190, 190, 190);
+      }
+      p {
+        padding: 5px;
+      }
+    }
+  }
+  .actionBtn {
+    text-align: end;
+   
+    margin-bottom: 2rem;
+    }
+  
+    
+  .row{
+      margin-bottom: 0.25em !important;
+      display: flex;
+      
+      padding-top: 1rem;
+  }
+  // }
+
+
+  .articleText{
+    font-size: 17px;
+    font-weight: 600 !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  }
+  
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+  height: 0.25em;
+  
+  }
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+    height: 0.25em !important;
+  }
+  .col-3{
+    align-self: center !important;
+    // margin-left: 20rem;
+    // padding-top: 0.02rem;
+    
+  }
+  .col-9{
+    align-self: center !important;
+  
+  
+  }
+  

@@ -1,0 +1,137 @@
+.expend-card{
+  border: 1px solid #80808099 ;
+  border-radius: 10px;
+  padding: 0;
+  
+  .MuiCollapse-vertical{
+      padding: 0 0 10px 0 !important;
+  }
+
+  .errorClass{
+    color: red;
+  }
+
+  input,
+  .MuiSelect-select {
+    height: 0.25em !important;
+  }
+
+  
+ 
+
+  .card-box{
+      border: 1px solid #80808099 ;
+      box-shadow: none;
+      .MuiCardContent-root{
+          padding: 0;
+          .heading{
+              padding: 5px;
+              background-color: rgb(190, 190, 190);
+          }
+          p{
+              padding: 5px;
+              p{
+                opacity: .5;
+            }
+          }
+      }
+   
+  }
+}
+
+.inner-scroll-div{
+  border: 1px solid #80808099 ;
+  max-height: 250px;
+  overflow-y:auto ;
+}
+.btn-cstm{
+  color: white;
+  opacity: 0.8;
+}
+.card-box {
+  border: 1px solid #80808099;
+  box-shadow: none;
+  .MuiCardContent-root {
+    padding: 0;
+    .heading {
+      padding: 5px;
+      background-color: rgb(190, 190, 190);
+    }
+    p {
+      padding: 5px;
+    }
+  }
+}
+.actionBtn {
+text-align: end !important;
+
+
+margin-bottom: 1rem;
+}
+.row{
+    margin-bottom: 0.25em !important;
+    display: flex;
+    
+    padding-top: 0.13rem;
+}
+.selectDiv div {
+
+  min-width: 20%;
+}
+// }
+
+.input_Field input{
+height: 0.15em !important;
+
+}
+.input_Field div{
+      
+  padding: 8.5px 8px;
+
+  }
+
+.col-3{
+  align-self: center !important;
+}
+.col-9{
+  align-self: center !important;
+
+
+}
+
+
+.public-DraftStyleDefault-ltr {
+  font-size: 12px !important;
+  direction: ltr;
+  text-align: left;
+  font-weight: 400 !important;
+}
+.textFieldClass input{
+  height:2.275em !important;
+  font-size: 12px !important;
+  padding: 3.5px 8px !important;
+ 
+}
+.textFieldClass div{
+  width: 45% !important;
+  height:2.275em !important;
+}
+.rdw-editor-wrapper{
+  width: 90% !important;
+  height: 200px !important;
+ 
+  .rdw-editor-main{
+      height: auto !important;
+      max-height: 117px !important;
+      
+  }
+  .rdw-editor-main span{
+    font-size: 12px !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    
+}
+.DraftEditor-editorContainer{
+  padding: 5px !important;
+
+}
+}

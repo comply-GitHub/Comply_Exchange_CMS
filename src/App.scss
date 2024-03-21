@@ -1,0 +1,310 @@
+.fw-500{
+    font-weight: 500 !important;
+}
+.btn-cstm{
+    background-color:#16639e !important;
+    border-color: #16639e!important;
+    // text-transform: unset !important; 
+}
+.btn-cstm:hover{
+    opacity: 1 !important;
+}
+table{
+    thead{
+        tr{
+            th{
+                color: #16639e  !important;
+            }
+        }
+    }
+}
+
+.logo-src{
+    height: 21px ;
+    width: 100%;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+}
+
+.app-sidebar__heading , .metismenu-link{
+    color: #0b0c0c !important;
+}
+.rdw-editor-wrapper{
+    border: 1px solid;
+}
+.rdw-left-aligned-block{
+  padding: 10px !important;
+}
+
+.border-1{
+ border: 1px solid rgba(128, 128, 128, 0.6);
+}
+
+.addSubpage{
+
+  background-color: none !important;
+    color: #16639e !important;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 5px !important;
+    line-height: 0 !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    text-transform: unset !important; 
+  }
+
+  .addForms{
+    background-color: none !important;
+    color: #16639e !important;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 5px !important;
+    line-height: 3 !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+
+  }
+  .add_Rules{
+    background-color: none !important;
+    color: #16639e !important;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 5px !important;
+    font-size: 12px !important;
+
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+  }
+.checkBox{
+    color:#145a8d !important;
+  }
+
+
+  .complyColor{
+    color: #145a8d;
+    font-size: 30px !important;
+    font-weight: 600 !important;
+    
+  }
+  .box-shade1{
+        box-shadow: 0 0.46875rem 2.1875rem rgba(8, 10, 37, 0.03), 0 0.9375rem 1.40625rem rgba(8, 10, 37, 0.03), 0 0.25rem 0.53125rem rgba(8, 10, 37, 0.05), 0 0.125rem 0.1875rem rgba(8, 10, 37, 0.03);
+        border-width: 0;
+        transition: all 0.2s;
+  }
+
+  .headingLabel{
+    margin-top: 0.5rem !important;
+    font-size: 15px !important;
+    font-weight: 400;
+    justify-content: center !important;
+    margin-bottom: 0.5rem !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+  }
+  .box_style {
+   
+    box-shadow: 0 0.46875rem 2.1875rem rgba(8, 10, 37, 0.03), 0 0.9375rem 1.40625rem rgba(8, 10, 37, 0.03), 0 0.25rem 0.53125rem rgba(8, 10, 37, 0.05), 0 0.125rem 0.1875rem rgba(8, 10, 37, 0.03);
+    background-color: white
+  }
+.table_head{
+  color: #145a8d !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
+align-items: center !important; 
+font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+}
+.table_content{
+  font-size: 12px !important;
+  align-items: center !important; 
+  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  
+
+}
+.w-20{
+  width: 20%;
+}
+  .rounded-Input div{
+    border-radius: 50px;
+  }
+
+.selectDiv div{
+    max-width: 65% !important;
+}
+  
+
+
+.vertical-nav-menu .metismenu-container i.metismenu-state-icon, .vertical-nav-menu .metismenu-container i.metismenu-icon {
+
+  opacity: 1 !important;
+  font-size: 20px !important;
+
+}
+.metismenu-item {
+  font-size: 12px !important;
+ 
+}
+.metismenu-item a{
+  line-height: 2rem !important;
+  height: 2rem !important;
+
+}
+.metismenu-item .active i{
+  font-weight: 700 !important;
+}
+.app-main__outer{
+  background-color: #e4f3ff !important;
+}
+.app-theme-white.app-container{
+  background-color: #e4f3ff !important;
+}
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding:  5px !important;
+}
+
+
+.rdw-editor-wrapper{
+  width: 100% !important;
+  height: 200px !important;
+ 
+  .rdw-editor-main{
+      height: auto !important;
+      max-height: 117px !important;
+      
+  }
+  .rdw-editor-main span{
+    font-size: 12px !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+
+    
+}
+.DraftEditor-editorContainer{
+  padding: 5px !important;
+
+}
+}
+.app-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  opacity: 1 !important;
+  background-color: white;
+
+
+  .app-header__logo {
+    visibility: visible;
+  }
+}
+
+
+.css-q0jhri-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled, .Mui-error):before {
+  border: none !important;
+}
+.input-file div::before{
+display: none !important;
+}
+.input-file div::after{
+  display: none !important;
+  }
+  .input-file input{
+    height: auto !important;
+    padding: 0 !important;
+    width: 80% !important;
+    border: 1px solid;
+  }
+
+  .editor-div button{
+    opacity: 0.8;
+
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    color: inherit;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    -webkit-transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    color: #fff;
+    background-color: #16639e !important;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+.editor-div button.Cancel{
+  background-color: white !important;
+  border: 1px solid rgba(25, 118, 210, 0.5) !important;
+  color: #1976d2 !important;
+  box-shadow: none !important;
+  margin-top: 3px !important;
+  margin-bottom: 5px !important;
+}
+.btn-cstm{display: none;}
+.addSubpage{
+  background-color: none !important;
+   
+  }
+.min-width{
+  min-width: 8rem;
+}
+
+.MuiPaper-elevation ul li {
+  justify-content: center !important;
+  font-size: 12px !important;
+}
+
+.actionRow svg:hover{
+  cursor: pointer !important;
+}
+
+.MuiFormControlLabel-label{
+  font-size: 12px !important;
+}
+
+.boldClass{
+  font-weight: 900 !important;
+}
+
+.bread_crumbs nav{
+  font-size: 13px;
+  font-weight: 550 !important;
+  margin: 0.5rem;
+  justify-content: end;
+  // color:"#3498db" !important;
+  display: flex;
+
+  cursor: pointer !important;
+}
+
+.bread_crumbs a:hover{
+  cursor: pointer !important;
+ 
+  text-decoration: underline !important;
+  :hover:after {
+    color: inherit !important;
+  }
+
+  .notDataDiv{
+    text-align: "-webkit-match-parent";
+    width: 100%;
+    font-size: larger;
+    padding: 8%;
+}
+}
+.bread_crumbs p{
+  margin: 0px !important;
+  cursor: default !important;
+}
+
+.errorClass{
+  color: red !important;
+  font-size: 12px !important;
+}

@@ -1,0 +1,77 @@
+.expend-card{
+    border: 1px solid #80808099 ;
+    border-radius: 10px;
+    padding: 0;
+    background: white;
+    // margin: 10px;
+    .MuiCollapse-vertical{
+        padding: 0 0 10px 0;
+    }
+    input , .MuiSelect-select{
+        height: 1rem;
+    }
+    p{
+        opacity: .5;
+    }
+    ul{
+        opacity: .5;
+    }
+ 
+    .card-box{
+        border: 1px solid #80808099 ;
+        box-shadow: none;
+        .MuiCardContent-root{
+            padding: 0;
+            .heading{
+                padding: 5px;
+                background-color: rgb(190, 190, 190);
+            }
+            p{
+                padding: 5px;
+            }
+        }
+     
+    }
+}
+
+
+
+.inner-scroll-div{
+    border: 1px solid #80808099 ;
+    max-height: 250px;
+    overflow-y:auto ;
+}
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8;
+}
+
+table{
+    a{
+        text-align: center;
+    }
+  
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+
+.tableContentList {
+    font-size: 12px !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    color: #16639e !important;
+    text-decoration: underline;
+    text-decoration-color: #16639e !important;
+}
+
+.logoImg{
+    max-width: 7rem;
+    max-height: 6rem;
+}

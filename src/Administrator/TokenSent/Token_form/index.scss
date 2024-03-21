@@ -1,0 +1,19 @@
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}
+table{
+    a{
+        text-align: center;
+    }
+ 
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}

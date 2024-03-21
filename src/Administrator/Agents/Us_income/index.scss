@@ -1,0 +1,74 @@
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+.overflow-x-auto{
+    overflow-x:auto !important;
+}
+.overflow-y-auto{
+    overflow-y:auto  !important;
+}
+table{
+    label{
+        width: max-content;
+        max-width: 540px;
+    }
+    th{
+        vertical-align: middle;
+    }
+    td{
+        vertical-align: middle;
+    }
+    border: 1px solid gray;
+    a{
+        text-align: center;
+    }
+       .MuiSelect-select{
+        background: none;
+    }
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+.min-width-max{
+    min-width: max-content;
+}
+.css-q0jhri-MuiInputBase-root-MuiInput-root:after , .css-q0jhri-MuiInputBase-root-MuiInput-root:before{
+    display: none;
+}
+.maxdiv{
+    overflow-y: hidden;
+    border: 1px solid gray;
+    table{
+        label{
+            width: 100%;
+        }
+    }
+}
+.maxdiv:hover{
+    overflow-y: auto !important;
+}
+
+@media(max-width:1000px){
+    .maxdiv{
+        overflow-y: auto !important;
+    }
+}
+.table > :not(caption) > * > * {
+    padding: 0.001rem 0.4rem !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+}
+.tableField{
+    // padding: 0.001rem 0.002rem !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+   
+    
+
+}

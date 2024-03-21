@@ -1,0 +1,103 @@
+.btn-cstm{
+  color: white !important;
+  opacity: 0.8 !important;
+}
+table{
+  a{
+      text-align: center;
+  }
+  .MuiSelect-select{
+      background: white;
+  }
+  a:hover{
+      cursor: pointer;
+   }
+  thead{
+      background: #f0f0f0;
+      a{
+          color: inherit !important;
+      } 
+  }
+}
+
+.MuiCollapse-vertical {
+  padding: 0 0 10px 0;
+}
+// input,
+// .MuiSelect-select {
+//   height: 0.25em;
+// }
+
+
+
+.card-box {
+  border: 1px solid #80808099;
+  box-shadow: none;
+  .MuiCardContent-root {
+    padding: 0;
+    .heading {
+      padding: 5px;
+      background-color: rgb(190, 190, 190);
+    }
+    p {
+      padding: 5px;
+    }
+  }
+}
+.actionBtn {
+  text-align: end;
+
+  margin-bottom: 2rem;
+  }
+.row{
+    margin-bottom: 0.25em !important;
+    display: flex;
+    
+    padding-top: 0.5rem;
+}
+// }
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+height: 0.25em;
+
+}
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  height: 0.25em !important;
+}
+.col-3{
+  align-self: center !important;
+  // margin-left: 20rem;
+  // padding-top: 0.02rem;
+  
+}
+.col-9{
+  align-self: center !important;
+
+}
+.rdw-editor-wrapper{
+  width: 65% !important;
+  height: 200px !important;
+ 
+  .rdw-editor-main{
+      height: auto !important;
+      max-height: 117px !important;
+      
+  }
+  .rdw-editor-main span{
+    font-size: 12px !important;
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+   
+    
+}
+.DraftEditor-editorContainer{
+  padding: 5px !important;
+
+}
+}
+.table_content input{ 
+  font-size: 12px !important;
+  align-items: center !important; 
+  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  
+
+}

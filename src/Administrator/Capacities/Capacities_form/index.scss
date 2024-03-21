@@ -1,0 +1,24 @@
+.card{
+    border: 1px solid #80808099 ;
+    border-radius: 10px;
+    padding: 0;
+    background: white;
+}
+
+table{
+    thead{
+
+        th{
+            vertical-align: baseline !important;
+           text-align: center;
+           font-size: large;
+        }
+    }
+    td{
+        text-align: center;
+    }
+}
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}

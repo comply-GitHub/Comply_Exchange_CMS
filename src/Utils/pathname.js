@@ -1,0 +1,27 @@
+const Pathname = {
+  SignUp: "/signup",
+  pages:"/pages",
+  pageInfo:"/page_details",
+  content:"/content",
+  contentInfo:"/contentInfo",  
+  documentsInfo:"/documentation_details",
+  agents:"/agent",
+  formType:"/form_type",
+  agentInfo:"/agentInfo",
+  easyHelp:"/easyHelp",
+  language:"/languages",
+  languageInfo:"/languages_details",
+  completedForms:"/completed_Forms",
+  capacities:"/capacities",
+  capacitiesInfo:"/capacities_info",
+  FormInstructions:"/form_instruction",
+  Forms_Details:"/forms_instruction_info",
+  Forms_add:'/add_forms',
+  pageInfoId:"page_details_id",
+  capacities_add:"/add_capacities",
+  Rules:"/rules",
+  RulesInfo:"/rules_details",
+  subpage_details:"/subpage_details",
+  Glossaries:"/glossaries"
+};
+export default Pathname;

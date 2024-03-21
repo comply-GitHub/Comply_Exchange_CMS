@@ -1,0 +1,39 @@
+.btn-cstm{
+    color: white !important;
+    opacity: 0.8 !important;
+}
+table{
+    a{
+        text-align: center;
+    }
+       .MuiSelect-select{
+        background: none;
+    }
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+.table_head{
+    font-size: 13px !important;
+    font-weight: bold !important;
+  align-items: center !important; 
+  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  }
+  .table_content{
+    font-size: 12px !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+ 
+  }
+  .tableWidth{
+    padding: 0.02rem 0.5rem !important;
+    background-color: var(--bs-table-bg);
+    border-bottom-width: 1px;
+   
+  }

@@ -1,0 +1,95 @@
+                .btn-cstm{
+    border: 1px solid #16639e !important;
+    color: white !important;
+    opacity: 0.8 !important;
+}
+table{
+    border: 1px solid gray;
+    a{
+        text-align: center;
+    }
+
+    a:hover{
+        cursor: pointer;
+     }
+    thead{
+        background: #f0f0f0;
+        a{
+            color: inherit !important;
+        } 
+    }
+}
+.p-relative{
+    position: relative;
+}
+.tool{
+  position: absolute;
+  margin-left: 5px;
+}
+.cstm-tooltip{
+    position: absolute;
+    top: 30%;
+}
+.input_Field input{
+    height: 0.15em !important;
+    
+    }
+    .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+        height: 0.435em !important;
+    }
+    
+    
+.text{
+        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-size: 12px !important;
+        font-weight: 530;
+    }
+   .text span {
+
+        font-size: 12px !important;
+    }
+
+.file-Input-select{
+    font-size: 12px !important;
+}   
+.textFieldClass input{
+  height:0.275em !important;
+  font-size: 12px !important;
+ 
+}
+.textFieldClass div{
+  width: 100% !important;
+} 
+
+.textFieldClassInput input{
+height:0.375em !important;
+  font-size: 12px !important; 
+  width: 95% !important;
+}
+.table_head{
+    font-size: 13px !important;
+    font-weight: bold !important;
+  align-items: center !important; 
+  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  }
+  .table_header{
+    font-size: 18px !important;
+    font-weight: bold !important;
+  align-items: center !important; 
+  font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+  }
+  .table_content{
+    font-size: 12px !important;
+    align-items: center !important; 
+    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
+    
+  
+  }
+  .hidden{
+    color: transparent !important;
+   
+    
+  }
+  .hide{
+    margin-left: -6%;
+  }
