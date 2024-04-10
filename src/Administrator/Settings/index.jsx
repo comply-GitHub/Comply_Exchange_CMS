@@ -126,10 +126,12 @@ const arr=[1,2,3,4,5]
     pinbasedLoginTokenValidityTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin : 0,
     pinbasedLoginTokenLockOutTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin : 0,
     showLoginPage:settingsData?.settingsData?.showLoginPage ? settingsData?.settingsData?.showLoginPage : false,
+    enableClickToStartSubmission: settingsData?.enableClickToStartSubmission ? settingsData?.enableClickToStartSubmission : false,
     googleTranslateAPIKey: settingsData?.settingsData?.googleTranslateAPIKey ? settingsData?.settingsData?.googleTranslateAPIKey : "",
     purgeRedundantSubmissionData: settingsData?.settingsData?.purgeRedundantSubmissionData ? settingsData?.settingsData?.purgeRedundantSubmissionData : "",
     runExchangeInIframe: settingsData?.settingsData?.runExchangeInIframe ? settingsData?.settingsData?.runExchangeInIframe :false,
     taxformsAgent:settingsData?.settingsData?.taxformsAgent ? settingsData?.settingsData?.taxformsAgent : 0,
+    defaultAgentID:settingsData?.settingsData?.defaultAgentID ? settingsData?.settingsData?.defaultAgentID:0,
     dualformsAgent:settingsData?.settingsData?.dualformsAgent ? settingsData?.settingsData?.dualformsAgent : "",
     crSformsAgent:settingsData?.settingsData?.crSformsAgent ? settingsData?.settingsData?.crSformsAgent : 0,
     defaultRetroactiveStatement: settingsData?.settingsData?.defaultRetroactiveStatement ? settingsData?.settingsData?.defaultRetroactiveStatement : "",
@@ -190,10 +192,12 @@ const arr=[1,2,3,4,5]
       pinbasedLoginTokenValidityTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin : 0,
       pinbasedLoginTokenLockOutTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin : 0,
       showLoginPage:settingsData?.settingsData?.showLoginPage ? settingsData?.settingsData?.showLoginPage : false,
+      enableClickToStartSubmission:settingsData?.settingsData?.enableClickToStartSubmission ? settingsData?.settingsData?.enableClickToStartSubmission : false ,
       googleTranslateAPIKey: settingsData?.settingsData?.googleTranslateAPIKey ? settingsData?.settingsData?.googleTranslateAPIKey : "",
       purgeRedundantSubmissionData: settingsData?.settingsData?.purgeRedundantSubmissionData ? settingsData?.settingsData?.purgeRedundantSubmissionData : "",
       runExchangeInIframe: settingsData?.settingsData?.runExchangeInIframe ? settingsData?.settingsData?.runExchangeInIframe :false,
       taxformsAgent:settingsData?.settingsData?.taxformsAgent ? settingsData?.settingsData?.taxformsAgent : 0,
+      defaultAgentID:settingsData?.settingsData?.defaultAgentID ? settingsData?.settingsData?.defaultAgentID:0,
       dualformsAgent:settingsData?.settingsData?.dualformsAgent ? settingsData?.settingsData?.dualformsAgent : "",
       crSformsAgent:settingsData?.settingsData?.crSformsAgent ? settingsData?.settingsData?.crSformsAgent : 0,
       defaultRetroactiveStatement: settingsData?.settingsData?.defaultRetroactiveStatement ? settingsData?.settingsData?.defaultRetroactiveStatement : "",
@@ -240,10 +244,12 @@ const arr=[1,2,3,4,5]
         pinbasedLoginTokenValidityTimeinMin:apiData?.pinbasedLoginTokenValidityTimeinMin ? apiData?.pinbasedLoginTokenValidityTimeinMin : 0,
         pinbasedLoginTokenLockOutTimeinMin:apiData?.pinbasedLoginTokenLockOutTimeinMin ? apiData?.pinbasedLoginTokenLockOutTimeinMin : 0,
         showLoginPage:apiData?.showLoginPage ? apiData?.showLoginPage : false,
+        enableClickToStartSubmission:apiData?.enableClickToStartSubmission ? apiData?.enableClickToStartSubmission : false,
         googleTranslateAPIKey: apiData?.googleTranslateAPIKey ? apiData?.googleTranslateAPIKey : "",
         purgeRedundantSubmissionData: apiData?.purgeRedundantSubmissionData ? apiData?.purgeRedundantSubmissionData : "",
         runExchangeInIframe: apiData?.runExchangeInIframe ? apiData?.runExchangeInIframe :false,
         taxformsAgent:apiData?.taxformsAgent ? apiData?.taxformsAgent : 0,
+        defaultAgentID:apiData?.defaultAgentID ? apiData?.defaultAgentID : 0,
         dualformsAgent:apiData?.dualformsAgent ? apiData?.dualformsAgent : "",
         CRSformsAgent:apiData?.CRSformsAgent ? apiData?.CRSformsAgent : 0,
         defaultRetroactiveStatement: apiData?.defaultRetroactiveStatement ? apiData?.defaultRetroactiveStatement : "",
@@ -463,6 +469,7 @@ const arr=[1,2,3,4,5]
         id: params.id,
         DefaultCoverPagePdf:imageFile,
         taxformsAgent:data?.taxformsAgent,
+        defaultAgentID:data?.defaultAgentID,
         dualformsAgent:data?.dualformsAgent,
          crSformsAgent:data?.crSformsAgent,
          defaultCoverPagePdf_FileName: selectedFileName,
@@ -483,6 +490,7 @@ const arr=[1,2,3,4,5]
         pinbasedLoginTokenLockOutTimeinMin:data?.pinbasedLoginTokenLockOutTimeinMin,
         // defaultLogo_FileName: data?.defaultLogo_FileName,
         showLoginPage:data?.showLoginPage,
+        enableClickToStartSubmission:data?.enableClickToStartSubmission,
         googleTranslateAPIKey: data?.googleTranslateAPIKey,
         APIURL:data?.APIURL,
         purgeRedundantSubmissionData: data?.purgeRedundantSubmissionData,
@@ -965,6 +973,47 @@ const arr=[1,2,3,4,5]
                 </div>
               </div>
             </div>
+
+            <div className="col-12 d-flex">
+              <div className="row my-1 w-100">
+                <div className="col-5 d-flex">
+                  <div className="my-auto text w-100" variant="body2">
+                 Enable Click To Start Submission
+                  </div>
+                </div>
+                <div className="col-7">
+                <Checkbox onChange={handleToogle} name="enableClickToStartSubmission" checked={data?.enableClickToStartSubmission}  />
+                </div>
+               
+              </div>
+            </div>
+
+            <div className="col-12 d-flex">
+              <div className="row my-1 w-100">
+                <div className="col-5 d-flex">
+                  <div className="my-auto text w-100" variant="body2">
+                 Select Agent For Click To Start Submission
+                  </div>
+                </div>
+                <div className="col-7">
+                <select name="defaultAgentID" value={data?.defaultAgentID} onChange={handleChange} style={{height:"36px",width:'50%'}}>
+                  <option value="00000000-0000-0000-0000-000000000000">--- Select ---</option>
+                  
+                  {agentDetails?.map((item, ind) => {
+                    return (
+                
+                  <option key={ind} value={item.id}>
+                  {item.name}
+                </option>
+              );
+            })}
+                    
+                  </select>
+                </div>
+               
+              </div>
+            </div>
+
             <div className="col-12 d-flex">
               <div className="row my-1 w-100">
                 <div className="col-5 d-flex">
