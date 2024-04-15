@@ -152,7 +152,8 @@ const arr=[1,2,3,4,5]
   });
   const [open, setOpen] = useState(false);
   const [imageFile, setImageFile] = useState(null)
-  const [imageFileLogo, setImageFileLogo] = useState(null)
+  console.log(imageFile,"77")
+  const [imageFileLogo, setImageFileLogo] = useState([])
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
@@ -320,7 +321,7 @@ const arr=[1,2,3,4,5]
  
 
   const openImageView = () => {
-    if (imageFile || (settingsData?.settingsData?.defaultCoverPagePdf && typeof settingsData.settingsData.defaultCoverPagePdf === 'string')) {
+    if (imageFile  || (settingsData?.settingsData?.defaultCoverPagePdf && typeof settingsData.settingsData.defaultCoverPagePdf === 'string')) {
       const fileToUse = imageFile || settingsData.settingsData.defaultCoverPagePdf;
       
       if (fileToUse instanceof Blob) {
@@ -348,7 +349,18 @@ const arr=[1,2,3,4,5]
     }
   };
   
-  
+  // const openImageView = () => {
+  //   // Logic to open the image view
+  //   // For example, you can create a modal or navigate to a new page to display the image
+  //   // Here's a simple example using window.open() to open the file in a new tab
+  //   if (settingsData?.settingsData?.defaultCoverPagePdf) {
+  //     // If settingsData?.settingsData?.defaultCoverPagePdf exists, open the preview
+  //     window.open(settingsData?.settingsData?.defaultCoverPagePdf, '_blank');
+  //   } else {
+  //     // If defaultCoverPagePdf doesn't exist, handle accordingly (e.g., show an error message)
+  //     console.log('No file to preview');
+  //   }
+  // };
   // const handleImage = e => {
   //   const file = e.target.files[0];
   //   console.log('Selected File:', file);
@@ -400,7 +412,10 @@ const arr=[1,2,3,4,5]
       console.log('Image file and name set successfully pdfff.');
     }
   };
-
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+  };
   // const handleImage = (e) => {
   //   const selectedFile = e.target.files[0];
   
@@ -412,18 +427,18 @@ const arr=[1,2,3,4,5]
   //     setImageFile(selectedFile);
   //   }
   // };
-  const handleImage = e => {
-    var binaryData = []
-    binaryData.push(e.target.files[0])
-    let imageFile = e.target.files[0]
-    console.log(e.target.files[0], 'test')
-    if (!imageFile.name.match(/\.(pdf)$/)) {
-      alert('Please select a valid image.')
-    } else {
-      setImageFile(imageFile)
-      console.log(imageFile,"78778")
-    }
-  };
+  // const handleImage = e => {
+  //   var binaryData = []
+  //   binaryData.push(e.target.files[0])
+  //   let imageFile = e.target.files[0]
+  //   console.log(e.target.files[0], 'test')
+  //   if (!imageFile.name.match(/\.(pdf)$/)) {
+  //     alert('Please select a valid image.')
+  //   } else {
+  //     setImageFile(imageFile)
+  //     console.log(imageFile,"78778")
+  //   }
+  // };
 
   const handleToogle = e => {
     setData({ ...data, [e.target.name]: e.target.checked })
@@ -589,11 +604,40 @@ const arr=[1,2,3,4,5]
                  
                 
                  
-           
-                 
-                 
                <>
-                 {imageFile || settingsData?.settingsData?.defaultCoverPagePdf ?( <select name="defaultCoverPagePdfType" value={data?.defaultCoverPagePdfType} onChange={handleChange} style={{height:"30px",width:'50%'}}className="file-upload-option" >
+    {/* {settingsData?.settingsData?.defaultCoverPagePdf || imageFile == null && ( */}
+      <Input
+      name="defaultCoverPagePdf"
+      id="defaultCoverPagePdf"
+      onChange={(e) => handleImage(e)}
+      type="file"
+      className="text"
+    />
+   
+     {/* <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link> */}
+    {/* )} */}
+
+ {imageFile !==null ?( 
+      <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link>
+    ):""}
+    {/* {imageFile!==null ||
+  
+     settingsData?.settingsData?.defaultCoverPagePdfType === "2" &&
+      (
+      // If imageFile exists and defaultCoverPagePdfType is '2', show additional file upload input
+      <Input
+        id="defaultCoverPagePdf"
+        name="defaultCoverPagePdf"
+        onChange={(e) => handleImage(e)}
+        type="file"
+        className="mx-2 text"
+      />
+    )} */}
+  </>
+                 
+                 
+               {/* <>
+                 {!settingsData?.settingsData?.defaultCoverPagePdf ?( <select name="defaultCoverPagePdfType" value={data?.defaultCoverPagePdfType} onChange={handleChange} style={{height:"30px",width:'50%'}}className="file-upload-option" >
                     <option value="1">Keep Existing</option>
                     <option value="2">Upload</option>
                     <option value="3">Remove</option>
@@ -604,7 +648,7 @@ const arr=[1,2,3,4,5]
                </>
        
     
-      {imageFile || settingsData?.settingsData?.defaultCoverPagePdf  &&( <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link>)}
+      {imageFile || settingsData?.settingsData?.defaultCoverPagePdf  &&( <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link>)} */}
 
                 </div>
               </div>

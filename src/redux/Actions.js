@@ -480,29 +480,7 @@ export const getCountryArticles = () => {
 };
 //UPSERT_REQUEST_HEADER//UPSERT_EFORMS
 
-export const UpsertRequestHeader = (value) => {
-  return (dispatch) => {
-    // const dataToSend = { message: value };
-    Utils.api.postApiCall(
-      Utils.endPoints.UPSERT_REQUEST_HEADER,
-      value,
-      (responseData) => {
-        let { data } = responseData;
-        dispatch({
-          type: Utils.ActionName.UPSERT_REQUEST_HEADER,
-          payload: { data: data.data },
-        });
-         if (responseData) {
-          Utils.showAlert(1, "Request Header updated successfully.");
-        }
-      },
-      (error) => {
-        let { data } = error;
-        Utils.showAlert(2, data.message);
-      }
-    );
-  };
-};
+
 
 export const UpsertEFormsAgent = (value) => {
   return (dispatch) => {
@@ -2741,11 +2719,12 @@ export const upsertSettings = (value) => {
           type: Utils.ActionName.UPSERT_SETTINGS,
           payload: { data: data.data },
         });
-         if (responseData) {
-         
-          Utils.showAlert(1, responseData?.data);
+        if (responseData) {
+          // Utils.showAlert(1, responseData?.data);
         }
-             },
+        // Check if both requests are successful before showing the alert and saving to localStorage
+        checkAndSaveToLocalStorage(dispatch);
+      },
       (error) => {
         let { data } = error;
         Utils.showAlert(2, data.message);
@@ -2754,6 +2733,48 @@ export const upsertSettings = (value) => {
     );
   };
 };
+
+export const UpsertRequestHeader = (value) => {
+  return (dispatch) => {
+    Utils.api.postApiCall(
+      Utils.endPoints.UPSERT_REQUEST_HEADER,
+      value,
+      (responseData) => {
+        let { data } = responseData;
+        dispatch({
+          type: Utils.ActionName.UPSERT_REQUEST_HEADER,
+          payload: { data: data.data },
+        });
+        if (responseData) {
+          // Utils.showAlert(1, "Request Header updated successfully.");
+        }
+        // Check if both requests are successful before showing the alert and saving to localStorage
+        checkAndSaveToLocalStorage(dispatch);
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.message);
+      }
+    );
+  };
+};
+
+let successfulRequests = 0;
+
+const checkAndSaveToLocalStorage = (dispatch) => {
+  successfulRequests++;
+  
+ 
+  if (successfulRequests === 2) {
+
+    localStorage.setItem("response", "data saved successfully");
+ 
+    Utils.showAlert(1, "Updated successfully.");
+  
+    successfulRequests = 0;
+  }
+};
+
 
 export const updateUSFormTypes = (value) => {
   return (dispatch) => {
