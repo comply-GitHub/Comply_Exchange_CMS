@@ -325,7 +325,7 @@ function FormType({ match }) {
   >
     <option value="1">---Select---</option>
     {SelfCert?.formsData?.records
-  ?.filter(rows1 => !rows1.isDisabled)
+  ?.filter(rows1 => rows1.isActive)
   .map((rows1, ind) => (
     <option key={ind} value={rows1.id}>
       {rows1.name}
@@ -389,7 +389,7 @@ function FormType({ match }) {
   >
     <option value="1">---Select---</option>
     {SelfCert?.formsData?.records
-  ?.filter(rows1 => !rows1.isDisabled)
+  ?.filter(rows1 => rows1.isActive)
   .map((rows1, ind) => (
     <option key={ind} value={rows1.id}>
       {rows1.name}
@@ -454,7 +454,7 @@ function FormType({ match }) {
   >
     <option value="1">---Select---</option>
     {SelfCert?.formsData?.records
-  ?.filter(rows1 => !rows1.isDisabled)
+  ?.filter(rows1 => rows1.isActive)
   .map((rows1, ind) => (
     <option key={ind} value={rows1.id}>
       {rows1.name}
@@ -518,7 +518,7 @@ function FormType({ match }) {
   >
     <option value="1">---Select---</option>
     {SelfCert?.formsData?.records
-  ?.filter(rows1 => !rows1.isDisabled)
+  ?.filter(rows1 => rows1.isActive)
   .map((rows1, ind) => (
     <option key={ind} value={rows1.id}>
       {rows1.name}
