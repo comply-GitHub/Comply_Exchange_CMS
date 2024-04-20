@@ -357,6 +357,7 @@ const Pages = ({ match }) => {
                   </Paper>
                 </table>
               </div>
+              <>{ console.log(tableData?.pageData?.records,"99")}</>
               {tableData?.pageData?.totalPages > 1 ? (
                 <Stack className="px-3 col-12" spacing={2}>
                   <Pagination
