@@ -51,10 +51,11 @@ import {
   Button,
   Tooltip,
   Link,
+  Pagination
 } from "@mui/material";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Pagination from "@mui/material/Pagination";
+// import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Check } from "@mui/icons-material";
 import DoneIcon from '@mui/icons-material/Done';
@@ -90,8 +91,16 @@ export default function FormTypeTable() {
     dispatch(getAllLanguages());
     dispatch(getAllFormTypes(page, size, search));
     dispatch(getAllUSFormTypes());
-  }, []);
+  }, [page,search]);
 
+
+  useEffect(()=>{
+    if(search===""){
+      setPage(1);
+      setSize(10);
+      dispatch(getAllFormTypes(page, size, search));
+    }
+  },[])
   const setSubmit = (e) => {
     e.preventDefault();
     setPage(1);
@@ -210,7 +219,7 @@ export default function FormTypeTable() {
                                   {row.name}
                                 </TableCell>
                                 <TableCell>
-                                 {row?.isDisabled ?(<DoneIcon style={{fontSize:"35px",color:"green",fontWeight:"bold"}}/> ): ("")
+                                 {row.isDisabled === true ?(""): (<DoneIcon style={{fontSize:"35px",color:"green",fontWeight:"bold"}}/> )
 
                                   }
                                 </TableCell>
@@ -368,6 +377,20 @@ export default function FormTypeTable() {
                   </Paper>
                 </table>
               </div>
+              {data?.formsData?.totalPages > 1 ? (
+             
+             <Stack className="px-3 col-12" spacing={2}>
+               <Pagination
+                variant="outlined"
+                shape="rounded"
+                color="primary"
+                 count={data?.formsData?.totalPages}
+                 onChange={(e, value) => setPage(value)}
+               />
+             </Stack>
+           ) : (
+             ""
+           )}
             </div>
             <div className="actionBtn">
               <Button
@@ -382,16 +405,8 @@ export default function FormTypeTable() {
                 Add Self Certification
               </Button>
             </div>
-            {data?.formsData?.totalPages > 1 ? (
-              <Stack spacing={2}>
-                <Pagination
-                  count={data?.formsData?.totalPages}
-                  onChange={(e, value) => setPage(value)}
-                />
-              </Stack>
-            ) : (
-              ""
-            )}
+           
+           
           </div>
         </div>
       </div>
