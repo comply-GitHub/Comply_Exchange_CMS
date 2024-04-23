@@ -56,6 +56,7 @@ import AppFooter from '../../../Layout/AppFooter/'
 import ThemeOptions from '../../../Layout/ThemeOptions/'
 import Info from '../../../assets/helpIcon.png';
 import InfoIcon from '@mui/icons-material/Info';
+import { toast } from 'react-toastify';
 
 function UserManagement ({ match }) {
   let params = useParams()
@@ -64,6 +65,7 @@ function UserManagement ({ match }) {
   const [checkedStatus, setCheckedStatus] = useState({});
 
   const [checkedStatusHidden,setCheckedStatusHidden] = useState({});
+  const [selectedfile,setSelectedfile]=useState(null);
 
   const idAgentData = useSelector(state => state.getAgentByIdReducer)
   const countryList = useSelector(state => state?.getCountryNameReducer?.getCountryNameData)
@@ -1077,6 +1079,10 @@ return(
 //   });
 // };
 
+ const handleFileSelect=(e)=>{
+  setSelectedfile(e.target.files[0]);
+ }
+
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(data.tokenEmail)
@@ -1087,7 +1093,12 @@ return(
     .filter((item) => checkedStatusHidden?.[item.id] || item.agentId !== 0)
     .map((item) => item.id);
 
-
+    if(selectedfile!=null){
+      if(selectedfile?.type!=="image/png"){
+        toast.error("Please select png image")
+        return
+      }
+    }
     console.log(data,"1111")
   
       const updateData= {
@@ -1105,6 +1116,7 @@ return(
         defaultLanguageId: data?.defaultLanguageId,
         includeDefaultEnglish: data?.includeDefaultEnglish,
         logoId: data?.logoId,
+        logo: selectedfile,
         logoNavigateURL:data?.logoNavigateURL,
         pdfWatermark:data?.pdfWatermark,
         displayVersion: data?.displayVersion,
@@ -1569,9 +1581,7 @@ return(
                     <div className='row mx-2 my-1 py-0'>
                       <div className='col-5 d-flex'>
                         <div
-                          className='my-auto text'
-                          
-                          
+                          className='my-auto text'    
                         >
                           Logo: <span >
     <Tooltip  title="Recommended dimensions: 200px X 43px" arrow>
@@ -1587,7 +1597,7 @@ return(
                         name="logoId"
                         value={data?.logoId}
 
-                          onChange={handleFile}
+                          onChange={(e)=>{handleFile(e); handleChange(e)}}
                           style={{
                             minWidth: '140px',
                             height: '30px',
@@ -1601,7 +1611,7 @@ return(
                         </Select>
 
                         {submit === 2 && (
-                          <Input style={{ fontSize: '13px' }} type='file' />
+                          <Input name='logoFile' style={{ fontSize: '13px' }} type='file' onChange={(e)=>handleFileSelect(e)} />
                         )}
                         <span className='my-auto text mx-2'>
                           <a>View..</a>
