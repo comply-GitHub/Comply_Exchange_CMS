@@ -464,6 +464,36 @@ return(
     setData({ ...data, termsAndConditions: html });
   }, [editorState1]);
 
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState2.getCurrentContent()));
+    setData({ ...data, tokenEmail: html });
+  }, [editorState2]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState3.getCurrentContent()));
+    setData({ ...data, sendSignatureProcess: html });
+  }, [editorState3]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState4.getCurrentContent()));
+    setData({ ...data, byUsingEmailAndPassword: html });
+  }, [editorState4]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState5.getCurrentContent()));
+    setData({ ...data, saveAndExit: html });
+  }, [editorState5]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState6.getCurrentContent()));
+    setData({ ...data, Description: html });
+  }, [editorState6]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState7.getCurrentContent()));
+    setData({ ...data, SMSFormat : html });
+  }, [editorState7]);
+
  
   useEffect(() => {
     const plainText = data?.pageContent
