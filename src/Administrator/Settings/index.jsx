@@ -126,10 +126,12 @@ const arr=[1,2,3,4,5]
     pinbasedLoginTokenValidityTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin : 0,
     pinbasedLoginTokenLockOutTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin : 0,
     showLoginPage:settingsData?.settingsData?.showLoginPage ? settingsData?.settingsData?.showLoginPage : false,
+    enableClickToStartSubmission: settingsData?.enableClickToStartSubmission ? settingsData?.enableClickToStartSubmission : false,
     googleTranslateAPIKey: settingsData?.settingsData?.googleTranslateAPIKey ? settingsData?.settingsData?.googleTranslateAPIKey : "",
     purgeRedundantSubmissionData: settingsData?.settingsData?.purgeRedundantSubmissionData ? settingsData?.settingsData?.purgeRedundantSubmissionData : "",
     runExchangeInIframe: settingsData?.settingsData?.runExchangeInIframe ? settingsData?.settingsData?.runExchangeInIframe :false,
     taxformsAgent:settingsData?.settingsData?.taxformsAgent ? settingsData?.settingsData?.taxformsAgent : 0,
+    defaultAgentID:settingsData?.settingsData?.defaultAgentID ? settingsData?.settingsData?.defaultAgentID:0,
     dualformsAgent:settingsData?.settingsData?.dualformsAgent ? settingsData?.settingsData?.dualformsAgent : "",
     crSformsAgent:settingsData?.settingsData?.crSformsAgent ? settingsData?.settingsData?.crSformsAgent : 0,
     defaultRetroactiveStatement: settingsData?.settingsData?.defaultRetroactiveStatement ? settingsData?.settingsData?.defaultRetroactiveStatement : "",
@@ -150,7 +152,8 @@ const arr=[1,2,3,4,5]
   });
   const [open, setOpen] = useState(false);
   const [imageFile, setImageFile] = useState(null)
-  const [imageFileLogo, setImageFileLogo] = useState(null)
+  console.log(imageFile,"77")
+  const [imageFileLogo, setImageFileLogo] = useState([])
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
@@ -190,10 +193,12 @@ const arr=[1,2,3,4,5]
       pinbasedLoginTokenValidityTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin : 0,
       pinbasedLoginTokenLockOutTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin : 0,
       showLoginPage:settingsData?.settingsData?.showLoginPage ? settingsData?.settingsData?.showLoginPage : false,
+      enableClickToStartSubmission:settingsData?.settingsData?.enableClickToStartSubmission ? settingsData?.settingsData?.enableClickToStartSubmission : false ,
       googleTranslateAPIKey: settingsData?.settingsData?.googleTranslateAPIKey ? settingsData?.settingsData?.googleTranslateAPIKey : "",
       purgeRedundantSubmissionData: settingsData?.settingsData?.purgeRedundantSubmissionData ? settingsData?.settingsData?.purgeRedundantSubmissionData : "",
       runExchangeInIframe: settingsData?.settingsData?.runExchangeInIframe ? settingsData?.settingsData?.runExchangeInIframe :false,
       taxformsAgent:settingsData?.settingsData?.taxformsAgent ? settingsData?.settingsData?.taxformsAgent : 0,
+      defaultAgentID:settingsData?.settingsData?.defaultAgentID ? settingsData?.settingsData?.defaultAgentID:0,
       dualformsAgent:settingsData?.settingsData?.dualformsAgent ? settingsData?.settingsData?.dualformsAgent : "",
       crSformsAgent:settingsData?.settingsData?.crSformsAgent ? settingsData?.settingsData?.crSformsAgent : 0,
       defaultRetroactiveStatement: settingsData?.settingsData?.defaultRetroactiveStatement ? settingsData?.settingsData?.defaultRetroactiveStatement : "",
@@ -240,10 +245,12 @@ const arr=[1,2,3,4,5]
         pinbasedLoginTokenValidityTimeinMin:apiData?.pinbasedLoginTokenValidityTimeinMin ? apiData?.pinbasedLoginTokenValidityTimeinMin : 0,
         pinbasedLoginTokenLockOutTimeinMin:apiData?.pinbasedLoginTokenLockOutTimeinMin ? apiData?.pinbasedLoginTokenLockOutTimeinMin : 0,
         showLoginPage:apiData?.showLoginPage ? apiData?.showLoginPage : false,
+        enableClickToStartSubmission:apiData?.enableClickToStartSubmission ? apiData?.enableClickToStartSubmission : false,
         googleTranslateAPIKey: apiData?.googleTranslateAPIKey ? apiData?.googleTranslateAPIKey : "",
         purgeRedundantSubmissionData: apiData?.purgeRedundantSubmissionData ? apiData?.purgeRedundantSubmissionData : "",
         runExchangeInIframe: apiData?.runExchangeInIframe ? apiData?.runExchangeInIframe :false,
         taxformsAgent:apiData?.taxformsAgent ? apiData?.taxformsAgent : 0,
+        defaultAgentID:apiData?.defaultAgentID ? apiData?.defaultAgentID : 0,
         dualformsAgent:apiData?.dualformsAgent ? apiData?.dualformsAgent : "",
         CRSformsAgent:apiData?.CRSformsAgent ? apiData?.CRSformsAgent : 0,
         defaultRetroactiveStatement: apiData?.defaultRetroactiveStatement ? apiData?.defaultRetroactiveStatement : "",
@@ -314,7 +321,7 @@ const arr=[1,2,3,4,5]
  
 
   const openImageView = () => {
-    if (imageFile || (settingsData?.settingsData?.defaultCoverPagePdf && typeof settingsData.settingsData.defaultCoverPagePdf === 'string')) {
+    if (imageFile  || (settingsData?.settingsData?.defaultCoverPagePdf && typeof settingsData.settingsData.defaultCoverPagePdf === 'string')) {
       const fileToUse = imageFile || settingsData.settingsData.defaultCoverPagePdf;
       
       if (fileToUse instanceof Blob) {
@@ -342,7 +349,18 @@ const arr=[1,2,3,4,5]
     }
   };
   
-  
+  // const openImageView = () => {
+  //   // Logic to open the image view
+  //   // For example, you can create a modal or navigate to a new page to display the image
+  //   // Here's a simple example using window.open() to open the file in a new tab
+  //   if (settingsData?.settingsData?.defaultCoverPagePdf) {
+  //     // If settingsData?.settingsData?.defaultCoverPagePdf exists, open the preview
+  //     window.open(settingsData?.settingsData?.defaultCoverPagePdf, '_blank');
+  //   } else {
+  //     // If defaultCoverPagePdf doesn't exist, handle accordingly (e.g., show an error message)
+  //     console.log('No file to preview');
+  //   }
+  // };
   // const handleImage = e => {
   //   const file = e.target.files[0];
   //   console.log('Selected File:', file);
@@ -394,7 +412,10 @@ const arr=[1,2,3,4,5]
       console.log('Image file and name set successfully pdfff.');
     }
   };
-
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+  };
   // const handleImage = (e) => {
   //   const selectedFile = e.target.files[0];
   
@@ -406,18 +427,18 @@ const arr=[1,2,3,4,5]
   //     setImageFile(selectedFile);
   //   }
   // };
-  const handleImage = e => {
-    var binaryData = []
-    binaryData.push(e.target.files[0])
-    let imageFile = e.target.files[0]
-    console.log(e.target.files[0], 'test')
-    if (!imageFile.name.match(/\.(pdf)$/)) {
-      alert('Please select a valid image.')
-    } else {
-      setImageFile(imageFile)
-      console.log(imageFile,"78778")
-    }
-  };
+  // const handleImage = e => {
+  //   var binaryData = []
+  //   binaryData.push(e.target.files[0])
+  //   let imageFile = e.target.files[0]
+  //   console.log(e.target.files[0], 'test')
+  //   if (!imageFile.name.match(/\.(pdf)$/)) {
+  //     alert('Please select a valid image.')
+  //   } else {
+  //     setImageFile(imageFile)
+  //     console.log(imageFile,"78778")
+  //   }
+  // };
 
   const handleToogle = e => {
     setData({ ...data, [e.target.name]: e.target.checked })
@@ -463,6 +484,7 @@ const arr=[1,2,3,4,5]
         id: params.id,
         DefaultCoverPagePdf:imageFile,
         taxformsAgent:data?.taxformsAgent,
+        defaultAgentID:data?.defaultAgentID,
         dualformsAgent:data?.dualformsAgent,
          crSformsAgent:data?.crSformsAgent,
          defaultCoverPagePdf_FileName: selectedFileName,
@@ -483,6 +505,7 @@ const arr=[1,2,3,4,5]
         pinbasedLoginTokenLockOutTimeinMin:data?.pinbasedLoginTokenLockOutTimeinMin,
         // defaultLogo_FileName: data?.defaultLogo_FileName,
         showLoginPage:data?.showLoginPage,
+        enableClickToStartSubmission:data?.enableClickToStartSubmission,
         googleTranslateAPIKey: data?.googleTranslateAPIKey,
         APIURL:data?.APIURL,
         purgeRedundantSubmissionData: data?.purgeRedundantSubmissionData,
@@ -581,11 +604,40 @@ const arr=[1,2,3,4,5]
                  
                 
                  
-           
-                 
-                 
                <>
-                 {imageFile || settingsData?.settingsData?.defaultCoverPagePdf ?( <select name="defaultCoverPagePdfType" value={data?.defaultCoverPagePdfType} onChange={handleChange} style={{height:"30px",width:'50%'}}className="file-upload-option" >
+    {/* {settingsData?.settingsData?.defaultCoverPagePdf || imageFile == null && ( */}
+      <Input
+      name="defaultCoverPagePdf"
+      id="defaultCoverPagePdf"
+      onChange={(e) => handleImage(e)}
+      type="file"
+      className="text"
+    />
+   
+     {/* <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link> */}
+    {/* )} */}
+
+ {imageFile !==null ?( 
+      <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link>
+    ):""}
+    {/* {imageFile!==null ||
+  
+     settingsData?.settingsData?.defaultCoverPagePdfType === "2" &&
+      (
+      // If imageFile exists and defaultCoverPagePdfType is '2', show additional file upload input
+      <Input
+        id="defaultCoverPagePdf"
+        name="defaultCoverPagePdf"
+        onChange={(e) => handleImage(e)}
+        type="file"
+        className="mx-2 text"
+      />
+    )} */}
+  </>
+                 
+                 
+               {/* <>
+                 {!settingsData?.settingsData?.defaultCoverPagePdf ?( <select name="defaultCoverPagePdfType" value={data?.defaultCoverPagePdfType} onChange={handleChange} style={{height:"30px",width:'50%'}}className="file-upload-option" >
                     <option value="1">Keep Existing</option>
                     <option value="2">Upload</option>
                     <option value="3">Remove</option>
@@ -596,7 +648,7 @@ const arr=[1,2,3,4,5]
                </>
        
     
-      {imageFile || settingsData?.settingsData?.defaultCoverPagePdf  &&( <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link>)}
+      {imageFile || settingsData?.settingsData?.defaultCoverPagePdf  &&( <Link style={{cursor:"pointer"}}   onClick={openImageView}>View..</Link>)} */}
 
                 </div>
               </div>
@@ -965,6 +1017,47 @@ const arr=[1,2,3,4,5]
                 </div>
               </div>
             </div>
+
+            <div className="col-12 d-flex">
+              <div className="row my-1 w-100">
+                <div className="col-5 d-flex">
+                  <div className="my-auto text w-100" variant="body2">
+                 Enable Click To Start Submission
+                  </div>
+                </div>
+                <div className="col-7">
+                <Checkbox onChange={handleToogle} name="enableClickToStartSubmission" checked={data?.enableClickToStartSubmission}  />
+                </div>
+               
+              </div>
+            </div>
+
+            <div className="col-12 d-flex">
+              <div className="row my-1 w-100">
+                <div className="col-5 d-flex">
+                  <div className="my-auto text w-100" variant="body2">
+                 Select Agent For Click To Start Submission
+                  </div>
+                </div>
+                <div className="col-7">
+                <select name="defaultAgentID" value={data?.defaultAgentID} onChange={handleChange} style={{height:"36px",width:'50%'}}>
+                  <option value="00000000-0000-0000-0000-000000000000">--- Select ---</option>
+                  
+                  {agentDetails?.map((item, ind) => {
+                    return (
+                
+                  <option key={ind} value={item.id}>
+                  {item.name}
+                </option>
+              );
+            })}
+                    
+                  </select>
+                </div>
+               
+              </div>
+            </div>
+
             <div className="col-12 d-flex">
               <div className="row my-1 w-100">
                 <div className="col-5 d-flex">

@@ -324,11 +324,13 @@ function FormType({ match }) {
     disabled={!setting?.usIndividualSelfCert}
   >
     <option value="1">---Select---</option>
-    {SelfCert?.formsData?.records?.map((rows1, ind) => (
-      <option key={ind} value={rows1.id}>
-        {rows1.name}
-      </option>
-    ))}
+    {SelfCert?.formsData?.records
+  ?.filter(rows1 => !rows1.isDisabled)
+  .map((rows1, ind) => (
+    <option key={ind} value={rows1.id}>
+      {rows1.name}
+    </option>
+  ))}
   </select>
                       </TableCell>
                     </TableRow>
@@ -386,11 +388,13 @@ function FormType({ match }) {
     disabled={!setting?.usEntitySelfCert} 
   >
     <option value="1">---Select---</option>
-    {SelfCert?.formsData?.records?.map((rows1, ind) => (
-      <option key={ind} value={rows1.id}>
-        {rows1.name}
-      </option>
-    ))}
+    {SelfCert?.formsData?.records
+  ?.filter(rows1 => !rows1.isDisabled)
+  .map((rows1, ind) => (
+    <option key={ind} value={rows1.id}>
+      {rows1.name}
+    </option>
+  ))}
   </select>
                       </TableCell>
                     </TableRow>
@@ -446,14 +450,16 @@ function FormType({ match }) {
     fullWidth
     name="nonUSIndividualSelfCertFormType"
     onChange={handleChange}
-    disabled={!setting?.nonUSIndividualSelfCert} // Enable if checkbox is checked
+    disabled={!setting?.nonUSIndividualSelfCert} 
   >
     <option value="1">---Select---</option>
-    {SelfCert?.formsData?.records?.map((rows1, ind) => (
-      <option key={ind} value={rows1.id}>
-        {rows1.name}
-      </option>
-    ))}
+    {SelfCert?.formsData?.records
+  ?.filter(rows1 => !rows1.isDisabled)
+  .map((rows1, ind) => (
+    <option key={ind} value={rows1.id}>
+      {rows1.name}
+    </option>
+  ))}
   </select>
                       </TableCell>
                     </TableRow>
@@ -511,11 +517,13 @@ function FormType({ match }) {
     disabled={!setting?.nonUSEntitySelfCert} 
   >
     <option value="1">---Select---</option>
-    {SelfCert?.formsData?.records?.map((rows1, ind) => (
-      <option key={ind} value={rows1.id}>
-        {rows1.name}
-      </option>
-    ))}
+    {SelfCert?.formsData?.records
+  ?.filter(rows1 => !rows1.isDisabled)
+  .map((rows1, ind) => (
+    <option key={ind} value={rows1.id}>
+      {rows1.name}
+    </option>
+  ))}
   </select>
                       </TableCell>
                     </TableRow>
