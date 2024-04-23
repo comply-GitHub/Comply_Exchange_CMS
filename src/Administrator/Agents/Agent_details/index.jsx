@@ -459,7 +459,10 @@ return(
   }, [params.id])
 
 
-
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState1.getCurrentContent()));
+    setData({ ...data, termsAndConditions: html });
+  }, [editorState1]);
 
  
   useEffect(() => {
@@ -1117,6 +1120,7 @@ return(
         taxpayerInformation_EntityOnly: data?.taxpayerInformation_EntityOnly,
         taxpayerInformation_NonUSEntityOnly: data?.taxpayerInformation_NonUSEntityOnly,
         taxpayerInformation_GIIN: data?.taxpayerInformation_GIIN,
+        termsAndConditions:data?.termsAndConditions,
         formSelection: data?.formSelection,
         w8IMYRelatedFiles: data?.w8IMYRelatedFiles,
         w8BENJuly2017PartIIWhenTreatyClaimNo: data?.w8BENJuly2017PartIIWhenTreatyClaimNo,
