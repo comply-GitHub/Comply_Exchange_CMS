@@ -121,7 +121,7 @@ return(
        defaultSelection: "",
        defaultLanguageId: 0,
        includeDefaultEnglish: false,
-       logoId: 0,
+       logoId: 1,
        logoNavigateURL:"",
        pdfWatermark:"",
        displayVersion: false,
@@ -275,7 +275,7 @@ return(
     defaultSelection: "",
     defaultLanguageId: 0,
     includeDefaultEnglish: false,
-    logoId: 0,
+    logoId: 1,
     logoNavigateURL:"",
     pdfWatermark:"",
     displayVersion: false,
@@ -453,7 +453,7 @@ return(
     if (params.id) {
       dispatch(
         getAgentById(params.id, data => {
-          setData(data)
+          setData({...data,logoId:data?.logoId==0?1:data?.logoId})
           console.log(data,"iio")
         })
       )
