@@ -71,10 +71,22 @@ function UserManagement ({ match }) {
   const skippedSteps = useSelector(state => state?.getAgentSkippedReducer)
   const hiddensection = useSelector(state => state?.getAgentHiddenSectionReducer)
   
-  
-  console.log(hiddensection,"123")
   useEffect(() => {
    
+    // setEditorState1(  idPageData?.pageDataById?.pageContent
+    //   ? () => {
+    //       const blocksFromHTML = convertFromHTML(
+    //         idPageData?.pageDataById?.pageContent
+    //       );
+    //       const contentState = ContentState.createFromBlockArray(
+    //         blocksFromHTML.contentBlocks,
+    //         blocksFromHTML.entityMap
+    //       );
+    //       console.log(blocksFromHTML, "blocksFromHTML");
+
+    //       return EditorState.createWithContent(contentState);
+    //     }
+    //   : () => EditorState.createEmpty())
     setEditorState1(EditorState.createEmpty())
     setEditorState2(EditorState.createEmpty())
     setEditorState3(EditorState.createEmpty())
@@ -88,6 +100,12 @@ function UserManagement ({ match }) {
 
   useEffect(() => {
     if (params && params.id !== undefined && params.id !== null) {
+      dispatch(
+        getAgentById(params.id, data => {
+          setData(data)
+          console.log(data,"iio")
+        })
+      )
       dispatch(getAllAgentSkippedSteps(params.id));
       dispatch(getAllAgentHiddenSection(params.id));
     } else {
@@ -427,6 +445,7 @@ return(
   
   useEffect(()=>{
     console.log(data,"qwww")
+    
   },[data])
 
   const [submit, setSubmit] = useState(1)
@@ -458,7 +477,43 @@ return(
     }
   }, [params.id])
 
+ useEffect(() => {
+    console.log(data,"DSFASDFA",data?.termsAndConditions)
+    // Component mounted, initialize the editor states
+    setEditorState1(
+      data?.termsAndConditions
+        ? () => {
+            const blocksFromHTML = convertFromHTML(
+              data?.termsAndConditions
+            );
+            const contentState = ContentState.createFromBlockArray(
+              blocksFromHTML.contentBlocks,
+              blocksFromHTML.entityMap
+            );
+            console.log(blocksFromHTML, "blocksFromHTML");
 
+            return EditorState.createWithContent(contentState);
+          }
+        : () => EditorState.createEmpty()
+    );
+
+    // setEditorState2(
+    //   idPageData?.pageDataById?.summary
+    //     ? () => {
+    //         const blocksFromHTML = convertFromHTML(
+    //           idPageData?.pageDataById?.summary
+    //         );
+    //         const contentState = ContentState.createFromBlockArray(
+    //           blocksFromHTML.contentBlocks,
+    //           blocksFromHTML.entityMap
+    //         );
+    //         console.log(blocksFromHTML, "blocksFromHTML");
+
+    //         return EditorState.createWithContent(contentState);
+    //       }
+    //     : () => EditorState.createEmpty()
+    // );
+  }, [data?.termsAndConditions]);
   useEffect(() => {
     let html = draftToHtml(convertToRaw(editorState1.getCurrentContent()));
     setData({ ...data, termsAndConditions: html });
