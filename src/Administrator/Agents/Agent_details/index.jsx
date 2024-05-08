@@ -498,24 +498,127 @@ return(
           }
         : () => EditorState.createEmpty()
     );
-
-    // setEditorState2(
-    //   idPageData?.pageDataById?.summary
-    //     ? () => {
-    //         const blocksFromHTML = convertFromHTML(
-    //           idPageData?.pageDataById?.summary
-    //         );
-    //         const contentState = ContentState.createFromBlockArray(
-    //           blocksFromHTML.contentBlocks,
-    //           blocksFromHTML.entityMap
-    //         );
-    //         console.log(blocksFromHTML, "blocksFromHTML");
-
-    //         return EditorState.createWithContent(contentState);
-    //       }
-    //     : () => EditorState.createEmpty()
-    // );
   }, [data?.termsAndConditions]);
+  
+ useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState2(
+    data?.tokenEmail
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.tokenEmail
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.tokenEmail]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState3(
+    data?.sendSignatureProcess
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.sendSignatureProcess
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.sendSignatureProcess]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState4(
+    data?.byUsingEmailAndPassword
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.byUsingEmailAndPassword
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.byUsingEmailAndPassword]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState5(
+    data?.saveAndExit
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.saveAndExit
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.saveAndExit]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState6(
+    data?.Description
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.Description
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.Description]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState7(
+    data?.SMSFormat
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.SMSFormat
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.SMSFormat]);
   useEffect(() => {
     let html = draftToHtml(convertToRaw(editorState1.getCurrentContent()));
     setData({ ...data, termsAndConditions: html });
