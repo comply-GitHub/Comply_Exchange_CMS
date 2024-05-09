@@ -118,9 +118,7 @@ function UserManagement ({ match }) {
 
 
   const [getSkippedSteps, setSkippedSteps] = useState([]);
-  console.log(getSkippedSteps,"aws")
   const [getHiddenSection, setHiddenSection] = useState([]);
-  console.log(getHiddenSection,"awsdcdh")
 
 const CalculateData=()=>{
 return(
@@ -405,7 +403,6 @@ return(
     taxpayerInformation_NonUSIndividualOnly: false,
     isActive: false,
     isDeleted: false,
-   
     smsFormat:"",
     sendSignatureProcess:"",
     byUsingEmailIDandpassword: "",
@@ -603,10 +600,10 @@ useEffect(() => {
 useEffect(() => {
   // Component mounted, initialize the editor states
   setEditorState7(
-    data?.SMSFormat
+    data?.smsFormat
       ? () => {
           const blocksFromHTML = convertFromHTML(
-            data?.SMSFormat
+            data?.smsFormat
           );
           const contentState = ContentState.createFromBlockArray(
             blocksFromHTML.contentBlocks,
@@ -618,7 +615,7 @@ useEffect(() => {
         }
       : () => EditorState.createEmpty()
   );
-}, [data?.SMSFormat]);
+}, [data?.smsFormat]);
   useEffect(() => {
     let html = draftToHtml(convertToRaw(editorState1.getCurrentContent()));
     setData({ ...data, termsAndConditions: html });
@@ -651,7 +648,7 @@ useEffect(() => {
 
   useEffect(() => {
     let html = draftToHtml(convertToRaw(editorState7.getCurrentContent()));
-    setData({ ...data, SMSFormat : html });
+    setData({ ...data, smsFormat : html });
   }, [editorState7]);
 
  
@@ -758,10 +755,10 @@ useEffect(() => {
         : () => EditorState.createEmpty()
     )
     setEditorState7(
-      idAgentData?.agentDataById?.SMSFormat 
+      idAgentData?.agentDataById?.smsFormat 
         ? () => {
             const blocksFromHTML = convertFromHTML(
-              idAgentData?.agentDataById?.SMSFormat 
+              idAgentData?.agentDataById?.smsFormat 
             )
             const contentState = ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
@@ -1341,9 +1338,9 @@ useEffect(() => {
         taxpayerInformation_NonUSIndividualOnly: data?.taxpayerInformation_NonUSIndividualOnly,
         isActive: data?.isActive,
         isDeleted: data?.isDeleted,
-        smsFormat:data?.smsFormat,
+        SMSFormat:data?.smsFormat,
         sendSignatureProcess:data?.sendSignatureProcess,
-        byUsingEmailIDandpassword: data?.byUsingEmailIDandpassword,
+        byUsingEmailAndPassword: data?.byUsingEmailIDandpassword,
         saveAndExit: data?.saveAndExit,
         description: data?.description,
         nextAgentIntroductionText: data?.nextAgentIntroductionText,
