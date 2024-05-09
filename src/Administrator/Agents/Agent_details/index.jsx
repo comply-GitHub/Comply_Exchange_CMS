@@ -253,7 +253,7 @@ return(
        isDeleted: false,
        smsFormat:"",
        sendSignatureProcess:"",
-       byUsingEmailAndPassword: "",
+       byUsingEmailIDandpassword: "",
        saveAndExit: "",
        description: "",
        nextAgentIntroductionText: "",
@@ -408,7 +408,7 @@ return(
    
     smsFormat:"",
     sendSignatureProcess:"",
-    byUsingEmailAndPassword: "",
+    byUsingEmailIDandpassword: "",
     saveAndExit: "",
     description: "",
     nextAgentIntroductionText: "",
@@ -543,10 +543,10 @@ useEffect(() => {
 useEffect(() => {
   // Component mounted, initialize the editor states
   setEditorState4(
-    data?.byUsingEmailAndPassword
+    data?.byUsingEmailIDandpassword
       ? () => {
           const blocksFromHTML = convertFromHTML(
-            data?.byUsingEmailAndPassword
+            data?.byUsingEmailIDandpassword
           );
           const contentState = ContentState.createFromBlockArray(
             blocksFromHTML.contentBlocks,
@@ -558,7 +558,7 @@ useEffect(() => {
         }
       : () => EditorState.createEmpty()
   );
-}, [data?.byUsingEmailAndPassword]);
+}, [data?.byUsingEmailIDandpassword]);
 
 useEffect(() => {
   // Component mounted, initialize the editor states
@@ -583,10 +583,10 @@ useEffect(() => {
 useEffect(() => {
   // Component mounted, initialize the editor states
   setEditorState6(
-    data?.Description
+    data?.description
       ? () => {
           const blocksFromHTML = convertFromHTML(
-            data?.Description
+            data?.description
           );
           const contentState = ContentState.createFromBlockArray(
             blocksFromHTML.contentBlocks,
@@ -598,7 +598,7 @@ useEffect(() => {
         }
       : () => EditorState.createEmpty()
   );
-}, [data?.Description]);
+}, [data?.description]);
 
 useEffect(() => {
   // Component mounted, initialize the editor states
@@ -636,7 +636,7 @@ useEffect(() => {
 
   useEffect(() => {
     let html = draftToHtml(convertToRaw(editorState4.getCurrentContent()));
-    setData({ ...data, byUsingEmailAndPassword: html });
+    setData({ ...data, byUsingEmailIDandpassword: html });
   }, [editorState4]);
 
   useEffect(() => {
@@ -646,7 +646,7 @@ useEffect(() => {
 
   useEffect(() => {
     let html = draftToHtml(convertToRaw(editorState6.getCurrentContent()));
-    setData({ ...data, Description: html });
+    setData({ ...data, description: html });
   }, [editorState6]);
 
   useEffect(() => {
@@ -710,10 +710,10 @@ useEffect(() => {
     )
 
     setEditorState4(
-      idAgentData?.agentDataById?.byUsingEmailAndPassword
+      idAgentData?.agentDataById?.byUsingEmailIDandpassword
         ? () => {
             const blocksFromHTML = convertFromHTML(
-              idAgentData?.agentDataById?.byUsingEmailAndPassword
+              idAgentData?.agentDataById?.byUsingEmailIDandpassword
             )
             const contentState = ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
@@ -742,10 +742,10 @@ useEffect(() => {
         : () => EditorState.createEmpty()
     )
     setEditorState6(
-      idAgentData?.agentDataById?.Description 
+      idAgentData?.agentDataById?.description 
         ? () => {
             const blocksFromHTML = convertFromHTML(
-              idAgentData?.agentDataById?.Description 
+              idAgentData?.agentDataById?.description 
             )
             const contentState = ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
@@ -1257,8 +1257,6 @@ useEffect(() => {
         return
       }
     }
-    console.log(data,"1111")
-  
       const updateData= {
         id: params.id,
         name:data?.name,
@@ -1345,7 +1343,7 @@ useEffect(() => {
         isDeleted: data?.isDeleted,
         smsFormat:data?.smsFormat,
         sendSignatureProcess:data?.sendSignatureProcess,
-        byUsingEmailAndPassword: data?.byUsingEmailAndPassword,
+        byUsingEmailIDandpassword: data?.byUsingEmailIDandpassword,
         saveAndExit: data?.saveAndExit,
         description: data?.description,
         nextAgentIntroductionText: data?.nextAgentIntroductionText,
@@ -2135,7 +2133,7 @@ useEffect(() => {
 
                 <div className='row col-8 mt-2'>
                     <div className='col-12 editor-div headings'>
-                      <lable>Description:</lable>
+                      <lable>description:</lable>
                       <div
                         style={{
                          
