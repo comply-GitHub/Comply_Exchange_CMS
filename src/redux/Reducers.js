@@ -6,7 +6,9 @@ const {
   COUNTRIES,
   COUNTRY_NAME,
   GET_AGENT_TIN_TYPE_BY_ID,
+  UPDATE_AGENT_TIN_TYPE_BY_ID,
   GET_AGENT_STATEMENT,
+  UPDATE_AGENT_STATEMENT,
   LANGUAGES,
   GET_AGENT_SKIPPED_STEPS,
   GET_HIDDEN_SECTION,
@@ -201,6 +203,8 @@ export const getAgentStatementTypeIdReducer = (state = initialState, action) => 
   switch (action.type) {
     case GET_AGENT_STATEMENT:
       return { ...state, ...action.payload };
+      case UPDATE_AGENT_STATEMENT:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -209,6 +213,8 @@ export const getAgentTinTypeIdReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_AGENT_TIN_TYPE_BY_ID:
       return { ...state, ...action.payload };
+    case UPDATE_AGENT_TIN_TYPE_BY_ID:
+        return { ...state, ...action.payload };
     default:
       return state;
   }
