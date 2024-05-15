@@ -89,6 +89,8 @@ import {
   postAgentSptHidden,
   getAgentEformSelection,
 } from "../../../redux/Actions";
+import TinTable from "./SubComponents/TinTable";
+import DocumentartEvidence from "./SubComponents/DocumentartEvidence";
 
 function EditList({ match }) {
   const params = useParams();
@@ -163,7 +165,7 @@ function EditList({ match }) {
   const getDocumentMandatoryData = useSelector(
     (state) => state.getDocumentMandatoryReducer
   );
-  console.log(getDocumentMandatoryData,"ii")
+  // console.log(getDocumentMandatoryData,"ii")
 
 
   const getExemptCodeDisableData = useSelector(
@@ -227,8 +229,8 @@ function EditList({ match }) {
       dispatch(getFatcaGiinDisabled(params.id));
       dispatch(getSpecialSptHidden(params.id));
       dispatch(getAgentEformSelection(params.id));
-      dispatch(getAgentTinTypeById(params.id));
-      dispatch(getAgentStatementById(params.id));
+     // dispatch(getAgentTinTypeById(params.id));
+      //dispatch(getAgentStatementById(params.id));
     }
 
     // const result = getHiddenAgentsCountries?.getHiddenAgentsCountries?.filter((i)=>{
@@ -438,7 +440,7 @@ function EditList({ match }) {
   const handleClickOpen = () => setOpen1(true);
   const handleClose = () => setOpen1(false);
 const paymentdataTable= useSelector( (state) => state?.getPaymentTypeReducer?.getPaymentTypeData)
- console.log(paymentdataTable,"pp")
+//  console.log(paymentdataTable,"pp")
 
  const docTable= useSelector( (state) => state?.getDocumentMandatoryReducer?.getDocMandatoryData)
 
@@ -536,6 +538,8 @@ const [newData, setNewData] = useState([]
     existingAgentChapter3EntityTypeIds:getCh3HiddenState,
     existingAgentChapter4EntityTypeIds:getCh4HiddenState,
     existingAgentChapter4EntityTypeIdsImportant:getCh4ImpState,
+    existingAgentTaxpayerTypesIds:getAgentTinData?.AgentTinTypeId,
+    existingAgentWrittenStatementIds:getAgentStatementData?.AgentStatementTypeId,
       
     };
     dispatch(postAgentUpdateList(UpdatedKeys));
@@ -575,199 +579,8 @@ const [newData, setNewData] = useState([]
               </div>
             </div>
             <div className=" row m-1  card p-3">
-              <div className="col-12 d-flex overflow-x-auto p-0">
-                <table class="table table-hover table-striped">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className="table_head" scope="col">
-                        <label>Documentary Evidence – replacement Q&A</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Not FTIN Provided</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Tax Jurisdiction Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Tax Residency Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Telephone Country Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Address Country Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>U.S. Citizenship Additional Info</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Bank Branch Country Mismatch</label>
-                      </TableCell>
-                      <TableCell scope="col"></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                  {getAgentStatementData?.AgentStatementTypeId?.map((statement) => (
-          <TableRow key={statement.id}>
-            <TableCell>
-              <div>
-                <label className="table_content">{statement.name}</label>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div>
-                <Checkbox className="p-0" defaultChecked={statement.noFTINProvided} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.taxJurisdictionMismatch} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.taxResidencyMismatch} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.telephoneCountryMismatch} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.addressCountryMismatch} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.usCitizenshipAdditionalInfo} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.accountCountryMismatch} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <EditIcon
-                 onClick={() => {
-                  // history.push(
-                  //   `/agent_content_edit/${statement?.id}`
-                  // );
-
-                  history.push({
-                    pathname: `/agent_content_edit/${statement?.id}`,
-                    state: { name: statement?.name , id:statement?.id }, // Replace with your actual prop data
-                  });
-                  
-                }
-              }
-                  
-                  style={{
-                    color: "green",
-                    fontSize: "20px",
-                    cursor: "pointer",
-                  }} 
-                />
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
-                   
-                  </TableBody>
-                </table>
-              </div>
-              <div className="col-12 d-flex overflow-x-auto p-0 mt-3">
-                <table class="table table-hover table-striped">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className="table_head" scope="col">
-                        <label>Taxpayer id type</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>State</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Non U.S. Individual</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>U.S. Individual</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>U.S. Entity</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Non U.S. Entity</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Intermediary</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Non U.S. Government</label>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-        {getAgentTinData?.AgentTinTypeId?.map((item) => (
-           <TableRow key={item.id}>
-           <TableCell>
-             <div>
-               <label className="table_content">{item.taxpayerIdTypeName}</label>
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <EditIcon
-                    onClick={() => {
-                      setOpen2(true);
-                      setId1(item)
-                    }}
-                    style={{
-                      color: "green",
-                      fontSize: "20px",
-                      cursor: "pointer",
-                    }}
-               />
-               <label className="table_content">{item.stateName}</label>
-             </div>
-           </TableCell>
-           <TableCell>
-             <div>
-               <Checkbox defaultChecked={item.nonUSIndividual} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.usIndividual} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.usEntity} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.nonUSEntity} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.intermediary} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.nonUSGovernment} />
-             </div>
-           </TableCell>
-         </TableRow>
-       ))}
-      </TableBody>
-                </table>
-              </div>
+             <DocumentartEvidence></DocumentartEvidence>
+              <TinTable setOpen2={setOpen2} setId1={setId1}/>
               <div className="col-12 d-flex overflow-x-auto p-0 mt-3">
                 <table class="table table-hover table-striped">
                   <TableHead>
@@ -1508,7 +1321,7 @@ const [newData, setNewData] = useState([]
                         <TableBody>
                           {getUSVisaTypeHiddenData?.getusVisaHiddenData?.map(
                             (i, ind) => {
-                              console.log(i,"000")
+                              // console.log(i,"000")
                               return (
                                 <TableRow>
                                   <TableCell className="d-flex tableField">
