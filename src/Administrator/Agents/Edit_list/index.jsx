@@ -117,14 +117,34 @@ function EditList({ match }) {
  
 
   const [data, setData] = useState({});
-  const [checkedValue,setCheckedValue] = useState(false)
+  const [checkboxValues, setCheckboxValues] = useState({});
+  const [checkboxValues1, setCheckboxValues1] = useState({});
   const [modifiedKeys, setModifiedKeys] = useState([]);
 
   useEffect(() => {
    
    
   }, [modifiedKeys]);
+  const handleCheckboxChange = (statementId, fieldName, isChecked , ) => {
+    // Update the checkbox state
+    setCheckboxValues(prevState => ({
+      ...prevState,
+      [statementId]: {
+        ...prevState[statementId],
+        [fieldName]: isChecked,
+      }
+    }));
+  };
 
+  const handleCheckboxChange1 = (itemId, fieldName, value) => {
+    setCheckboxValues1(prevState => ({
+      ...prevState,
+      [itemId]: {
+        ...prevState[itemId],
+        [fieldName]: value
+      }
+    }));
+  };
   const [getCh3HiddenState, setCh3HiddenState] = useState([]);
   const [getCountriesImpState, setCountriesImpState] = useState([]);
   const [getCountriesHiddenState, setCountriesHiddenState] = useState([]);
@@ -189,13 +209,7 @@ function EditList({ match }) {
     (state) => state.getAgentSptHiddenReducer
   );
 
-  // useEffect(() => {
-    
-  //   setModifiedKeys((prevData) => ({
-  //     ...prevData,
-  //     hidden:specualSptHiddenData?.specualSptHiddenData?.hidden,
-  //   }));
-  // }, [specualSptHiddenData?.specualSptHiddenData?.hidden],500);
+
 
   const getUSVisaTypeHiddenData = useSelector(
     (state) => state.getUSVisaTypeHiddenReducer
@@ -307,6 +321,50 @@ function EditList({ match }) {
   //       "isSelfCertification": obj?.isSelfCertification
   //     });
   // }
+  useEffect(() => {
+    // Fetch data from API
+    // Update checkboxValues state with initial values from API
+    if (getAgentTinData?.AgentTinTypeId) {
+      const initialCheckboxValues = {};
+      getAgentTinData?.AgentTinTypeId?.forEach((item) => {
+        initialCheckboxValues[item.id] = {
+          intermediary: item.intermediary || false,
+          nonUSEntity: item.nonUSEntity || false,
+          nonUSGovernment: item.nonUSGovernment || false,
+nonUSIndividual: item.nonUSIndividual || false,
+usEntity: item.usEntity || false,
+usIndividual: item.usIndividual || false,
+
+         
+        };
+      });
+      setCheckboxValues1(initialCheckboxValues);
+    }
+  }, [getAgentTinData]);
+
+  useEffect(() => {
+    // Fetch data from API
+    // Update checkboxValues state with initial values from API
+    if (getAgentStatementData?.AgentStatementTypeId) {
+      const initialCheckboxValues = {};
+      getAgentStatementData.AgentStatementTypeId.forEach((statement) => {
+        initialCheckboxValues[statement.id] = {
+          noFTINProvided: statement.noFTINProvided || false,
+          taxJurisdictionMismatch: statement.taxJurisdictionMismatch || false,
+          taxResidencyMismatch: statement.taxResidencyMismatch || false,
+telephoneCountryMismatch: statement.telephoneCountryMismatch || false,
+addressCountryMismatch: statement.addressCountryMismatch || false,
+usCitizenshipAdditionalInfo: statement.usCitizenshipAdditionalInfo || false,
+accountCountryMismatch: statement.accountCountryMismatch || false,
+         
+        };
+      });
+      setCheckboxValues(initialCheckboxValues);
+    }
+  }, [getAgentStatementData]);
+
+
+
   useEffect(() => {
     setExmCodeDisabledState(
       filterexemptionCodeId(getExemptCodeDisableData?.getExemptCodeDisableData)
@@ -508,7 +566,34 @@ const [newData, setNewData] = useState([]
    
   const handleSubmit = (e) => {
     e.preventDefault();
+    const existingAgentWrittenStatementIds = Object.entries(checkboxValues).map(([statementId, values]) => ({
+      id: statementId,
+      agentId: params.id,
+      name: statementId.name,
+      writtenStatementReasonId: statementId,
+      contentmanagementid: statementId.contentmanagementid,
+      taxJurisdictionMismatch: values.taxJurisdictionMismatch || false,
+      taxResidencyMismatch: values.taxResidencyMismatch || false,
+      telephoneCountryMismatch: values.telephoneCountryMismatch || false,
+      addressCountryMismatch: values.addressCountryMismatch || false,
+      usCitizenshipAdditionalInfo: values.usCitizenshipAdditionalInfo || false,
+      accountCountryMismatch: values.accountCountryMismatch || false,
+      noFTINProvided: values.noFTINProvided || false,
+    }));
 
+    const existingAgentTaxpayerTypesIds = getAgentTinData?.AgentTinTypeId?.map((item) => ({
+      id: item.id,
+      agentId: params.id,
+      stateId: item.stateId,
+      taxpayerIdTypeID: item.taxpayerIdTypeID,
+      nonUSIndividual: checkboxValues1[item.id]?.nonUSIndividual || false,
+      usIndividual: checkboxValues1[item.id]?.usIndividual || false,
+      usEntity: checkboxValues1[item.id]?.usEntity || false,
+      nonUSEntity: checkboxValues1[item.id]?.nonUSEntity || false,
+      intermediary: checkboxValues1[item.id]?.intermediary || false,
+      nonUSGovernment: checkboxValues1[item.id]?.nonUSGovernment || false,
+    }));
+    
     let UpdatedKeys={
       
        agentId: params.id,
@@ -531,6 +616,10 @@ const [newData, setNewData] = useState([]
         isSelfCertification: item.isSelfCertification,
        
       })),
+
+      existingAgentTaxpayerTypesIds:existingAgentTaxpayerTypesIds,
+      
+      existingAgentWrittenStatementIds: existingAgentWrittenStatementIds,
     
     existingAgentFATCAEntityGIINChallengeIds:getGiinDisabledState,
     existingAgentChapter3EntityTypeIds:getCh3HiddenState,
@@ -608,7 +697,7 @@ const [newData, setNewData] = useState([]
                   </TableHead>
                   <TableBody>
                   {getAgentStatementData?.AgentStatementTypeId?.map((statement) => (
-          <TableRow key={statement.id}>
+          <TableRow key={statement.writtenStatementReasonId}>
             <TableCell>
               <div>
                 <label className="table_content">{statement.name}</label>
@@ -616,37 +705,47 @@ const [newData, setNewData] = useState([]
             </TableCell>
             <TableCell>
               <div>
-                <Checkbox className="p-0" defaultChecked={statement.noFTINProvided} />
+                <Checkbox 
+          className="p-0" 
+          checked={checkboxValues[statement.writtenStatementReasonId]?.noFTINProvided || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'noFTINProvided', e.target.checked)}
+        /> 
               </div>
             </TableCell>
             <TableCell>
               <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.taxJurisdictionMismatch} />
+                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.taxJurisdictionMismatch || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'taxJurisdictionMismatch', e.target.checked)}  />
               </div>
             </TableCell>
             <TableCell>
               <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.taxResidencyMismatch} />
+                <Checkbox className="p-0"checked={checkboxValues[statement.writtenStatementReasonId]?.taxResidencyMismatch || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'taxResidencyMismatch', e.target.checked)} />
               </div>
             </TableCell>
             <TableCell>
               <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.telephoneCountryMismatch} />
+                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.telephoneCountryMismatch || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'telephoneCountryMismatch', e.target.checked)}  />
               </div>
             </TableCell>
             <TableCell>
               <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.addressCountryMismatch} />
+                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.addressCountryMismatch || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'addressCountryMismatch', e.target.checked)} />
               </div>
             </TableCell>
             <TableCell>
               <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.usCitizenshipAdditionalInfo} />
+                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.usCitizenshipAdditionalInfo || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'usCitizenshipAdditionalInfo', e.target.checked)} />
               </div>
             </TableCell>
             <TableCell>
               <div className="d-flex">
-                <Checkbox className="p-0" defaultChecked={statement.accountCountryMismatch} />
+                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.accountCountryMismatch || false} 
+          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'accountCountryMismatch', e.target.checked)} />
               </div>
             </TableCell>
             <TableCell>
@@ -654,7 +753,7 @@ const [newData, setNewData] = useState([]
                 <EditIcon
                  onClick={() => {
                   // history.push(
-                  //   `/agent_content_edit/${statement?.id}`
+                  //   `/agent_content_edit/${statement?.writtenStatementReasonId}`
                   // );
 
                   history.push({
@@ -710,61 +809,79 @@ const [newData, setNewData] = useState([]
                     </TableRow>
                   </TableHead>
                   <TableBody>
-        {getAgentTinData?.AgentTinTypeId?.map((item) => (
-           <TableRow key={item.id}>
-           <TableCell>
-             <div>
-               <label className="table_content">{item.taxpayerIdTypeName}</label>
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <EditIcon
-                    onClick={() => {
-                      setOpen2(true);
-                      setId1(item)
-                    }}
-                    style={{
-                      color: "green",
-                      fontSize: "20px",
-                      cursor: "pointer",
-                    }}
-               />
-               <label className="table_content">{item.stateName}</label>
-             </div>
-           </TableCell>
-           <TableCell>
-             <div>
-               <Checkbox defaultChecked={item.nonUSIndividual} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.usIndividual} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.usEntity} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.nonUSEntity} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.intermediary} />
-             </div>
-           </TableCell>
-           <TableCell>
-             <div className="d-flex">
-               <Checkbox defaultChecked={item.nonUSGovernment} />
-             </div>
-           </TableCell>
-         </TableRow>
-       ))}
+                  {getAgentTinData?.AgentTinTypeId?.map((item) => (
+  <TableRow key={item.taxpayerIdTypeID}>
+    <TableCell>
+      <div>
+        <label className="table_content">{item.taxpayerIdTypeName}</label>
+      </div>
+    </TableCell>
+    <TableCell>
+      <div className="d-flex">
+        <EditIcon
+          onClick={() => {
+            setOpen2(true);
+            setId1(item)
+          }}
+          style={{
+            color: "green",
+            fontSize: "20px",
+            cursor: "pointer",
+          }}
+        />
+        <label className="table_content">{item.stateName}</label>
+      </div>
+    </TableCell>
+    <TableCell>
+      <div>
+        <Checkbox
+          checked={checkboxValues1[item.taxpayerIdTypeID]?.nonUSIndividual || false}
+          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'nonUSIndividual', e.target.checked)}
+        />
+      </div>
+    </TableCell>
+    <TableCell>
+      <div className="d-flex">
+        <Checkbox
+          checked={checkboxValues1[item.taxpayerIdTypeID]?.usIndividual || false}
+          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'usIndividual', e.target.checked)}
+        />
+      </div>
+    </TableCell>
+    <TableCell>
+      <div className="d-flex">
+        <Checkbox
+          checked={checkboxValues1[item.taxpayerIdTypeID]?.usEntity || false}
+          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'usEntity', e.target.checked)}
+        />
+      </div>
+    </TableCell>
+    <TableCell>
+      <div className="d-flex">
+        <Checkbox
+          checked={checkboxValues1[item.taxpayerIdTypeID]?.nonUSEntity || false}
+          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'nonUSEntity', e.target.checked)}
+        />
+      </div>
+    </TableCell>
+    <TableCell>
+      <div className="d-flex">
+        <Checkbox
+          checked={checkboxValues1[item.taxpayerIdTypeID]?.intermediary || false}
+          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'intermediary', e.target.checked)}
+        />
+      </div>
+    </TableCell>
+    <TableCell>
+      <div className="d-flex">
+        <Checkbox
+          checked={checkboxValues1[item.taxpayerIdTypeID]?.nonUSGovernment || false}
+          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'nonUSGovernment', e.target.checked)}
+        />
+      </div>
+    </TableCell>
+  </TableRow>
+))}
       </TableBody>
                 </table>
               </div>
