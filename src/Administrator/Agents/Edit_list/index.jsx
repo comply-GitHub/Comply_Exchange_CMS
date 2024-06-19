@@ -277,7 +277,7 @@ function EditList({ match }) {
       ?.map((obj) => obj.chapter4EntityTypeId);
   }
   useEffect(() => {
-    setCh3HiddenState(filterchapter4EntityTypeId(getCh4Imp?.getCh4Imp));
+    setCh3HiddenState(filterchapter3EntityTypeId(getCh4Imp?.getCh4Imp));
   }, [getCh4Imp]);
 
   function filterchapter3EntityTypeId(objectsArray) {
