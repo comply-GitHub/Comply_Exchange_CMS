@@ -567,10 +567,11 @@ const [newData, setNewData] = useState([]
   const handleSubmit = (e) => {
     e.preventDefault();
     const existingAgentWrittenStatementIds = Object.entries(checkboxValues).map(([statementId, values]) => ({
+      
       id: statementId,
       agentId: params.id,
       name: statementId.name,
-      writtenStatementReasonId: statementId,
+      writtenStatementReasonId: values.writtenStatementReasonId,
       contentmanagementid: statementId.contentmanagementid,
       taxJurisdictionMismatch: values.taxJurisdictionMismatch || false,
       taxResidencyMismatch: values.taxResidencyMismatch || false,
