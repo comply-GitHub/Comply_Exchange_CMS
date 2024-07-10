@@ -116,34 +116,11 @@ function EditList({ match }) {
   const [id1, setId1] = useState({});
 
   const [data, setData] = useState({});
-  const [checkboxValues, setCheckboxValues] = useState({});
-  const [checkboxValues1, setCheckboxValues1] = useState({});
+  const [checkedValue, setCheckedValue] = useState(false);
   const [modifiedKeys, setModifiedKeys] = useState([]);
 
-  useEffect(() => {
-   
-   
-  }, [modifiedKeys]);
-  const handleCheckboxChange = (statementId, fieldName, isChecked , ) => {
-    // Update the checkbox state
-    setCheckboxValues(prevState => ({
-      ...prevState,
-      [statementId]: {
-        ...prevState[statementId],
-        [fieldName]: isChecked,
-      }
-    }));
-  };
+  useEffect(() => {}, [modifiedKeys]);
 
-  const handleCheckboxChange1 = (itemId, fieldName, value) => {
-    setCheckboxValues1(prevState => ({
-      ...prevState,
-      [itemId]: {
-        ...prevState[itemId],
-        [fieldName]: value
-      }
-    }));
-  };
   const [getCh3HiddenState, setCh3HiddenState] = useState([]);
   const [getCountriesImpState, setCountriesImpState] = useState([]);
   const [getCountriesHiddenState, setCountriesHiddenState] = useState([]);
@@ -207,6 +184,13 @@ function EditList({ match }) {
     (state) => state.getAgentSptHiddenReducer
   );
 
+  // useEffect(() => {
+
+  //   setModifiedKeys((prevData) => ({
+  //     ...prevData,
+  //     hidden:specualSptHiddenData?.specualSptHiddenData?.hidden,
+  //   }));
+  // }, [specualSptHiddenData?.specualSptHiddenData?.hidden],500);
 
   const getUSVisaTypeHiddenData = useSelector(
     (state) => state.getUSVisaTypeHiddenReducer
@@ -236,8 +220,8 @@ function EditList({ match }) {
       dispatch(getFatcaGiinDisabled(params.id));
       dispatch(getSpecialSptHidden(params.id));
       dispatch(getAgentEformSelection(params.id));
-      dispatch(getAgentTinTypeById(params.id));
-      dispatch(getAgentStatementById(params.id));
+      // dispatch(getAgentTinTypeById(params.id));
+      //dispatch(getAgentStatementById(params.id));
     }
 
     // const result = getHiddenAgentsCountries?.getHiddenAgentsCountries?.filter((i)=>{
@@ -293,13 +277,13 @@ function EditList({ match }) {
       ?.map((obj) => obj.chapter4EntityTypeId);
   }
   useEffect(() => {
-    setCh4ImpState(filterchapter4IMPTypeId(getCh4Imp?.getCh4Imp));
+    setCh3HiddenState(filterchapter3EntityTypeId(getCh4Imp?.getCh4Imp));
   }, [getCh4Imp]);
 
-  function filterchapter4IMPTypeId(objectsArray) {
+  function filterchapter3EntityTypeId(objectsArray) {
     return objectsArray
       ?.filter((obj) => obj?.agentId !== 0)
-      ?.map((obj) => obj.chapter4EntityTypeId);
+      ?.map((obj) => obj.chapter3EntityTypeId);
   }
   // useEffect(()=>{
   //   setDocMandatoryState(filterMandetoryStateId(getDocumentMandatoryData?.getDocMandatoryData))
@@ -314,50 +298,6 @@ function EditList({ match }) {
   //       "isSelfCertification": obj?.isSelfCertification
   //     });
   // }
-  useEffect(() => {
-    // Fetch data from API
-    // Update checkboxValues state with initial values from API
-    if (getAgentTinData?.AgentTinTypeId) {
-      const initialCheckboxValues = {};
-      getAgentTinData?.AgentTinTypeId?.forEach((item) => {
-        initialCheckboxValues[item.id] = {
-          intermediary: item.intermediary || false,
-          nonUSEntity: item.nonUSEntity || false,
-          nonUSGovernment: item.nonUSGovernment || false,
-nonUSIndividual: item.nonUSIndividual || false,
-usEntity: item.usEntity || false,
-usIndividual: item.usIndividual || false,
-
-         
-        };
-      });
-      setCheckboxValues1(initialCheckboxValues);
-    }
-  }, [getAgentTinData]);
-
-  useEffect(() => {
-    // Fetch data from API
-    // Update checkboxValues state with initial values from API
-    if (getAgentStatementData?.AgentStatementTypeId) {
-      const initialCheckboxValues = {};
-      getAgentStatementData.AgentStatementTypeId.forEach((statement) => {
-        initialCheckboxValues[statement.id] = {
-          noFTINProvided: statement.noFTINProvided || false,
-          taxJurisdictionMismatch: statement.taxJurisdictionMismatch || false,
-          taxResidencyMismatch: statement.taxResidencyMismatch || false,
-telephoneCountryMismatch: statement.telephoneCountryMismatch || false,
-addressCountryMismatch: statement.addressCountryMismatch || false,
-usCitizenshipAdditionalInfo: statement.usCitizenshipAdditionalInfo || false,
-accountCountryMismatch: statement.accountCountryMismatch || false,
-         
-        };
-      });
-      setCheckboxValues(initialCheckboxValues);
-    }
-  }, [getAgentStatementData]);
-
-
-
   useEffect(() => {
     setExmCodeDisabledState(
       filterexemptionCodeId(getExemptCodeDisableData?.getExemptCodeDisableData)
@@ -425,9 +365,6 @@ accountCountryMismatch: statement.accountCountryMismatch || false,
       )
     );
   }, [getFatcaGiinDisabledData]);
-
-
-
 
   function filterfatcaEntityTypeId(objectsArray) {
     return objectsArray
@@ -563,44 +500,14 @@ accountCountryMismatch: statement.accountCountryMismatch || false,
     dispatch(postEformSelectionWanring(payload, params.id));
     setIsEdit(false);
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const existingAgentWrittenStatementIds = Object.entries(checkboxValues).map(([statementId, values]) => ({
-      
-      id: statementId,
-      agentId: params.id,
-      name: statementId.name,
-      writtenStatementReasonId: values.writtenStatementReasonId,
-      contentmanagementid: statementId.contentmanagementid,
-      taxJurisdictionMismatch: values.taxJurisdictionMismatch || false,
-      taxResidencyMismatch: values.taxResidencyMismatch || false,
-      telephoneCountryMismatch: values.telephoneCountryMismatch || false,
-      addressCountryMismatch: values.addressCountryMismatch || false,
-      usCitizenshipAdditionalInfo: values.usCitizenshipAdditionalInfo || false,
-      accountCountryMismatch: values.accountCountryMismatch || false,
-      noFTINProvided: values.noFTINProvided || false,
-    }));
 
-    const existingAgentTaxpayerTypesIds = getAgentTinData?.AgentTinTypeId?.map((item) => ({
-      id: item.id,
+    let UpdatedKeys = {
       agentId: params.id,
-      stateId: item.stateId,
-      taxpayerIdTypeID: item.taxpayerIdTypeID,
-      nonUSIndividual: checkboxValues1[item.id]?.nonUSIndividual || false,
-      usIndividual: checkboxValues1[item.id]?.usIndividual || false,
-      usEntity: checkboxValues1[item.id]?.usEntity || false,
-      nonUSEntity: checkboxValues1[item.id]?.nonUSEntity || false,
-      intermediary: checkboxValues1[item.id]?.intermediary || false,
-      nonUSGovernment: checkboxValues1[item.id]?.nonUSGovernment || false,
-    }));
-    
-    let UpdatedKeys={
-      
-       agentId: params.id,
-       existingAgentImportantCountryIds: getCountriesImpState,
-       existingAgentHiddenCountryIds:getCountriesHiddenState,
+      existingAgentImportantCountryIds: getCountriesImpState,
+      existingAgentHiddenCountryIds: getCountriesHiddenState,
       existingAgentCapacityHiddenIds: getCapacityHiddenState,
       existingAgentIncomeCodeIds: getIncomeCodeHiddenState,
       existingAgentExemptionCodeIds: getExmCodeDisabledState,
@@ -618,15 +525,13 @@ accountCountryMismatch: statement.accountCountryMismatch || false,
         isSelfCertification: item.isSelfCertification,
       })),
 
-      existingAgentTaxpayerTypesIds:existingAgentTaxpayerTypesIds,
-      
-      existingAgentWrittenStatementIds: existingAgentWrittenStatementIds,
-    
-    existingAgentFATCAEntityGIINChallengeIds:getGiinDisabledState,
-    existingAgentChapter3EntityTypeIds:getCh3HiddenState,
-    existingAgentChapter4EntityTypeIds:getCh4HiddenState,
-    existingAgentChapter4EntityTypeIdsImportant:getCh4ImpState,
-      
+      existingAgentFATCAEntityGIINChallengeIds: getGiinDisabledState,
+      existingAgentChapter3EntityTypeIds: getCh3HiddenState,
+      existingAgentChapter4EntityTypeIds: getCh4HiddenState,
+      existingAgentChapter4EntityTypeIdsImportant: getCh4ImpState,
+      existingAgentTaxpayerTypesIds: getAgentTinData?.AgentTinTypeId,
+      existingAgentWrittenStatementIds:
+        getAgentStatementData?.AgentStatementTypeId,
     };
     dispatch(postAgentUpdateList(UpdatedKeys));
 
@@ -663,227 +568,12 @@ accountCountryMismatch: statement.accountCountryMismatch || false,
               </div>
             </div>
             <div className=" row m-1  card p-3">
-              <div className="col-12 d-flex overflow-x-auto p-0">
-                <table class="table table-hover table-striped">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className="table_head" scope="col">
-                        <label>Documentary Evidence – replacement Q&A</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Not FTIN Provided</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Tax Jurisdiction Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Tax Residency Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Telephone Country Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Address Country Mismatch</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>U.S. Citizenship Additional Info</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Bank Branch Country Mismatch</label>
-                      </TableCell>
-                      <TableCell scope="col"></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                  {getAgentStatementData?.AgentStatementTypeId?.map((statement) => (
-          <TableRow key={statement.writtenStatementReasonId}>
-            <TableCell>
-              <div>
-                <label className="table_content">{statement.name}</label>
-              </div>
-            </TableCell>
-            <TableCell>
-              <div>
-                <Checkbox 
-          className="p-0" 
-          checked={checkboxValues[statement.writtenStatementReasonId]?.noFTINProvided || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'noFTINProvided', e.target.checked)}
-        /> 
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.taxJurisdictionMismatch || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'taxJurisdictionMismatch', e.target.checked)}  />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0"checked={checkboxValues[statement.writtenStatementReasonId]?.taxResidencyMismatch || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'taxResidencyMismatch', e.target.checked)} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.telephoneCountryMismatch || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'telephoneCountryMismatch', e.target.checked)}  />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.addressCountryMismatch || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'addressCountryMismatch', e.target.checked)} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.usCitizenshipAdditionalInfo || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'usCitizenshipAdditionalInfo', e.target.checked)} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <Checkbox className="p-0" checked={checkboxValues[statement.writtenStatementReasonId]?.accountCountryMismatch || false} 
-          onChange={(e) => handleCheckboxChange(statement.writtenStatementReasonId, 'accountCountryMismatch', e.target.checked)} />
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="d-flex">
-                <EditIcon
-                 onClick={() => {
-                  // history.push(
-                  //   `/agent_content_edit/${statement?.writtenStatementReasonId}`
-                  // );
-
-                  history.push({
-                    pathname: `/agent_content_edit/${statement?.id}`,
-                    state: { name: statement?.name , id:statement?.id }, // Replace with your actual prop data
-                  });
-                  
-                }
-              }
-                  
-                  style={{
-                    color: "green",
-                    fontSize: "20px",
-                    cursor: "pointer",
-                  }} 
-                />
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
-                   
-                  </TableBody>
-                </table>
-              </div>
-              <div className="col-12 d-flex overflow-x-auto p-0 mt-3">
-                <table class="table table-hover table-striped">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className="table_head" scope="col">
-                        <label>Taxpayer id type</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>State</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Non U.S. Individual</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>U.S. Individual</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>U.S. Entity</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Non U.S. Entity</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Intermediary</label>
-                      </TableCell>
-                      <TableCell className="table_head" scope="col">
-                        <label>Non U.S. Government</label>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                  {getAgentTinData?.AgentTinTypeId?.map((item) => (
-  <TableRow key={item.taxpayerIdTypeID}>
-    <TableCell>
-      <div>
-        <label className="table_content">{item.taxpayerIdTypeName}</label>
-      </div>
-    </TableCell>
-    <TableCell>
-      <div className="d-flex">
-        <EditIcon
-          onClick={() => {
-            setOpen2(true);
-            setId1(item)
-          }}
-          style={{
-            color: "green",
-            fontSize: "20px",
-            cursor: "pointer",
-          }}
-        />
-        <label className="table_content">{item.stateName}</label>
-      </div>
-    </TableCell>
-    <TableCell>
-      <div>
-        <Checkbox
-          checked={checkboxValues1[item.taxpayerIdTypeID]?.nonUSIndividual || false}
-          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'nonUSIndividual', e.target.checked)}
-        />
-      </div>
-    </TableCell>
-    <TableCell>
-      <div className="d-flex">
-        <Checkbox
-          checked={checkboxValues1[item.taxpayerIdTypeID]?.usIndividual || false}
-          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'usIndividual', e.target.checked)}
-        />
-      </div>
-    </TableCell>
-    <TableCell>
-      <div className="d-flex">
-        <Checkbox
-          checked={checkboxValues1[item.taxpayerIdTypeID]?.usEntity || false}
-          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'usEntity', e.target.checked)}
-        />
-      </div>
-    </TableCell>
-    <TableCell>
-      <div className="d-flex">
-        <Checkbox
-          checked={checkboxValues1[item.taxpayerIdTypeID]?.nonUSEntity || false}
-          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'nonUSEntity', e.target.checked)}
-        />
-      </div>
-    </TableCell>
-    <TableCell>
-      <div className="d-flex">
-        <Checkbox
-          checked={checkboxValues1[item.taxpayerIdTypeID]?.intermediary || false}
-          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'intermediary', e.target.checked)}
-        />
-      </div>
-    </TableCell>
-    <TableCell>
-      <div className="d-flex">
-        <Checkbox
-          checked={checkboxValues1[item.taxpayerIdTypeID]?.nonUSGovernment || false}
-          onChange={(e) => handleCheckboxChange1(item.taxpayerIdTypeID, 'nonUSGovernment', e.target.checked)}
-        />
-      </div>
-    </TableCell>
-  </TableRow>
-))}
-      </TableBody>
-                </table>
-              </div>
+              <DocumentartEvidence></DocumentartEvidence>
+              <TinTable
+                setOpen2={setOpen2}
+                setId1={setId1}
+                getAgentTinData={getAgentTinData}
+              />
               <div className="col-12 d-flex overflow-x-auto p-0 mt-3">
                 <table class="table table-hover table-striped">
                   <TableHead>
@@ -1289,17 +979,17 @@ accountCountryMismatch: statement.accountCountryMismatch || false,
                           {getCh4Imp?.getCh4Imp?.map((i, ind) => {
                             return (
                               <TableRow key={i.id}>
-                              <TableCell className="d-flex tableField">
-                                <Checkbox
-                                  className="mx-1"
-                                  defaultChecked={i.agentId == params.id}
-                                  onClick={(e) =>
-                                    handleToggle(
-                                      i.chapter4EntityTypeId,
-                                      getCh4ImpState,
-                                      setCh4ImpState
-                                    )
-                                  }
+                                <TableCell className="d-flex tableField">
+                                  <Checkbox
+                                    className="mx-1"
+                                    defaultChecked={i.agentId == params.id}
+                                    onClick={(e) =>
+                                      handleToggle(
+                                        i.chapter4EntityTypeId,
+                                        getCh4ImpState,
+                                        setCh4ImpState
+                                      )
+                                    }
                                   />
                                   <label className="mx-2 d-flex my-auto table_content">
                                     {i.name}
@@ -1325,7 +1015,7 @@ accountCountryMismatch: statement.accountCountryMismatch || false,
                     <div className="maxdiv" style={{ height: "300px" }}>
                       <table class="table table-hover table-striped">
                         <TableBody>
-                        
+                          {/* fatcaEntityTypeId */}
 
                           {getFatcaGiinDisabledData?.getFatcaGiinDisabledData?.map(
                             (i, ind) => (
