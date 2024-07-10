@@ -4491,7 +4491,8 @@ export const updateAgents = value => {
       error => {
         let { data } = error
         Utils.showAlert(2, data.message)
-      }
+      },
+      'multi'
     )
   }
 }
@@ -4566,7 +4567,8 @@ export const createAgents = value => {
       },
       error => {
         Utils.showAlert(2, error.statusText)
-      }
+      },
+      'multi'
     )
   }
 }

@@ -56,6 +56,7 @@ import AppFooter from '../../../Layout/AppFooter/'
 import ThemeOptions from '../../../Layout/ThemeOptions/'
 import Info from '../../../assets/helpIcon.png';
 import InfoIcon from '@mui/icons-material/Info';
+import { toast } from 'react-toastify';
 
 function UserManagement ({ match }) {
   let params = useParams()
@@ -64,6 +65,7 @@ function UserManagement ({ match }) {
   const [checkedStatus, setCheckedStatus] = useState({});
 
   const [checkedStatusHidden,setCheckedStatusHidden] = useState({});
+  const [selectedfile,setSelectedfile]=useState(null);
 
   const idAgentData = useSelector(state => state.getAgentByIdReducer)
   const countryList = useSelector(state => state?.getCountryNameReducer?.getCountryNameData)
@@ -71,10 +73,22 @@ function UserManagement ({ match }) {
   const skippedSteps = useSelector(state => state?.getAgentSkippedReducer)
   const hiddensection = useSelector(state => state?.getAgentHiddenSectionReducer)
   
-  
-  console.log(hiddensection,"123")
   useEffect(() => {
    
+    // setEditorState1(  idPageData?.pageDataById?.pageContent
+    //   ? () => {
+    //       const blocksFromHTML = convertFromHTML(
+    //         idPageData?.pageDataById?.pageContent
+    //       );
+    //       const contentState = ContentState.createFromBlockArray(
+    //         blocksFromHTML.contentBlocks,
+    //         blocksFromHTML.entityMap
+    //       );
+    //       console.log(blocksFromHTML, "blocksFromHTML");
+
+    //       return EditorState.createWithContent(contentState);
+    //     }
+    //   : () => EditorState.createEmpty())
     setEditorState1(EditorState.createEmpty())
     setEditorState2(EditorState.createEmpty())
     setEditorState3(EditorState.createEmpty())
@@ -88,6 +102,12 @@ function UserManagement ({ match }) {
 
   useEffect(() => {
     if (params && params.id !== undefined && params.id !== null) {
+      dispatch(
+        getAgentById(params.id, data => {
+          setData(data)
+          console.log(data,"iio")
+        })
+      )
       dispatch(getAllAgentSkippedSteps(params.id));
       dispatch(getAllAgentHiddenSection(params.id));
     } else {
@@ -98,9 +118,7 @@ function UserManagement ({ match }) {
 
 
   const [getSkippedSteps, setSkippedSteps] = useState([]);
-  console.log(getSkippedSteps,"aws")
   const [getHiddenSection, setHiddenSection] = useState([]);
-  console.log(getHiddenSection,"awsdcdh")
 
 const CalculateData=()=>{
 return(
@@ -119,7 +137,7 @@ return(
        defaultSelection: "",
        defaultLanguageId: 0,
        includeDefaultEnglish: false,
-       logoId: 0,
+       logoId: 1,
        logoNavigateURL:"",
        pdfWatermark:"",
        displayVersion: false,
@@ -233,7 +251,7 @@ return(
        isDeleted: false,
        smsFormat:"",
        sendSignatureProcess:"",
-       byUsingEmailAndPassword: "",
+       byUsingEmailIDandpassword: "",
        saveAndExit: "",
        description: "",
        nextAgentIntroductionText: "",
@@ -273,7 +291,7 @@ return(
     defaultSelection: "",
     defaultLanguageId: 0,
     includeDefaultEnglish: false,
-    logoId: 0,
+    logoId: 1,
     logoNavigateURL:"",
     pdfWatermark:"",
     displayVersion: false,
@@ -385,10 +403,9 @@ return(
     taxpayerInformation_NonUSIndividualOnly: false,
     isActive: false,
     isDeleted: false,
-   
     smsFormat:"",
     sendSignatureProcess:"",
-    byUsingEmailAndPassword: "",
+    byUsingEmailIDandpassword: "",
     saveAndExit: "",
     description: "",
     nextAgentIntroductionText: "",
@@ -427,6 +444,7 @@ return(
   
   useEffect(()=>{
     console.log(data,"qwww")
+    
   },[data])
 
   const [submit, setSubmit] = useState(1)
@@ -451,15 +469,187 @@ return(
     if (params.id) {
       dispatch(
         getAgentById(params.id, data => {
-          setData(data)
+          setData({...data,logoId:data?.logoId==0?1:data?.logoId})
           console.log(data,"iio")
         })
       )
     }
   }, [params.id])
 
+ useEffect(() => {
+    console.log(data,"DSFASDFA",data?.termsAndConditions)
+    // Component mounted, initialize the editor states
+    setEditorState1(
+      data?.termsAndConditions
+        ? () => {
+            const blocksFromHTML = convertFromHTML(
+              data?.termsAndConditions
+            );
+            const contentState = ContentState.createFromBlockArray(
+              blocksFromHTML.contentBlocks,
+              blocksFromHTML.entityMap
+            );
+            console.log(blocksFromHTML, "blocksFromHTML");
 
+            return EditorState.createWithContent(contentState);
+          }
+        : () => EditorState.createEmpty()
+    );
+  }, [data?.termsAndConditions]);
+  
+ useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState2(
+    data?.tokenEmail
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.tokenEmail
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
 
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.tokenEmail]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState3(
+    data?.sendSignatureProcess
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.sendSignatureProcess
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.sendSignatureProcess]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState4(
+    data?.byUsingEmailIDandpassword
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.byUsingEmailIDandpassword
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.byUsingEmailIDandpassword]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState5(
+    data?.saveAndExit
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.saveAndExit
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.saveAndExit]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState6(
+    data?.description
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.description
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.description]);
+
+useEffect(() => {
+  // Component mounted, initialize the editor states
+  setEditorState7(
+    data?.smsFormat
+      ? () => {
+          const blocksFromHTML = convertFromHTML(
+            data?.smsFormat
+          );
+          const contentState = ContentState.createFromBlockArray(
+            blocksFromHTML.contentBlocks,
+            blocksFromHTML.entityMap
+          );
+          console.log(blocksFromHTML, "blocksFromHTML");
+
+          return EditorState.createWithContent(contentState);
+        }
+      : () => EditorState.createEmpty()
+  );
+}, [data?.smsFormat]);
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState1.getCurrentContent()));
+    setData({ ...data, termsAndConditions: html });
+  }, [editorState1]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState2.getCurrentContent()));
+    setData({ ...data, tokenEmail: html });
+  }, [editorState2]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState3.getCurrentContent()));
+    setData({ ...data, sendSignatureProcess: html });
+  }, [editorState3]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState4.getCurrentContent()));
+    setData({ ...data, byUsingEmailIDandpassword: html });
+  }, [editorState4]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState5.getCurrentContent()));
+    setData({ ...data, saveAndExit: html });
+  }, [editorState5]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState6.getCurrentContent()));
+    setData({ ...data, description: html });
+  }, [editorState6]);
+
+  useEffect(() => {
+    let html = draftToHtml(convertToRaw(editorState7.getCurrentContent()));
+    setData({ ...data, smsFormat : html });
+  }, [editorState7]);
 
  
   useEffect(() => {
@@ -517,10 +707,10 @@ return(
     )
 
     setEditorState4(
-      idAgentData?.agentDataById?.byUsingEmailAndPassword
+      idAgentData?.agentDataById?.byUsingEmailIDandpassword
         ? () => {
             const blocksFromHTML = convertFromHTML(
-              idAgentData?.agentDataById?.byUsingEmailAndPassword
+              idAgentData?.agentDataById?.byUsingEmailIDandpassword
             )
             const contentState = ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
@@ -549,10 +739,10 @@ return(
         : () => EditorState.createEmpty()
     )
     setEditorState6(
-      idAgentData?.agentDataById?.Description 
+      idAgentData?.agentDataById?.description 
         ? () => {
             const blocksFromHTML = convertFromHTML(
-              idAgentData?.agentDataById?.Description 
+              idAgentData?.agentDataById?.description 
             )
             const contentState = ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
@@ -565,10 +755,10 @@ return(
         : () => EditorState.createEmpty()
     )
     setEditorState7(
-      idAgentData?.agentDataById?.SMSFormat 
+      idAgentData?.agentDataById?.smsFormat 
         ? () => {
             const blocksFromHTML = convertFromHTML(
-              idAgentData?.agentDataById?.SMSFormat 
+              idAgentData?.agentDataById?.smsFormat 
             )
             const contentState = ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
@@ -1044,6 +1234,10 @@ return(
 //   });
 // };
 
+ const handleFileSelect=(e)=>{
+  setSelectedfile(e.target.files[0]);
+ }
+
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(data.tokenEmail)
@@ -1054,9 +1248,12 @@ return(
     .filter((item) => checkedStatusHidden?.[item.id] || item.agentId !== 0)
     .map((item) => item.id);
 
-
-    console.log(data,"1111")
-  
+    if(selectedfile!=null){
+      if(selectedfile?.type!=="image/png"){
+        toast.error("Please select png image")
+        return
+      }
+    }
       const updateData= {
         id: params.id,
         name:data?.name,
@@ -1072,6 +1269,7 @@ return(
         defaultLanguageId: data?.defaultLanguageId,
         includeDefaultEnglish: data?.includeDefaultEnglish,
         logoId: data?.logoId,
+        logo: selectedfile,
         logoNavigateURL:data?.logoNavigateURL,
         pdfWatermark:data?.pdfWatermark,
         displayVersion: data?.displayVersion,
@@ -1117,6 +1315,7 @@ return(
         taxpayerInformation_EntityOnly: data?.taxpayerInformation_EntityOnly,
         taxpayerInformation_NonUSEntityOnly: data?.taxpayerInformation_NonUSEntityOnly,
         taxpayerInformation_GIIN: data?.taxpayerInformation_GIIN,
+        termsAndConditions:data?.termsAndConditions,
         formSelection: data?.formSelection,
         w8IMYRelatedFiles: data?.w8IMYRelatedFiles,
         w8BENJuly2017PartIIWhenTreatyClaimNo: data?.w8BENJuly2017PartIIWhenTreatyClaimNo,
@@ -1139,9 +1338,9 @@ return(
         taxpayerInformation_NonUSIndividualOnly: data?.taxpayerInformation_NonUSIndividualOnly,
         isActive: data?.isActive,
         isDeleted: data?.isDeleted,
-        smsFormat:data?.smsFormat,
+        SMSFormat:data?.smsFormat,
         sendSignatureProcess:data?.sendSignatureProcess,
-        byUsingEmailAndPassword: data?.byUsingEmailAndPassword,
+        byUsingEmailAndPassword: data?.byUsingEmailIDandpassword,
         saveAndExit: data?.saveAndExit,
         description: data?.description,
         nextAgentIntroductionText: data?.nextAgentIntroductionText,
@@ -1535,9 +1734,7 @@ return(
                     <div className='row mx-2 my-1 py-0'>
                       <div className='col-5 d-flex'>
                         <div
-                          className='my-auto text'
-                          
-                          
+                          className='my-auto text'    
                         >
                           Logo: <span >
     <Tooltip  title="Recommended dimensions: 200px X 43px" arrow>
@@ -1553,7 +1750,7 @@ return(
                         name="logoId"
                         value={data?.logoId}
 
-                          onChange={handleFile}
+                          onChange={(e)=>{handleFile(e); handleChange(e)}}
                           style={{
                             minWidth: '140px',
                             height: '30px',
@@ -1567,7 +1764,7 @@ return(
                         </Select>
 
                         {submit === 2 && (
-                          <Input style={{ fontSize: '13px' }} type='file' />
+                          <Input name='logoFile' style={{ fontSize: '13px' }} type='file' onChange={(e)=>handleFileSelect(e)} />
                         )}
                         <span className='my-auto text mx-2'>
                           <a>View..</a>
@@ -1933,7 +2130,7 @@ return(
 
                 <div className='row col-8 mt-2'>
                     <div className='col-12 editor-div headings'>
-                      <lable>Description:</lable>
+                      <lable>description:</lable>
                       <div
                         style={{
                          
