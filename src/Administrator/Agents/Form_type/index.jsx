@@ -422,7 +422,7 @@ function FormType({ match }) {
                             style={{ minWidth: "max-content" }}
                             className="table_content"
                           >
-                            W9
+                            W8
                           </div>
                         </div>
                       </TableCell>
@@ -486,7 +486,7 @@ function FormType({ match }) {
                             style={{ minWidth: "max-content" }}
                             className="table_content"
                           >
-                            W9
+                            W8
                           </div>
                         </div>
                       </TableCell>
