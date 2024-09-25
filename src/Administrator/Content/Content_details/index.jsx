@@ -85,12 +85,13 @@ export default function Content_details() {
     }
   }, [params.id]);
 
+
+
+ const [editorState1, setEditorState1] = useState(EditorState.createEmpty());
   useEffect(()=>{
     let html = draftToHtml(convertToRaw(editorState1.getCurrentContent()));
     setData({...data,text:html})
   },[editorState1])
-
-  const [editorState1, setEditorState1] = useState(EditorState.createEmpty());
 
   const handleEditorStateChange1 = (editorState) => {
     setEditorState1(editorState);
