@@ -2723,7 +2723,7 @@ export const upsertSettings = (value) => {
           // Utils.showAlert(1, responseData?.data);
         }
         // Check if both requests are successful before showing the alert and saving to localStorage
-        checkAndSaveToLocalStorage(dispatch);
+        checkAndSaveToLocalStorage(dispatch,true);
       },
       (error) => {
         let { data } = error;
@@ -2761,11 +2761,13 @@ export const UpsertRequestHeader = (value) => {
 
 let successfulRequests = 0;
 
-const checkAndSaveToLocalStorage = (dispatch) => {
+const checkAndSaveToLocalStorage = (dispatch,key) => {
   successfulRequests++;
   
- 
-  if (successfulRequests === 2) {
+ if(key){
+  Utils.showAlert(1, "Updated successfully.");
+ }
+  else if (successfulRequests === 2) {
 
     localStorage.setItem("response", "data saved successfully");
  

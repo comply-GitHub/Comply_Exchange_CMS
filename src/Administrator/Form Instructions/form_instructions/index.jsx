@@ -107,17 +107,17 @@ export default function ContentManagement() {
   const settingData = useSelector((state) => state?.getSettingsReducer?.settingsData);
   
 
-  const displayFormInstructions = settingData?.displayFormInstructions;
+  const FormInstructions = settingData?.displayFormInstructions;
 
-  useEffect(() => {
-    console.log(displayFormInstructions, "11");     
-  }, [settingData]);
+  // useEffect(() => {
+  //   console.log(FormInstructions, "11");     
+  // }, [settingData]);
  
-  const [isChecked, setIsChecked] = useState(displayFormInstructions || false);
+  const [isChecked, setIsChecked] = useState(FormInstructions || false);
 
   useEffect(() => {
-    setIsChecked(displayFormInstructions || false);
-  }, [displayFormInstructions]);
+    setIsChecked(FormInstructions || false);
+  }, [FormInstructions]);
 
   useEffect(() => {
     if (search === "") {
@@ -140,6 +140,7 @@ export default function ContentManagement() {
   const refreshPageData=()=>{  
     dispatch(getAllFormInstructions(page, size));
   }
+  
   const handleSave = () => {
     const updateData = {
       displayFormInstructions: isChecked,
