@@ -118,7 +118,7 @@ function UserManagement ({ match }) {
 
 
   const [getSkippedSteps, setSkippedSteps] = useState([]);
-  const [getHiddenSection, setHiddenSection] = useState([]);
+  const [getHiddenSection, setHiddenSection] = useState([null]);
 
 const CalculateData=()=>{
 return(
@@ -469,7 +469,7 @@ return(
     if (params.id) {
       dispatch(
         getAgentById(params.id, data => {
-          setData({...data,logoId:data?.logoId==0?1:data?.logoId})
+          setData({...data,logoId:data?.logoId== 0 ? 1 : data?.logoId})
           console.log(data,"iio")
         })
       )
@@ -558,7 +558,7 @@ useEffect(() => {
 }, [data?.byUsingEmailIDandpassword]);
 
 useEffect(() => {
-  // Component mounted, initialize the editor states
+
   setEditorState5(
     data?.saveAndExit
       ? () => {
@@ -1181,25 +1181,28 @@ useEffect(() => {
   
 
 
-
- 
-
   function filterSkippedTypeId(objectsArray) {
     return objectsArray
       ?.filter((obj) => obj?.agentId !== 0)
       ?.map((obj) => obj.id);
   }
+
+
   useEffect(() => {
     setSkippedSteps(filterSkippedTypeId( skippedSteps?.skippedStepsData));
   }, [skippedSteps]);
+
+
 
   function filterHiddenTypeId(objectsArray) {
     return objectsArray
       ?.filter((obj) => obj?.agentId !== 0)
       ?.map((obj) => obj.id);
   }
+
+
   useEffect(() => {
-    setHiddenSection(filterHiddenTypeId( hiddensection?.hiddenSectionData));
+    setHiddenSection(filterHiddenTypeId(hiddensection?.hiddenSectionData));
   }, [hiddensection]);
 
 
@@ -1268,7 +1271,7 @@ useEffect(() => {
         defaultSelection: data?.defaultSelection,
         defaultLanguageId: data?.defaultLanguageId,
         includeDefaultEnglish: data?.includeDefaultEnglish,
-        logoId: data?.logoId,
+        logoId: data?.logoId == 0 ? 1 : data?.logoId,
         logo: selectedfile,
         logoNavigateURL:data?.logoNavigateURL,
         pdfWatermark:data?.pdfWatermark,
@@ -1745,7 +1748,8 @@ useEffect(() => {
                       </div>
                       <div className='col-7  justify-content-between d-flex input-file'>
                         <Select
-                        defaultValue={0}
+                        required
+                       
                         className='text'
                         name="logoId"
                         value={data?.logoId}
@@ -1764,11 +1768,14 @@ useEffect(() => {
                         </Select>
 
                         {submit === 2 && (
+                          <>
                           <Input name='logoFile' style={{ fontSize: '13px' }} type='file' onChange={(e)=>handleFileSelect(e)} />
-                        )}
-                        <span className='my-auto text mx-2'>
+                          <span className='my-auto text mx-2'>
                           <a>View..</a>
                         </span>
+                        </>
+                        )}
+                       
                       </div>
                     </div>
                     <div className='row mx-2 my-1 py-0'>

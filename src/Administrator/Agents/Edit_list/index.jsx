@@ -276,14 +276,15 @@ function EditList({ match }) {
       ?.filter((obj) => obj?.agentId !== 0)
       ?.map((obj) => obj.chapter4EntityTypeId);
   }
+
   useEffect(() => {
-    setCh3HiddenState(filterchapter3EntityTypeId(getCh4Imp?.getCh4Imp));
+    setCh4ImpState(filterchapter4ImpTypeId(getCh4Imp?.getCh4Imp));
   }, [getCh4Imp]);
 
-  function filterchapter3EntityTypeId(objectsArray) {
+  function filterchapter4ImpTypeId(objectsArray) {
     return objectsArray
       ?.filter((obj) => obj?.agentId !== 0)
-      ?.map((obj) => obj.chapter3EntityTypeId);
+      ?.map((obj) => obj.chapter4EntityTypeId);
   }
   // useEffect(()=>{
   //   setDocMandatoryState(filterMandetoryStateId(getDocumentMandatoryData?.getDocMandatoryData))

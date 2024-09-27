@@ -20,7 +20,9 @@ import DialogTransition from "../../../reusables/deleteDialog";
 import {
   getAllFormInstructions,
   deleteFormInstruction,
-  changeFormInstructionSequence
+  changeFormInstructionSequence,
+  getAllSettings,
+  upsertSettings
 } from "../../../redux/Actions";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
@@ -59,24 +61,31 @@ function createData(agent, content, action) {
 
 export default function ContentManagement() {
   const history = useHistory();
+ 
   const row = [];
   const [open1, setOpen1] = useState(false);
   const handleClickOpen1 = () => setOpen1(true);
   const handleClose1 = () => setOpen1(false);
-
+ 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [idData, setIdData] = useState(0);
   const [page, setPage] = useState(1);
+ 
   const [size, setSize] = useState(10);
   const [search, setSearch] = useState("");
+ 
+
+ 
 
   const dispatch = useDispatch();
   const tableData = useSelector((state) => state.getAllFormInstructionReducer);
-
+ 
+ 
   useEffect(() => {
     dispatch(getAllFormInstructions(page, size));
+    dispatch(getAllSettings())
   }, []);
 
   const setSubmit = (e) => {
@@ -94,6 +103,21 @@ export default function ContentManagement() {
   useEffect(() => {
     dispatch(getAllFormInstructions(page, size));
   }, [page]);
+  
+  const settingData = useSelector((state) => state?.getSettingsReducer?.settingsData);
+  
+
+  const FormInstructions = settingData?.displayFormInstructions;
+
+  // useEffect(() => {
+  //   console.log(FormInstructions, "11");     
+  // }, [settingData]);
+ 
+  const [isChecked, setIsChecked] = useState(FormInstructions || false);
+
+  useEffect(() => {
+    setIsChecked(FormInstructions || false);
+  }, [FormInstructions]);
 
   useEffect(() => {
     if (search === "") {
@@ -103,6 +127,12 @@ export default function ContentManagement() {
     }
   }, [search]);
 
+  const handleChange = (event) => {
+    const newValue = event.target.checked;
+    setIsChecked(newValue);
+
+  
+  };
   const ChangeFormInstructionOrder=(Id,newOrderValue,direction)=>{
     dispatch(changeFormInstructionSequence(Id,newOrderValue,direction,refreshPageData));       
   }
@@ -110,7 +140,15 @@ export default function ContentManagement() {
   const refreshPageData=()=>{  
     dispatch(getAllFormInstructions(page, size));
   }
+  
+  const handleSave = () => {
+    const updateData = {
+      displayFormInstructions: isChecked,
+    };
 
+
+    dispatch(upsertSettings(updateData));
+  };
   return (
     <Fragment>
       <ThemeOptions />
@@ -286,7 +324,12 @@ export default function ContentManagement() {
                 <div className="table_content mt-2">Check to show Instructions tab in eForms:</div>
                
                  
-                  <Checkbox type="checkbox" size="small" />
+                <Checkbox
+        type="checkbox"
+        size="small"
+        checked={isChecked} 
+        onChange={handleChange}
+      />
                
               </div>
               {tableData?.formInstructionData?.totalPages > 1 ? (
@@ -304,6 +347,7 @@ export default function ContentManagement() {
           )}
             </div>
             <div className="actionBtn">
+           
               <Button
                 className="btn-cstm  my-2 mx-1"
                 style={{ float: "right", marginLeft: "5px" }}
@@ -316,6 +360,15 @@ export default function ContentManagement() {
                 }}
               >
                 Add Form Instruction
+              </Button>
+              <Button
+                className="btn-cstm  my-2 mx-1"
+                style={{ float: "right", marginLeft: "5px" }}
+                size="small"
+                onClick={handleSave}
+                
+              >
+               save
               </Button>
             
                

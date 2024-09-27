@@ -124,6 +124,8 @@ const arr=[1,2,3,4,5]
     hideheaderfooter:settingsData?.settingsData?.hideheaderfooter ? settingsData?.settingsData?.hideheaderfooter : false,
     showBreadcrumbs:settingsData?.settingsData?.showBreadcrumbs ? settingsData?.settingsData?.showBreadcrumbs : false,
     pinbasedLoginTokenValidityTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin : 0,
+    versionofApplication:settingsData?.settingsData?.versionofApplication ? settingsData?.settingsData?.versionofApplication :"",
+    
     pinbasedLoginTokenLockOutTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin : 0,
     showLoginPage:settingsData?.settingsData?.showLoginPage ? settingsData?.settingsData?.showLoginPage : false,
     enableClickToStartSubmission: settingsData?.enableClickToStartSubmission ? settingsData?.enableClickToStartSubmission : false,
@@ -191,6 +193,7 @@ const arr=[1,2,3,4,5]
       hideheaderfooter:settingsData?.settingsData?.hideheaderfooter ? settingsData?.settingsData?.hideheaderfooter : false,
       showBreadcrumbs:settingsData?.settingsData?.showBreadcrumbs ? settingsData?.settingsData?.showBreadcrumbs : false,
       pinbasedLoginTokenValidityTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenValidityTimeinMin : 0,
+      versionofApplication:settingsData?.settingsData?.versionofApplication ? settingsData?.settingsData?.versionofApplication :"",
       pinbasedLoginTokenLockOutTimeinMin:settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin ? settingsData?.settingsData?.pinbasedLoginTokenLockOutTimeinMin : 0,
       showLoginPage:settingsData?.settingsData?.showLoginPage ? settingsData?.settingsData?.showLoginPage : false,
       enableClickToStartSubmission:settingsData?.settingsData?.enableClickToStartSubmission ? settingsData?.settingsData?.enableClickToStartSubmission : false ,
@@ -243,6 +246,7 @@ const arr=[1,2,3,4,5]
         hideheaderfooter:apiData?.hideheaderfooter ? apiData?.hideheaderfooter : false,
         showBreadcrumbs:apiData?.showBreadcrumbs ? apiData?.showBreadcrumbs : false,
         pinbasedLoginTokenValidityTimeinMin:apiData?.pinbasedLoginTokenValidityTimeinMin ? apiData?.pinbasedLoginTokenValidityTimeinMin : 0,
+        versionofApplication:settingsData?.settingsData?.versionofApplication ? settingsData?.settingsData?.versionofApplication :"",
         pinbasedLoginTokenLockOutTimeinMin:apiData?.pinbasedLoginTokenLockOutTimeinMin ? apiData?.pinbasedLoginTokenLockOutTimeinMin : 0,
         showLoginPage:apiData?.showLoginPage ? apiData?.showLoginPage : false,
         enableClickToStartSubmission:apiData?.enableClickToStartSubmission ? apiData?.enableClickToStartSubmission : false,
@@ -503,6 +507,7 @@ const arr=[1,2,3,4,5]
         showBreadcrumbs:data?.showBreadcrumbs,
         pinbasedLoginTokenValidityTimeinMin:data?.pinbasedLoginTokenValidityTimeinMin,
         pinbasedLoginTokenLockOutTimeinMin:data?.pinbasedLoginTokenLockOutTimeinMin,
+        versionofApplication:data?.versionofApplication,
         // defaultLogo_FileName: data?.defaultLogo_FileName,
         showLoginPage:data?.showLoginPage,
         enableClickToStartSubmission:data?.enableClickToStartSubmission,
@@ -1091,6 +1096,19 @@ const arr=[1,2,3,4,5]
                 </div>
                 <div className="col-7">
                 <TextField onChange={handleChange} type="number"className="w-50 textFieldClass" fullWidth  name="pinbasedLoginTokenLockOutTimeinMin" value={data?.pinbasedLoginTokenLockOutTimeinMin} />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 d-flex">
+              <div className="row my-1 w-100">
+                <div className="col-5 d-flex">
+                  <div className="my-auto text w-100" variant="body2">
+                  Application Version:
+            </div>
+                </div>
+                <div className="col-7">
+                <TextField onChange={handleChange} className="w-50 textFieldClass" fullWidth  name="versionofApplication" value={data?.versionofApplication} />
                 </div>
               </div>
             </div>

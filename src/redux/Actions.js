@@ -2723,7 +2723,7 @@ export const upsertSettings = (value) => {
           // Utils.showAlert(1, responseData?.data);
         }
         // Check if both requests are successful before showing the alert and saving to localStorage
-        checkAndSaveToLocalStorage(dispatch);
+        checkAndSaveToLocalStorage(dispatch,true);
       },
       (error) => {
         let { data } = error;
@@ -2761,11 +2761,13 @@ export const UpsertRequestHeader = (value) => {
 
 let successfulRequests = 0;
 
-const checkAndSaveToLocalStorage = (dispatch) => {
+const checkAndSaveToLocalStorage = (dispatch,key) => {
   successfulRequests++;
   
- 
-  if (successfulRequests === 2) {
+ if(key){
+  Utils.showAlert(1, "Updated successfully.");
+ }
+  else if (successfulRequests === 2) {
 
     localStorage.setItem("response", "data saved successfully");
  
@@ -4498,32 +4500,57 @@ export const updateAgents = value => {
 }
 //UPDATE_AGENT_TIN
 
-export const updateAgentsTinType = (value, id) =>
- {
- 
-  return dispatch => {
-    const dataToSend = { message: value };
+export const updateAgentsTinType = (value,id) => {
+  return (dispatch) => {
+    // const dataToSend = { message: value };
     Utils.api.postApiCall(
       Utils.endPoints.UPDATE_AGENT_TIN,
-      dataToSend,
-      responseData => {
+      value,
+      (responseData) => {
         let { data } = responseData;
         dispatch({
           type: Utils.ActionName.UPDATE_AGENT_TIN,
-          payload: { data: data.data }
+          payload: { data: data.data },
         });
-        if (responseData) {
+         if (responseData) {
           Utils.showAlert(1, responseData?.data);
           dispatch(getAgentTinTypeById(id));
         }
       },
-      error => {
+      (error) => {
         let { data } = error;
         Utils.showAlert(2, data.message);
       }
     );
   };
 };
+
+// export const updateAgentsTinType = (value, id) =>
+//  {
+ 
+//   return dispatch => {
+//     const dataToSend = { message: value };
+//     Utils.api.postApiCall(
+//       Utils.endPoints.UPDATE_AGENT_TIN,
+//       dataToSend,
+//       responseData => {
+//         let { data } = responseData;
+//         dispatch({
+//           type: Utils.ActionName.UPDATE_AGENT_TIN,
+//           payload: { data: data.data }
+//         });
+//         if (responseData) {
+//           Utils.showAlert(1, responseData?.data);
+//           dispatch(getAgentTinTypeById(id));
+//         }
+//       },
+//       error => {
+//         let { data } = error;
+//         Utils.showAlert(2, data.message);
+//       }
+//     );
+//   };
+// };
 export const createAgents = value => {
   return dispatch => {
     const dataToSend = { message: value }
