@@ -217,7 +217,7 @@ export default function PhraseTable() {
                               </TableCell>
 
                               <TableCell
-                             
+                             style={{width:"45%"}}
                                 className="table_content previewClass"
                                 align="center"
                                 

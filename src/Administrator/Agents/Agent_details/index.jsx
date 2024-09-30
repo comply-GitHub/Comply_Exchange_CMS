@@ -71,7 +71,7 @@ function UserManagement ({ match }) {
   const countryList = useSelector(state => state?.getCountryNameReducer?.getCountryNameData)
   const language = useSelector(state => state?.getLangListReducer?.allLanguageData)
   const skippedSteps = useSelector(state => state?.getAgentSkippedReducer)
-  const hiddensection = useSelector(state => state?.getAgentHiddenSectionReducer)
+  const hiddenSections = useSelector(state => state?.getAgentHiddenSectionReducer)
   
   useEffect(() => {
    
@@ -118,7 +118,7 @@ function UserManagement ({ match }) {
 
 
   const [getSkippedSteps, setSkippedSteps] = useState([]);
-  const [getHiddenSection, setHiddenSection] = useState([null]);
+  const [getHiddenSection, setHiddenSection] = useState([]);
 
 const CalculateData=()=>{
 return(
@@ -1196,14 +1196,13 @@ useEffect(() => {
 
   function filterHiddenTypeId(objectsArray) {
     return objectsArray
-      ?.filter((obj) => obj?.agentId !== 0)
-      ?.map((obj) => obj.id);
+      ?.filter((obj) => obj?.agentId !== 0) // Filter out objects with agentId === 0
+      ?.map((obj) => obj.id); // Map the remaining objects to their ids
   }
-
-
+  
   useEffect(() => {
-    setHiddenSection(filterHiddenTypeId(hiddensection?.hiddenSectionData));
-  }, [hiddensection]);
+    setHiddenSection(filterHiddenTypeId(hiddenSections?.hiddenSectionData));
+  }, [hiddenSections]);
 
 
   function handleToggleIds(clientId, selectedData, setSelectedData) {
@@ -1218,6 +1217,20 @@ useEffect(() => {
     setSelectedData(selectedClients);
   }
 
+  function handleToggleIdss(clientId, selectedData, setSelectedData) {
+    let selectedClients = [...selectedData]; // Create a new array
+    const index = selectedClients.indexOf(clientId);
+    
+    if (index >= 0) {
+      // Remove the client if it's already selected
+      selectedClients.splice(index, 1);
+    } else {
+      // Add the client if it's not selected
+      selectedClients.push(clientId);
+    }
+    
+    setSelectedData(selectedClients); // Set the new array
+  }
 
 // const handleToggleDataIds = (clientId) => {
 //   setCheckedStatusHidden ((prevCheckedStatus) => {
@@ -1244,12 +1257,12 @@ useEffect(() => {
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(data.tokenEmail)
-    const checkedItems = skippedSteps?.skippedStepsData
-    .filter((item) => checkedStatus?.[item.id] || item.agentId !== 0)
-    .map((item) => item.id);
-    const checkedHiddenItems =  hiddensection?.hiddenSectionData
-    .filter((item) => checkedStatusHidden?.[item.id] || item.agentId !== 0)
-    .map((item) => item.id);
+    // const checkedItems = skippedSteps?.skippedStepsData
+    // .filter((item) => checkedStatus?.[item.id] || item.agentId !== 0)
+    // .map((item) => item.id);
+    // const checkedHiddenItems =  hiddenSections?.hiddenSectionData
+    // .filter((item) => checkedStatusHidden?.[item.id] || item.agentId !== 0)
+    // .map((item) => item.id);
 
     if(selectedfile!=null){
       if(selectedfile?.type!=="image/png"){
@@ -1347,7 +1360,6 @@ useEffect(() => {
         saveAndExit: data?.saveAndExit,
         description: data?.description,
         nextAgentIntroductionText: data?.nextAgentIntroductionText,
-      
         skippedSteps: getSkippedSteps,
         hiddenSections: getHiddenSection,
         hideW8ECILine12: data?.hideW8ECILine12,
@@ -1587,10 +1599,10 @@ useEffect(() => {
                         </div>
                       </div>
                       <div className='col-7 '>
-                        <Select className='selectBox text' fullWidth name='countryId'  defaultValue={0}  onChange={(e) => {
+                        <Select className='selectBox text' fullWidth name='countryId'  onChange={(e) => {
                                 handleChange(e);
                               }}
-                              value={data.countryId}>
+                              defaultValue={data.countryId}>
                         <MenuItem value={0}>-Select-</MenuItem>
                         {countryList?.map(
                                 (ele) => (
@@ -3373,13 +3385,13 @@ useEffect(() => {
                       </span>
                       </div>
                       <div className='inner-scroll-div'>
-                       { hiddensection?.hiddenSectionData?.map((item, index) => (
+                       { hiddenSections?.hiddenSectionData?.map((item, index) => (
                        <div key={item.id} className='d-flex'>
                <Checkbox
             className='p-0'
            
             defaultChecked={item.agentId == params.id}
-            onClick={() => handleToggleIds(item.id,getHiddenSection, setHiddenSection)}
+            onClick={() => handleToggleIdss(item.id,getHiddenSection, setHiddenSection)}
            
           />
                           <div
