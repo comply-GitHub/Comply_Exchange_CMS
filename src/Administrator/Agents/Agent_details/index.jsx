@@ -1599,19 +1599,19 @@ useEffect(() => {
                         </div>
                       </div>
                       <div className='col-7 '>
-                        <Select className='selectBox text' fullWidth name='countryId'  onChange={(e) => {
+                        <select className='selectBox1 text' fullWidth name='countryId'  onChange={(e) => {
                                 handleChange(e);
                               }}
-                              defaultValue={data.countryId}>
-                        <MenuItem value={0}>-Select-</MenuItem>
+                              value={data.countryId}>
+                        <option style={{marginLeft:"20px",fontSize:"10px"}} value={0}>-Select-</option>
                         {countryList?.map(
                                 (ele) => (
-                                  <MenuItem key={ele?.id} value={ele?.id}>
+                                  <option style={{marginLeft:"20px",fontSize:"10px"}}key={ele?.id} value={ele?.id}>
                                     {ele?.name}
-                                  </MenuItem>
+                                  </option>
                                 )
                               )}
-                        </Select>
+                        </select>
                       </div>
                     </div>
                     <div className='row mx-2 my-1 py-0'>

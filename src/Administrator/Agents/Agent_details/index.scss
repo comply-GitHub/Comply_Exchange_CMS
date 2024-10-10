@@ -2,17 +2,20 @@
   border: 1px solid #80808099;
   border-radius: 10px;
   padding: 2px;
+
   // margin: 10px;
   .MuiCardHeader-root {
     padding: 4px !important;
     background: white;
     border-radius: inherit;
+
     .MuiCardHeader-content {
       span {
         font-size: 14px;
       }
     }
   }
+
   .MuiCollapse-vertical {
     padding: 0 0 0px 0;
   }
@@ -20,6 +23,7 @@
   p {
     opacity: 0.5;
   }
+
   .px-5 {
     padding-left: 30px !important;
   }
@@ -27,12 +31,15 @@
   .card-box {
     border: 1px solid #80808099;
     box-shadow: none;
+
     .MuiCardContent-root {
       padding: 0;
+
       .heading {
         padding: 3px;
         background-color: rgb(190, 190, 190);
       }
+
       p {
         padding: 3px;
       }
@@ -51,10 +58,12 @@
   min-height: 0.05;
   width: 65% !important;
 }
+
 .btn-cstm {
   color: white !important;
   opacity: 0.8;
 }
+
 .label {
   font-size: 10px;
 }
@@ -64,11 +73,13 @@
   font-size: 12px !important;
   font-weight: 530;
 }
+
 .headings {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
   font-size: 12px !important;
   font-weight: 530 !important;
 }
+
 .rdw-editor-wrapper {
   width: 100% !important;
   height: 200px !important;
@@ -77,56 +88,78 @@
     height: auto !important;
     max-height: 117px !important;
   }
+
   .rdw-editor-main span {
     font-size: 12px !important;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
   }
+
   .DraftEditor-editorContainer {
     padding: 5px !important;
   }
 }
+
 .text input {
   font-size: 12px !important;
   align-items: center !important;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
 }
+
 .textFieldClass input {
   height: 0.275em !important;
   font-size: 12px !important;
 }
+
 .textFieldClassName div {
   width: 85% !important;
   height: 2.295em !important;
 
 }
+
 .customUpload {
   font-size: 13px !important;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
 }
 
-.formatClass{
-    align-self: center;
+.formatClass {
+  align-self: center;
 }
-.retro textarea{
+
+.retro textarea {
   font-size: 12px !important;
 }
+
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   margin-left: 10px;
 }
+
 .MuiPaper-elevation ul li {
-  justify-content: left!important;
+  justify-content: left !important;
   font-size: 12px !important;
 }
-.svg{
+
+.svg {
   margin-left: -15px;
   margin-top: 10px;
- 
- cursor: pointer;
+
+  cursor: pointer;
 }
-.logo{
+
+.logo {
   margin-left: -15px;
   // margin-top: 10px;
   font-size: 1.2rem;
- 
- cursor: pointer;
+
+  cursor: pointer;
+}
+
+.selectBox1 {
+  border-radius: 4px;
+  padding: 0 14px;
+  height: 2.4rem;
+  width: 100% !important;
+}
+
+.selectBox1 input {
+  margin-left: 10px;
 }

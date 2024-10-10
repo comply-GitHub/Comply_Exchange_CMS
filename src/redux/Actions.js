@@ -25,7 +25,7 @@ import Utils from "../Utils";
 import { ca } from "date-fns/locale";
 import constants from "../Utils/constants";
 
-
+import * as XLSX from 'xlsx';
 
 export const signupAction = (value) => {
   return (dispatch) => {
@@ -2895,6 +2895,12 @@ export const exportCountries = () => {
   };
 };
 
+
+
+
+
+
+
 export const exportEasy = () => {
   return (dispatch) => {
     Utils.api.getApiCall(
@@ -4474,30 +4480,35 @@ export const updateQuestion = (value) => {
   };
 };
 
-export const updateAgents = value => {
+export const updateAgents = (value, id) => {
   return dispatch => {
-    const dataToSend = { message: value }
+    const dataToSend = { message: value };
     Utils.api.putApiCall(
       Utils.endPoints.UPDATE_AGENT,
       value,
       responseData => {
-        let { data } = responseData
+        let { data } = responseData;
         dispatch({
           type: Utils.ActionName.UPDATE_AGENT,
           payload: { data: data.data }
-        })
+        });
+
         if (responseData) {
-          Utils.showAlert(1, responseData?.data)
+          // Set a timeout to show the alert after a delay
+          setTimeout(() => {
+            Utils.showAlert(1, responseData?.data);
+          }, 100); // Adjust the delay as needed (in milliseconds)
         }
       },
       error => {
-        let { data } = error
-        Utils.showAlert(2, data.message)
+        let { data } = error;
+        Utils.showAlert(2, data.message);
       },
       'multi'
-    )
-  }
-}
+    );
+  };
+};
+
 //UPDATE_AGENT_TIN
 
 export const updateAgentsTinType = (value,id) => {
