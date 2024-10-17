@@ -77,6 +77,10 @@ export default function PhraseTable() {
     setSize(10);
     dispatch(getAllRules(page, size, search));
   };
+  useEffect(() => {
+    dispatch(getAllRules(page, size));
+  }, [page]);
+
 
   const deleteItems = async () => {
     dispatch(deleteRule(idData));
@@ -361,6 +365,21 @@ export default function PhraseTable() {
                   </Paper>
                 </table>
               </div>
+              {tableData?.rulesData?.totalPages > 1 ? (
+                <Stack
+                style={{ marginTop: "10px" }} spacing={2}
+                >
+                  <Pagination
+                   variant="outlined"
+                   shape="rounded"
+                   color="primary"
+                    count={tableData?.rulesData?.totalPages}
+                    onChange={(e, value) => setPage(value)}
+                  />
+                </Stack>
+              ) : (
+                ""
+              )}
             </div>
             <div className="col-12" >
               <Button
@@ -387,20 +406,7 @@ export default function PhraseTable() {
                 Export
               </Button>
             </div>
-              {tableData?.rulesData?.totalPages > 1 ? (
-                <Stack
-                  className="px-3 col-12"
-                  style={{ marginTop: "10px" }}
-                  spacing={2}
-                >
-                  <Pagination
-                    count={tableData?.rulesData?.totalPages}
-                    onChange={(e, value) => setPage(value)}
-                  />
-                </Stack>
-              ) : (
-                ""
-              )}
+            
           </div>
         </div>
       </div>
@@ -434,7 +440,7 @@ export default function PhraseTable() {
        handleClose={handleClose2}
        Heading="Import Rules Data"
        apiCall={(formData)=>{
-    dispatch(importRule(formData))
+       dispatch(importRule(formData))
        }}
       
       />
