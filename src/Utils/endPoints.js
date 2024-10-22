@@ -18,6 +18,7 @@ const endPoint = {
   DELETE_LANGUAGE: "Language/LangugaeDelete",
   LANG_BY_SEARCH:"Language/LanguageSearch",
   BULK_TRANSLATE:"Agent/BulkTranslateLanguage",
+  TokenSent:"/AccountHolderDetail/GetSaveAndExitCreds",
 
   //PAGES API
   GET_ALL_PAGES: "Page/GetAllPages",
@@ -40,6 +41,7 @@ const endPoint = {
  GET_IGA:"/Countries/GetIGA",
  IMPORT_COUNTRIES:"Countries/Import",
  EXPORT_COUNTRIES:"Countries/Export",
+ EXPORT_TOKEN:"/AccountHolderDetail/Export",
 
  //Help
  GET_ALL_HELP_VIDEOS:"/HelpVideo/GetAllHelpVideos",

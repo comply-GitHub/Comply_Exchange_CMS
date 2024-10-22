@@ -2894,7 +2894,28 @@ export const exportCountries = () => {
     );
   };
 };
-
+//EXPORT_TOKEN
+export const exportTokenSent = () => {
+  return (dispatch) => {
+    Utils.api.getApiCall(
+      Utils.endPoints.EXPORT_TOKEN,
+      "",
+      (resData) => {
+        const url = window.URL.createObjectURL(new Blob([resData.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `TokenSent-${Date.now()}.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.error);
+      },
+      true
+    );
+  };
+};
 
 
 
@@ -3814,7 +3835,60 @@ export const getContentById = (value,callback) => {
   };
 };
 
+//TokenSent
 
+export const getTokenSent = (page,size,search) => {
+  let params= `?pageNumber=${page}&pageSize=${size}`
+  if(search){
+    params=`?searchTerm=${search}&pageNumber=${page}&pageSize=${size}`
+  }
+  return (dispatch) => {
+    Utils.api.getApiCall(
+      Utils.endPoints.TokenSent,
+      params,
+      (resData) => {
+        dispatch({
+          type: Utils.ActionName.TokenSent,
+          payload: {
+            TokenSentData: resData.data,
+          },
+        });
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.message);
+      }
+    );
+  };
+};
+
+// export const getTokenSent = (value,callback) => {
+//   return (dispatch) => {
+//     Utils.api.getApiCall(
+//       Utils.endPoints.TokenSent,
+//       // `?id=${value}`,
+//       (resData) => {
+//         if (resData.status === 200) {
+//           if(callback){
+//             callback(resData.data)
+//           }
+//           dispatch({
+//             type: Utils.ActionName.TokenSent,
+//             payload: {
+//               TokenSentdata: resData.data,
+//             },
+//           });
+//         } else {
+//           Utils.showAlert(2, resData.message);
+//         }
+//       },
+//       (error) => {
+//         let { data } = error;
+//         Utils.showAlert(2, data.message);
+//       }
+//     );
+//   };
+// };
 export const getLanguagesById = (value,callback) => {
   return (dispatch) => {
     Utils.api.getApiCall(
