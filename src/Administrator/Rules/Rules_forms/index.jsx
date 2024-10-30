@@ -45,7 +45,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Route, useHistory } from "react-router-dom";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
-import {getRulesLanguageById , deleteRule, getAllRules,getAllLanguages,importRule,exportRule } from "../../../redux/Actions";
+import {getRulesLanguageById , deleteRule, getAllRules,getAllLanguages,importRule,exportRule, } from "../../../redux/Actions";
 import DialogTransition from "../../../reusables/deleteDialog";
 import Modal from "../../../reusables/htmlDialog"
 import Transition from "../../../reusables/languagesModal";
@@ -69,6 +69,7 @@ export default function PhraseTable() {
   useEffect(() => {
     dispatch(getAllRules(page, size, search));
     dispatch(getAllLanguages())
+
   }, []);
 
   const setSubmit = (e) => {
@@ -81,7 +82,13 @@ export default function PhraseTable() {
     dispatch(getAllRules(page, size));
   }, [page]);
 
-
+  useEffect(()=>{
+    if(search===""){
+      setPage(1);
+      setSize(10);
+      dispatch(getAllRules(page, size, search));
+    }
+  },[search])
   const deleteItems = async () => {
     dispatch(deleteRule(idData));
     dispatch(getAllRules(page, size));

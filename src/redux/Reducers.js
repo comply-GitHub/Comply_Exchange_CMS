@@ -54,6 +54,7 @@ const {
   GET_IMPORTANT_COUNTRIES,
   GET_ALL_RULES,
   TokenSent,
+  COMPLETED_FORMS,
   GET_RULES_BY_ID,
   GET_HIDDEN_COUNTRIES,
   GET_CHAPTER3_HIDDEN_ENTITY,
@@ -136,7 +137,17 @@ export const getTokenSentReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export const getCompletedFormsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case COMPLETED_FORMS:
+      return { ...state, ...action.payload };
+    default:
+      return state;
+  }
+};
 //TokenSent
+//COMPLETED_FORMS
 export const getUserByIdReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_BY_ID:

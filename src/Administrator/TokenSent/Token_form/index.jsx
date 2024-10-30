@@ -60,10 +60,13 @@ export default function ContentManagement() {
     dispatch(getTokenSent(page, size,search));
   }, [page]);
  
-  // useEffect(() => {
-  //   dispatch(getTokenSent((page, size, search)));
-  
-  // }, []);
+  useEffect(()=>{
+    if(search===""){
+      setPage(1);
+      setSize(10);
+      dispatch(getTokenSent(page, size, search));
+    }
+  },[search])
 
 
 
@@ -136,11 +139,10 @@ export default function ContentManagement() {
                     className="mx-md-3 mx-auto w-50 rounded-Input"
    placeholder="Search"
    type="search"
+   value={search}
    variant="outlined"
-   
-  
+   onChange={(e) => setSearch(e.target.value)}
    size="small"
-   
    InputProps={{
        startAdornment: (
            <InputAdornment position="start">
@@ -149,7 +151,7 @@ export default function ContentManagement() {
             )}}/>
                   </div>
                 <div className="col-4">
-                  <Button  size="small"className="btn-cstm" style={{ float: "right", display:"none" }}>
+                  <Button  size="small"className="btn-cstm" style={{ float: "right", display:"none" }} onClick={setSubmit}>
                     Search
                   </Button>
                 </div>
