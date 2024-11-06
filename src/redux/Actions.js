@@ -2980,7 +2980,7 @@ export const PostCompleteForms = (id,agentid,formTypeId) => {
           type: Utils.ActionName.POST_COMPLETED_FORMS,
           payload: { data: data.data },
         });
-          if (responseData.status === 200) {
+          if (responseData) {
          
           Utils.showAlert(1, "Updated Successfully");
           // dispatch(getCompletedForms(page, size, search));
@@ -2992,7 +2992,7 @@ export const PostCompleteForms = (id,agentid,formTypeId) => {
         Utils.showAlert(2, data.message);
       }
     );
-  };
+  };            
 };
 
 export const getCompletedForms = (page,size,search) => {
