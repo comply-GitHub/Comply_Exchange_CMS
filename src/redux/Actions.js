@@ -2916,6 +2916,7 @@ export const exportTokenSent = () => {
     );
   };
 };
+
 export const exportCompleteForms = () => {
   return (dispatch) => {
     Utils.api.getApiCall(
@@ -2967,12 +2968,12 @@ export const deleteCompleteForms = (id,agentId,formId) => {
 };
 
 
-export const PostCompleteForms = (id,agentid,formTypeId) => {
+export const PostCompleteForms = (searchTerm,pageNo,pageSize,id,agentid,formTypeId) => {
   return (dispatch) => {
  
     Utils.api.postApiCall(
-     `${ Utils.endPoints.POST_COMPLETED_FORMS}?accountHolderDetailId=${id}&agentId=${agentid}&formTypeId=${formTypeId}`,
-      // value,
+     `${ Utils.endPoints.POST_COMPLETED_FORMS}?searchTerm=${1}&pageNumber=${pageNo}&pageSize=${pageSize}&accountHolderDetailId=${id}&agentId=${agentid}&formTypeId=${formTypeId}`,
+      "",
       (responseData) => {
         console.log(responseData,"responseData")
         let { data } = responseData;

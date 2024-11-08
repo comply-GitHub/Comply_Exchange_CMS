@@ -291,7 +291,7 @@ export default function ContentManagement() {
                                <span 
   className="addForms" 
   onClick={()=>{
-    dispatch(PostCompleteForms(row.accountHolderDetailsId,row.agentId,row.formTypeId))
+    dispatch(PostCompleteForms(search,page,size,row.accountHolderDetailsId,row.agentId,row.formTypeId))
     dispatch(getCompletedForms(page,size,search))
   }}
   style={{cursor:"pointer"}}
