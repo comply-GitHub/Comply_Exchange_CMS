@@ -238,7 +238,7 @@ export default function ContentManagement() {
                               
                                
                               >
-                                {row.content}
+                                {row.text}
                               </TableCell>
 
                              

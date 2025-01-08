@@ -27,6 +27,13 @@ table{
 // .w-85{
 //     width: 85% !important;
 }
+
+thead, tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    max-width: 95px;
+}
 .tableRow1{
     padding: 0.5rem 0.5rem  !important;
     background-color: var(--bs-table-bg);
