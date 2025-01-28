@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -40,117 +40,108 @@ import {
   Tooltip,
   Link,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { CheckBox } from "@mui/icons-material";
-function createData(agent, content, name, id, mail, date, admin, pdf, action) {
-  return { agent, content, name, id, mail, date, admin, pdf, action };
-}
+import {getCompletedForms,PostCompleteForms,deleteCompleteForms,exportCompleteForms,GetW9Pdf,GetEciPdf,GetBenPdf,GetBenEPdf,GetExpPdf,GetImyPdf,GetForm8233Pdf} from '../../../redux/Actions';
 
-const rows = [
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-  createData(
-    "Group Tax",
-    "W-8BEN-E (Oct 2021)",
-    "test",
-    "6000022",
-    "test@gmail.com",
-    "06/13/2023 13:11",
-    "Set as not Sent",
-    " View PDF"
-  ),
-];
+
+
 
 export default function ContentManagement() {
+
+
+  const dispatch=useDispatch();
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    dispatch(getCompletedForms(page, size,search));
+  }, [page]);
+  // useEffect(()=>{
+  //   dispatch(GetW9Pdf())
+  //   dispatch(GetForm8233Pdf())
+  //   dispatch(GetBenPdf())
+  //   dispatch(GetImyPdf())
+  //   dispatch(GetEciPdf())
+  //   dispatch(GetBenEPdf())
+  //   dispatch(GetExpPdf())
+  // },[])
+
+  useEffect(()=>{
+    if(search===""){
+      setPage(1);
+      setSize(10);
+      dispatch(getCompletedForms(page, size, search));
+    }
+  },[search])
+  useEffect(() => {
+    dispatch(getCompletedForms(page, size,search));
+  }, [page]);
+
+  // useEffect(() => {
+  //   dispatch(getCompletedForms(page, size,search));
+  // }, [dispatch(PostCompleteForms())]);
+  const tableData = useSelector((state) => state.getCompletedFormsReducer);
+  const handleDownloadForm = (row) => {
+    switch (row.formTypeId) {
+      case 1:
+        dispatch(GetW9Pdf(row.accountHolderDetailsId));
+        break;
+      case 2:
+        dispatch(GetBenPdf(row.accountHolderDetailsId));
+        break;
+      case 3:
+        dispatch(GetBenEPdf(row.accountHolderDetailsId));
+        break;
+      case 4:
+        dispatch(GetEciPdf(row.accountHolderDetailsId));
+        break;
+      case 6:
+        dispatch(GetExpPdf(row.accountHolderDetailsId));
+        break;
+      case 7:
+        dispatch(GetImyPdf(row.accountHolderDetailsId));
+        break;
+      case 8:
+        dispatch(GetForm8233Pdf(row.accountHolderDetailsId));
+        break;
+      default:
+        console.error("Invalid formTypeId");
+    }
+  };
+
+  const convertToUTC = (dateString) => {
+    
+    if (dateString === "0001-01-01T00:00:00") {
+        return ""; 
+    }
+
+
+    const date = new Date(dateString);
+    return date.toUTCString();
+};
+  const getFormName = (formTypeId) => {
+    switch(formTypeId) {
+        case 1:
+            return 'W-9';
+        case 2:
+            return 'W-8BEN';
+        case 3:
+            return 'W-8BEN-E';
+        case 4:
+            return 'W-8ECI';
+        case 6:
+            return 'W-8EXP';
+        case 7:
+              return 'W-8IMY';
+        case 8:
+                return 'Form 8233';
+    }
+};
+
   return (
     <Fragment>
       <ThemeOptions />
@@ -175,6 +166,8 @@ export default function ContentManagement() {
                   placeholder="Search"
                   type="search"
                   variant="outlined"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   size="small"
                   InputProps={{
                     startAdornment: (
@@ -195,7 +188,7 @@ export default function ContentManagement() {
                 </Button>
               </div>
             </div>
-            <div className=" row m-1  card p-2">
+            <div className=" row m-1 card">
               <div className="col-12 d-flex">
                 <table class="table table-hover table-striped">
                   <Paper>
@@ -240,7 +233,7 @@ export default function ContentManagement() {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {rows.map((row) => (
+                        {tableData?.CompletedFormsData?.records.map((row) => (
                           <TableRow
                             key={row.agent}
                             sx={{
@@ -248,20 +241,20 @@ export default function ContentManagement() {
                             }}
                           >
                             <TableCell align="left" className="table_content">
-                              {row.agent}
+                              {row.agentId}
                             </TableCell>
 
                             <TableCell className="table_content" align="center">
-                              {row.content}
+                            {getFormName(row.formTypeId)}
                             </TableCell>
                             <TableCell className="table_content" align="center">
-                              {row.name}
+                              {row.agentName}
                             </TableCell>
                             <TableCell className="table_content" align="center">
-                              {row.id}
+                              {row.uniqueIdentifier}
                             </TableCell>
                             <TableCell className="table_content" align="center">
-                              {row.mail}
+                              {row.email}
                             </TableCell>
                             <TableCell
                               className="table_content"
@@ -272,20 +265,19 @@ export default function ContentManagement() {
                               className="table_content"
                               align="center"
                             >
-                              {row.date}
+                              {convertToUTC (row.createdOn)}
                             </TableCell>
                             <TableCell className="table_content" align="center">
-                              <DoneIcon style={{color:"green"}}/>
+                            {row.isComplyAdminDownload ?( <DoneIcon style={{color:"green"}} />):""}
+                            
                             </TableCell>
-                            {/* <TableCell className="table_content" align="center">
-                              
-                            </TableCell> */}
+                          
                             <TableCell
                               className="table_content"
                               align="center"
                             ></TableCell>
                             <TableCell align="center">
-                              <DoneIcon style={{color:"green"}} />
+                            <DoneIcon style={{color:"green"}}/>
                             </TableCell>
                             <TableCell align="center" colSpan={2}>
                               <div
@@ -296,10 +288,23 @@ export default function ContentManagement() {
                                   fontSize: "12px",
                                 }}
                               >
-                                <span className="addForms">{row.admin}</span>
-                                <span className="addForms">{row.pdf}</span>{" "}
+                               <span 
+  className="addForms" 
+  onClick={()=>{
+    dispatch(PostCompleteForms(search,page,size,row.accountHolderDetailsId,row.agentId,row.formTypeId))
+    dispatch(getCompletedForms(page,size,search))
+  }}
+  style={{cursor:"pointer"}}
+>
+  set as not sent
+</span>
+
+                                <span onClick={() => handleDownloadForm(row)} className="addForms">download pdf</span>{" "}
                                 <span className="mt-2">
                                   <DeleteIcon
+                                   onClick={()=>{dispatch(deleteCompleteForms(row.accountHolderDetailsId,row.agentId,row.formTypeId))
+                                                 dispatch(getCompletedForms(page,size,search))
+                         }}
                                     style={{
                                       color: "red",
                                       fontSize: "20px",
@@ -321,18 +326,21 @@ export default function ContentManagement() {
                   </div>
                 </table>
               </div>
-              <Stack spacing={2}>
+              {tableData?.CompletedFormsData?.totalPages>1 ?(<Stack spacing={2}>
                 <Pagination
-                  count={10}
+
                   variant="outlined"
                   shape="rounded"
                   color="primary"
+                  count={tableData?.CompletedFormsData?.totalPages}
+                  onChange={(e, value) => setPage(value)}
                 />
-              </Stack>
+              </Stack>):""}
             </div>
             <div className="col-12" style={{ marginTop: "10px" }}>
               <Button
                 size="small"
+                onClick={()=>{dispatch(exportCompleteForms())}}
                 className="btn-cstm mx-1 mb-3"
                 style={{ float: "right" }}
               >

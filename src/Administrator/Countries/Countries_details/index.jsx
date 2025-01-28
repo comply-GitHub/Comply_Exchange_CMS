@@ -67,13 +67,14 @@ export default function Countries_details() {
   const articleData = useSelector(
     (state) =>  state.getCountryArticleByIdReducer?.getCountryArticleByIdData
   );
-  const [articleId, setArticleId] = useState(params?.id);
+ 
   const [perticularId, setPerticularId]= useState(null);
   console.log("1111111",articleData)
   const formData = useSelector((state) => state?.getYearsReducer?.yearData);
   let params = useParams();
   let history = useHistory();
   console.log("log", countryData);
+  // const [articleId, setArticleId] = useState(params?.id);
   const [data, setData] = useState({
     countryId: "",
     name: "",

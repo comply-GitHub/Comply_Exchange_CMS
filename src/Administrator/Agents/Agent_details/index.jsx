@@ -71,7 +71,7 @@ function UserManagement ({ match }) {
   const countryList = useSelector(state => state?.getCountryNameReducer?.getCountryNameData)
   const language = useSelector(state => state?.getLangListReducer?.allLanguageData)
   const skippedSteps = useSelector(state => state?.getAgentSkippedReducer)
-  const hiddensection = useSelector(state => state?.getAgentHiddenSectionReducer)
+  const hiddenSections = useSelector(state => state?.getAgentHiddenSectionReducer)
   
   useEffect(() => {
    
@@ -469,7 +469,7 @@ return(
     if (params.id) {
       dispatch(
         getAgentById(params.id, data => {
-          setData({...data,logoId:data?.logoId==0?1:data?.logoId})
+          setData({...data,logoId:data?.logoId== 0 ? 1 : data?.logoId})
           console.log(data,"iio")
         })
       )
@@ -558,7 +558,7 @@ useEffect(() => {
 }, [data?.byUsingEmailIDandpassword]);
 
 useEffect(() => {
-  // Component mounted, initialize the editor states
+
   setEditorState5(
     data?.saveAndExit
       ? () => {
@@ -1181,26 +1181,28 @@ useEffect(() => {
   
 
 
-
- 
-
   function filterSkippedTypeId(objectsArray) {
     return objectsArray
       ?.filter((obj) => obj?.agentId !== 0)
       ?.map((obj) => obj.id);
   }
+
+
   useEffect(() => {
     setSkippedSteps(filterSkippedTypeId( skippedSteps?.skippedStepsData));
   }, [skippedSteps]);
 
+
+
   function filterHiddenTypeId(objectsArray) {
     return objectsArray
-      ?.filter((obj) => obj?.agentId !== 0)
-      ?.map((obj) => obj.id);
+      ?.filter((obj) => obj?.agentId !== 0) // Filter out objects with agentId === 0
+      ?.map((obj) => obj.id); // Map the remaining objects to their ids
   }
+  
   useEffect(() => {
-    setHiddenSection(filterHiddenTypeId( hiddensection?.hiddenSectionData));
-  }, [hiddensection]);
+    setHiddenSection(filterHiddenTypeId(hiddenSections?.hiddenSectionData));
+  }, [hiddenSections]);
 
 
   function handleToggleIds(clientId, selectedData, setSelectedData) {
@@ -1215,6 +1217,20 @@ useEffect(() => {
     setSelectedData(selectedClients);
   }
 
+  function handleToggleIdss(clientId, selectedData, setSelectedData) {
+    let selectedClients = [...selectedData]; // Create a new array
+    const index = selectedClients.indexOf(clientId);
+    
+    if (index >= 0) {
+      // Remove the client if it's already selected
+      selectedClients.splice(index, 1);
+    } else {
+      // Add the client if it's not selected
+      selectedClients.push(clientId);
+    }
+    
+    setSelectedData(selectedClients); // Set the new array
+  }
 
 // const handleToggleDataIds = (clientId) => {
 //   setCheckedStatusHidden ((prevCheckedStatus) => {
@@ -1241,12 +1257,12 @@ useEffect(() => {
   const handleSubmit = async e => {
     e.preventDefault();
     console.log(data.tokenEmail)
-    const checkedItems = skippedSteps?.skippedStepsData
-    .filter((item) => checkedStatus?.[item.id] || item.agentId !== 0)
-    .map((item) => item.id);
-    const checkedHiddenItems =  hiddensection?.hiddenSectionData
-    .filter((item) => checkedStatusHidden?.[item.id] || item.agentId !== 0)
-    .map((item) => item.id);
+    // const checkedItems = skippedSteps?.skippedStepsData
+    // .filter((item) => checkedStatus?.[item.id] || item.agentId !== 0)
+    // .map((item) => item.id);
+    // const checkedHiddenItems =  hiddenSections?.hiddenSectionData
+    // .filter((item) => checkedStatusHidden?.[item.id] || item.agentId !== 0)
+    // .map((item) => item.id);
 
     if(selectedfile!=null){
       if(selectedfile?.type!=="image/png"){
@@ -1268,7 +1284,7 @@ useEffect(() => {
         defaultSelection: data?.defaultSelection,
         defaultLanguageId: data?.defaultLanguageId,
         includeDefaultEnglish: data?.includeDefaultEnglish,
-        logoId: data?.logoId,
+        logoId: data?.logoId == 0 ? 1 : data?.logoId,
         logo: selectedfile,
         logoNavigateURL:data?.logoNavigateURL,
         pdfWatermark:data?.pdfWatermark,
@@ -1344,7 +1360,6 @@ useEffect(() => {
         saveAndExit: data?.saveAndExit,
         description: data?.description,
         nextAgentIntroductionText: data?.nextAgentIntroductionText,
-      
         skippedSteps: getSkippedSteps,
         hiddenSections: getHiddenSection,
         hideW8ECILine12: data?.hideW8ECILine12,
@@ -1584,19 +1599,19 @@ useEffect(() => {
                         </div>
                       </div>
                       <div className='col-7 '>
-                        <Select className='selectBox text' fullWidth name='countryId'  defaultValue={0}  onChange={(e) => {
+                        <select className='selectBox1 text' fullWidth name='countryId'  onChange={(e) => {
                                 handleChange(e);
                               }}
                               value={data.countryId}>
-                        <MenuItem value={0}>-Select-</MenuItem>
+                        <option style={{marginLeft:"20px",fontSize:"10px"}} value={0}>-Select-</option>
                         {countryList?.map(
                                 (ele) => (
-                                  <MenuItem key={ele?.id} value={ele?.id}>
+                                  <option style={{marginLeft:"20px",fontSize:"10px"}}key={ele?.id} value={ele?.id}>
                                     {ele?.name}
-                                  </MenuItem>
+                                  </option>
                                 )
                               )}
-                        </Select>
+                        </select>
                       </div>
                     </div>
                     <div className='row mx-2 my-1 py-0'>
@@ -1745,7 +1760,8 @@ useEffect(() => {
                       </div>
                       <div className='col-7  justify-content-between d-flex input-file'>
                         <Select
-                        defaultValue={0}
+                        required
+                       
                         className='text'
                         name="logoId"
                         value={data?.logoId}
@@ -1764,11 +1780,14 @@ useEffect(() => {
                         </Select>
 
                         {submit === 2 && (
+                          <>
                           <Input name='logoFile' style={{ fontSize: '13px' }} type='file' onChange={(e)=>handleFileSelect(e)} />
-                        )}
-                        <span className='my-auto text mx-2'>
+                          <span className='my-auto text mx-2'>
                           <a>View..</a>
                         </span>
+                        </>
+                        )}
+                       
                       </div>
                     </div>
                     <div className='row mx-2 my-1 py-0'>
@@ -3366,13 +3385,13 @@ useEffect(() => {
                       </span>
                       </div>
                       <div className='inner-scroll-div'>
-                       { hiddensection?.hiddenSectionData?.map((item, index) => (
+                       { hiddenSections?.hiddenSectionData?.map((item, index) => (
                        <div key={item.id} className='d-flex'>
                <Checkbox
             className='p-0'
            
             defaultChecked={item.agentId == params.id}
-            onClick={() => handleToggleIds(item.id,getHiddenSection, setHiddenSection)}
+            onClick={() => handleToggleIdss(item.id,getHiddenSection, setHiddenSection)}
            
           />
                           <div

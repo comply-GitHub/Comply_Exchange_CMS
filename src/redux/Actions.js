@@ -25,7 +25,7 @@ import Utils from "../Utils";
 import { ca } from "date-fns/locale";
 import constants from "../Utils/constants";
 
-
+import * as XLSX from 'xlsx';
 
 export const signupAction = (value) => {
   return (dispatch) => {
@@ -2723,7 +2723,7 @@ export const upsertSettings = (value) => {
           // Utils.showAlert(1, responseData?.data);
         }
         // Check if both requests are successful before showing the alert and saving to localStorage
-        checkAndSaveToLocalStorage(dispatch);
+        checkAndSaveToLocalStorage(dispatch,true);
       },
       (error) => {
         let { data } = error;
@@ -2761,11 +2761,13 @@ export const UpsertRequestHeader = (value) => {
 
 let successfulRequests = 0;
 
-const checkAndSaveToLocalStorage = (dispatch) => {
+const checkAndSaveToLocalStorage = (dispatch,key) => {
   successfulRequests++;
   
- 
-  if (successfulRequests === 2) {
+ if(key){
+  Utils.showAlert(1, "Updated successfully.");
+ }
+  else if (successfulRequests === 2) {
 
     localStorage.setItem("response", "data saved successfully");
  
@@ -2892,6 +2894,134 @@ export const exportCountries = () => {
     );
   };
 };
+
+export const exportTokenSent = () => {
+  return (dispatch) => {
+    Utils.api.getApiCall(
+      Utils.endPoints.EXPORT_TOKEN,
+      "",
+      (resData) => {
+        const url = window.URL.createObjectURL(new Blob([resData.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `TokenSent-${Date.now()}.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.error);
+      },
+      true
+    );
+  };
+};
+
+export const exportCompleteForms = () => {
+  return (dispatch) => {
+    Utils.api.getApiCall(
+      Utils.endPoints.EXPORT_COMPLETE,
+      "",
+      (resData) => {
+        const url = window.URL.createObjectURL(new Blob([resData.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `CompleteForms-${Date.now()}.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.error);
+      },
+      true
+    );
+  };
+}
+//EXPORT_COMPLETE
+
+///AccountHolderDetail/DeleteCompletedForm
+
+export const deleteCompleteForms = (id,agentId,formId) => {
+  return (dispatch) => {
+    // const dataToSend = { message: value };
+    Utils.api.postApiCall(
+      `${Utils.endPoints.Delete_Complete_forms}?accountHolderDetailId=${id}&agentId=${agentId}&formTypeId=${formId}`,
+      "",
+      (responseData) => {
+        let { data } = responseData;
+        dispatch({
+          type: Utils.ActionName.Delete_Complete_forms,
+          payload: { data: data.data },
+        });
+         if (responseData) {
+           console.log(responseData,"responseData")
+          Utils.showAlert(1, "Deleted Successfully");
+        }
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.message);
+      }
+    );
+  };
+};
+
+
+export const PostCompleteForms = (searchTerm,pageNo,pageSize,id,agentid,formTypeId) => {
+  return (dispatch) => {
+ 
+    Utils.api.postApiCall(
+     `${ Utils.endPoints.POST_COMPLETED_FORMS}?searchTerm=${1}&pageNumber=${pageNo}&pageSize=${pageSize}&accountHolderDetailId=${id}&agentId=${agentid}&formTypeId=${formTypeId}`,
+      "",
+      (responseData) => {
+        console.log(responseData,"responseData")
+        let { data } = responseData;
+        dispatch({
+          type: Utils.ActionName.POST_COMPLETED_FORMS,
+          payload: { data: data.data },
+        });
+          if (responseData) {
+         
+          Utils.showAlert(1, "Updated Successfully");
+          // dispatch(getCompletedForms(page, size, search));
+        }
+       
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.message);
+      }
+    );
+  };            
+};
+
+export const getCompletedForms = (page,size,search) => {
+  let params= `?pageNumber=${page}&pageSize=${size}`
+  if(search){
+    params=`?searchTerm=${search}&pageNumber=${page}&pageSize=${size}`
+  }
+  return (dispatch) => {
+    Utils.api.getApiCall(
+      Utils.endPoints.COMPLETED_FORMS,
+      params,
+      (resData) => {
+        dispatch({
+          type: Utils.ActionName.COMPLETED_FORMS,
+          payload: {
+            CompletedFormsData: resData.data,
+          },
+        });
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.message);
+      }
+    );
+  };
+};
+
+
 
 export const exportEasy = () => {
   return (dispatch) => {
@@ -3806,7 +3936,60 @@ export const getContentById = (value,callback) => {
   };
 };
 
+//TokenSent
 
+export const getTokenSent = (page,size,search) => {
+  let params= `?pageNumber=${page}&pageSize=${size}`
+  if(search){
+    params=`?searchTerm=${search}&pageNumber=${page}&pageSize=${size}`
+  }
+  return (dispatch) => {
+    Utils.api.getApiCall(
+      Utils.endPoints.TokenSent,
+      params,
+      (resData) => {
+        dispatch({
+          type: Utils.ActionName.TokenSent,
+          payload: {
+            TokenSentData: resData.data,
+          },
+        });
+      },
+      (error) => {
+        let { data } = error;
+        Utils.showAlert(2, data.message);
+      }
+    );
+  };
+};
+
+// export const getTokenSent = (value,callback) => {
+//   return (dispatch) => {
+//     Utils.api.getApiCall(
+//       Utils.endPoints.TokenSent,
+//       // `?id=${value}`,
+//       (resData) => {
+//         if (resData.status === 200) {
+//           if(callback){
+//             callback(resData.data)
+//           }
+//           dispatch({
+//             type: Utils.ActionName.TokenSent,
+//             payload: {
+//               TokenSentdata: resData.data,
+//             },
+//           });
+//         } else {
+//           Utils.showAlert(2, resData.message);
+//         }
+//       },
+//       (error) => {
+//         let { data } = error;
+//         Utils.showAlert(2, data.message);
+//       }
+//     );
+//   };
+// };
 export const getLanguagesById = (value,callback) => {
   return (dispatch) => {
     Utils.api.getApiCall(
@@ -4472,58 +4655,88 @@ export const updateQuestion = (value) => {
   };
 };
 
-export const updateAgents = value => {
+export const updateAgents = (value, id) => {
   return dispatch => {
-    const dataToSend = { message: value }
+    const dataToSend = { message: value };
     Utils.api.putApiCall(
       Utils.endPoints.UPDATE_AGENT,
       value,
       responseData => {
-        let { data } = responseData
+        let { data } = responseData;
         dispatch({
           type: Utils.ActionName.UPDATE_AGENT,
           payload: { data: data.data }
-        })
+        });
+
         if (responseData) {
-          Utils.showAlert(1, responseData?.data)
+          // Set a timeout to show the alert after a delay
+          setTimeout(() => {
+            Utils.showAlert(1, responseData?.data);
+          }, 100); // Adjust the delay as needed (in milliseconds)
         }
       },
       error => {
-        let { data } = error
-        Utils.showAlert(2, data.message)
+        let { data } = error;
+        Utils.showAlert(2, data.message);
       },
       'multi'
-    )
-  }
-}
+    );
+  };
+};
+
 //UPDATE_AGENT_TIN
 
-export const updateAgentsTinType = (value, id) =>
- {
- 
-  return dispatch => {
-    const dataToSend = { message: value };
+export const updateAgentsTinType = (value,id) => {
+  return (dispatch) => {
+    // const dataToSend = { message: value };
     Utils.api.postApiCall(
       Utils.endPoints.UPDATE_AGENT_TIN,
-      dataToSend,
-      responseData => {
+      value,
+      (responseData) => {
         let { data } = responseData;
         dispatch({
           type: Utils.ActionName.UPDATE_AGENT_TIN,
-          payload: { data: data.data }
+          payload: { data: data.data },
         });
-        if (responseData) {
+         if (responseData) {
           Utils.showAlert(1, responseData?.data);
           dispatch(getAgentTinTypeById(id));
         }
       },
-      error => {
+      (error) => {
         let { data } = error;
         Utils.showAlert(2, data.message);
       }
     );
   };
 };
+
+// export const updateAgentsTinType = (value, id) =>
+//  {
+ 
+//   return dispatch => {
+//     const dataToSend = { message: value };
+//     Utils.api.postApiCall(
+//       Utils.endPoints.UPDATE_AGENT_TIN,
+//       dataToSend,
+//       responseData => {
+//         let { data } = responseData;
+//         dispatch({
+//           type: Utils.ActionName.UPDATE_AGENT_TIN,
+//           payload: { data: data.data }
+//         });
+//         if (responseData) {
+//           Utils.showAlert(1, responseData?.data);
+//           dispatch(getAgentTinTypeById(id));
+//         }
+//       },
+//       error => {
+//         let { data } = error;
+//         Utils.showAlert(2, data.message);
+//       }
+//     );
+//   };
+// };
 export const createAgents = value => {
   return dispatch => {
     const dataToSend = { message: value }
@@ -4969,6 +5182,392 @@ export const createAgentsTranslations = (value) => {
     );
   };
 };
+
+///pdf
+
+const convertAndDownloadPdf = (base64String, fileName, isDownload = false) => {
+    try {
+        let iframe = "<iframe width='100%' height='100%' src='" + base64String + "'></iframe>";
+        if (!isDownload) {
+          const iframe = `<iframe width='100%' height='100%' src='data:application/pdf;base64,${base64String}'></iframe>`;
+          let pdfWindow = window.open();
+          if (pdfWindow) {
+              pdfWindow.document.open();
+              pdfWindow.document.write(iframe);
+              pdfWindow.document.close();
+          }
+          return;  // Exit function after displaying PDF
+      }
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = base64String;
+        //link.target = "_blank";
+        // link.download = fileName;
+
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+    } catch (e) {
+        console.log("e", e);
+    }
+};
+
+export const GetW9Pdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetW9Pdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            // value,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "W9.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+export const GetEciPdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetECIPdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "ECI_Pdf.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+export const GetBenPdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetBENPdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "BEN_Pdf.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+export const GetBenEPdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetBENEPdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "BENE_Pdf.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+export const GetExpPdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetExpPdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "EXP_Pdf.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+export const GetImyPdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetIMYPdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "IMY_Pdf.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+export const GetForm8233Pdf = (accountHolderId, callback = (data) => { console.log(data); }, errorCallback = (error) => { console.log(error); }, isDownload = false) => {
+    return (dispatch) => {
+        Utils.api.getApiCall(
+            Utils.endPoints.GetForm8233Pdf,
+            `?AccountHolderDetailId=${accountHolderId}`,
+            (responseData) => {
+                const { data } = responseData;
+                console.log(responseData, "resp data");
+                if (responseData) {
+                    if (responseData.status == 500) {
+                        let err = {
+                            message: responseData.error,
+                            statusCode: 500,
+                            payload: responseData
+                        };
+                        dispatch({
+                            type: Utils.ActionName.UpdateError,
+                            payload: { ...err },
+                        });
+                        errorCallback({ message: "Internal server error occurred", payload: responseData });
+                    } else {
+                        if (callback) {
+                            let err = {
+                                message: "",
+                                payload: {},
+                                statusCode: 200
+                            };
+                            dispatch({
+                                type: Utils.ActionName.UpdateError,
+                                payload: { ...err },
+                            });
+                            callback(data);
+                        }
+                        convertAndDownloadPdf(data?.pdf, "Form8233_Pdf.pdf", isDownload);
+                    }
+                }
+            },
+            (error) => {
+                let err = { ...error };
+                dispatch({
+                    type: Utils.ActionName.UpdateError,
+                    payload: { ...err },
+                });
+                errorCallback(error);
+            },
+            false
+        );
+    };
+};
+
+
+
 
 export const setEnableBackgroundImage = (enableBackgroundImage) => ({
   type: SET_ENABLE_BACKGROUND_IMAGE,

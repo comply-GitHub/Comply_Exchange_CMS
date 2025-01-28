@@ -74,7 +74,12 @@ table{
     
 
 }
-
+thead, tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    max-width: none !important;
+}
 .table_textt{
     font-size: 12px !important;
     color: #16639e !important;

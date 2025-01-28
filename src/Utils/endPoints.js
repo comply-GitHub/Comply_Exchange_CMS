@@ -18,6 +18,7 @@ const endPoint = {
   DELETE_LANGUAGE: "Language/LangugaeDelete",
   LANG_BY_SEARCH:"Language/LanguageSearch",
   BULK_TRANSLATE:"Agent/BulkTranslateLanguage",
+  TokenSent:"/AccountHolderDetail/GetSaveAndExitCreds",
 
   //PAGES API
   GET_ALL_PAGES: "Page/GetAllPages",
@@ -40,7 +41,11 @@ const endPoint = {
  GET_IGA:"/Countries/GetIGA",
  IMPORT_COUNTRIES:"Countries/Import",
  EXPORT_COUNTRIES:"Countries/Export",
-
+ EXPORT_TOKEN:"/AccountHolderDetail/Export",
+ EXPORT_COMPLETE:"/AccountHolderDetail/CompletedFormDataDownloadExcel",
+ COMPLETED_FORMS:"/AccountHolderDetail/GetCompletedFormData",
+ POST_COMPLETED_FORMS:"/AccountHolderDetail/UpdateAdminCompletedForm",
+ Delete_Complete_forms:"/AccountHolderDetail/DeleteCompletedForm",
  //Help
  GET_ALL_HELP_VIDEOS:"/HelpVideo/GetAllHelpVideos",
  POST_HELP_VIDEOS:"/HelpVideo/InsertHelpVideo",
@@ -220,7 +225,14 @@ const endPoint = {
   //Security keys
   GET_SECURITY_KEY:"SecurityKey/GetSecurity",
   UPSERT_SECURITY_KEY:"SecurityKey/UpsertSecurity",
-
+//pdf
+GetW9Pdf:"/W9IndividualEntity/GetW9Pdf",
+GetECIPdf:"/W8ECIIndividualEntity/GetECIPdf",
+GetBENPdf:"/W8BENIndividual/GetBENPdf",
+GetBENEPdf:"/W8BENEEntity/GetBENEPdf",
+GetExpPdf:"/W8EXPEntity/GetExpPdf",
+GetIMYPdf:"/W8IMYEntity/GetIMYPdf",
+GetForm8233Pdf:"/Form8233Individual/GetForm8233Pdf",
   //Administrator
   GET_USER_BY_ID:"Account/GetUser",
   CHANGE_PASSWORD:"Account/ChangePassword",

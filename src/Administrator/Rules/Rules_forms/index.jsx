@@ -45,7 +45,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Route, useHistory } from "react-router-dom";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
-import {getRulesLanguageById , deleteRule, getAllRules,getAllLanguages,importRule,exportRule } from "../../../redux/Actions";
+import {getRulesLanguageById , deleteRule, getAllRules,getAllLanguages,importRule,exportRule, } from "../../../redux/Actions";
 import DialogTransition from "../../../reusables/deleteDialog";
 import Modal from "../../../reusables/htmlDialog"
 import Transition from "../../../reusables/languagesModal";
@@ -69,6 +69,7 @@ export default function PhraseTable() {
   useEffect(() => {
     dispatch(getAllRules(page, size, search));
     dispatch(getAllLanguages())
+
   }, []);
 
   const setSubmit = (e) => {
@@ -77,7 +78,17 @@ export default function PhraseTable() {
     setSize(10);
     dispatch(getAllRules(page, size, search));
   };
+  useEffect(() => {
+    dispatch(getAllRules(page, size));
+  }, [page]);
 
+  useEffect(()=>{
+    if(search===""){
+      setPage(1);
+      setSize(10);
+      dispatch(getAllRules(page, size, search));
+    }
+  },[search])
   const deleteItems = async () => {
     dispatch(deleteRule(idData));
     dispatch(getAllRules(page, size));
@@ -361,6 +372,21 @@ export default function PhraseTable() {
                   </Paper>
                 </table>
               </div>
+              {tableData?.rulesData?.totalPages > 1 ? (
+                <Stack
+                style={{ marginTop: "10px" }} spacing={2}
+                >
+                  <Pagination
+                   variant="outlined"
+                   shape="rounded"
+                   color="primary"
+                    count={tableData?.rulesData?.totalPages}
+                    onChange={(e, value) => setPage(value)}
+                  />
+                </Stack>
+              ) : (
+                ""
+              )}
             </div>
             <div className="col-12" >
               <Button
@@ -387,20 +413,7 @@ export default function PhraseTable() {
                 Export
               </Button>
             </div>
-              {tableData?.rulesData?.totalPages > 1 ? (
-                <Stack
-                  className="px-3 col-12"
-                  style={{ marginTop: "10px" }}
-                  spacing={2}
-                >
-                  <Pagination
-                    count={tableData?.rulesData?.totalPages}
-                    onChange={(e, value) => setPage(value)}
-                  />
-                </Stack>
-              ) : (
-                ""
-              )}
+            
           </div>
         </div>
       </div>
@@ -434,7 +447,7 @@ export default function PhraseTable() {
        handleClose={handleClose2}
        Heading="Import Rules Data"
        apiCall={(formData)=>{
-    dispatch(importRule(formData))
+       dispatch(importRule(formData))
        }}
       
       />

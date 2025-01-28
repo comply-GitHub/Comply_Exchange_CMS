@@ -187,6 +187,13 @@ export default function ContentManagement() {
                             >
                               Name
                             </TableCell>
+
+                            <TableCell
+                             align="left"
+                              className='table_head tableRow1'
+                            >
+                              Content Preview
+                            </TableCell>
                            
 
                             <TableCell 
@@ -225,6 +232,13 @@ export default function ContentManagement() {
                                
                               >
                                 {row.name}
+                              </TableCell>
+                              <TableCell className="table_content tableRow1"
+                                
+                              
+                               
+                              >
+                                {row.text}
                               </TableCell>
 
                              

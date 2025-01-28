@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React, { useEffect, useState } from "react";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,12 +11,14 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import ThemeOptions from "../../../Layout/ThemeOptions/";
 import { Fragment } from 'react';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AppHeader from "../../../Layout/AppHeader/";
 import AppSidebar from "../../../Layout/AppSidebar/";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import {getTokenSent,exportTokenSent} from '../../../redux/Actions';
 // import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AppFooter from "../../../Layout/AppFooter/";
@@ -40,29 +43,69 @@ import {
   Tooltip,
   Link,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { CheckBox } from '@mui/icons-material';
-function createData(agent,content, name,mail,page,date,admin,action) {
-  return { agent,content, name,mail,page,date,admin,action };
-}
+import {getTokenSentReducer} from '../../../redux/Reducers';
 
-const rows = [
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com', "/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	'),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	'),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	'),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	' ),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',	'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	' ),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	'),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	'),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',	'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	' ),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	'  ),
-  createData('Group Tax','W-8BEN-E (Oct 2021)','test',		'test@gmail.com',"/Pages/USEntityTaxpayer-information_OBFX.aspx",'06/13/2023 13:11','88KD6W	' ),
-];
 
 export default function ContentManagement() {
+  const dispatch=useDispatch();
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  const [search, setSearch] = useState("");
  
+  useEffect(() => {
+    dispatch(getTokenSent(page, size,search));
+  }, [page]);
+ 
+  useEffect(()=>{
+    if(search===""){
+      setPage(1);
+      setSize(10);
+      dispatch(getTokenSent(page, size, search));
+    }
+  },[search])
 
+
+
+  const tableData = useSelector((state) => state.getTokenSentReducer);
+  console.log(tableData,"tableData")
+  const convertToUTC = (dateString) => {
+    
+    if (dateString === "0001-01-01T00:00:00") {
+        return ""; 
+    }
+
+
+    const date = new Date(dateString);
+    return date.toUTCString();
+};
+  const getFormName = (formTypeId) => {
+    switch(formTypeId) {
+        case 1:
+            return 'W-9';
+        case 2:
+            return 'W-8BEN';
+        case 3:
+            return 'W-8BEN-E';
+        case 4:
+            return 'W-8ECI';
+        case 6:
+            return 'W-8EXP';
+        case 7:
+              return 'W-8IMY';
+        case 8:
+                return 'Form 8233';
+    }
+};
+  const setSubmit = (e) => {
+    e.preventDefault();
+    setPage(1);
+    setSize(10);
+    dispatch(getTokenSent(page, size, search));
+  };
   return (
     <Fragment>
     <ThemeOptions />
@@ -86,7 +129,9 @@ export default function ContentManagement() {
                 </p>
               </Breadcrumbs>
             </div>
-            <div className=" row m-1 border p-3 box_style">
+          <form onSubmit={setSubmit}>
+
+          <div className=" row m-1 border p-3 box_style">
                   <div className="col-8 d-flex">
                    
                     <TextField
@@ -94,11 +139,10 @@ export default function ContentManagement() {
                     className="mx-md-3 mx-auto w-50 rounded-Input"
    placeholder="Search"
    type="search"
+   value={search}
    variant="outlined"
-   
-  
+   onChange={(e) => setSearch(e.target.value)}
    size="small"
-   
    InputProps={{
        startAdornment: (
            <InputAdornment position="start">
@@ -107,7 +151,7 @@ export default function ContentManagement() {
             )}}/>
                   </div>
                 <div className="col-4">
-                  <Button  size="small"className="btn-cstm" style={{ float: "right", display:"none" }}>
+                  <Button  size="small"className="btn-cstm" style={{ float: "right", display:"none" }} onClick={setSubmit}>
                     Search
                   </Button>
                 </div>
@@ -158,36 +202,36 @@ export default function ContentManagement() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {tableData?.TokenSentData?.records.map((row) => (
                         <TableRow
-                            key={row.agent}
+                            key={row.id}
                             sx={{ '&:last-child td, &:last-child th':
                                 { border: 0 } }}
                         >
                             <TableCell className="table_content" component="th" scope="row" >
-                                {row.agent}
+                                {row.agentId}
                             </TableCell>
 
                             <TableCell className="table_content"  align="center">
                               
-                              {row.content}
+                            {getFormName(row.formTypeId)}
                             </TableCell>
                             <TableCell className="table_content"align="center">
-                                {row.name}
+                                {row.agentName}
                             </TableCell>
                           
                             <TableCell className="table_content"align="center">
-                                {row.mail}
+                                {row.email}
                             </TableCell>
                             <TableCell className="table_content"align="center">
-                                {row.page}
+                                {row.stepName}
                             </TableCell>
                            
                             <TableCell className="table_content"align="center">
-                                {row.date}
+                            {convertToUTC (row.createdOn)}
                             </TableCell>
                             <TableCell className="table_content"align="center">
-                              {row.admin}
+                              {row.token}
                                
                             </TableCell>
                            
@@ -230,13 +274,22 @@ export default function ContentManagement() {
             </table>
  
                   </div>
+                  {tableData?.TokenSentData?.totalPages > 1 ? (
                   <Stack  spacing={2}>
      
-     <Pagination count={10} variant="outlined" shape="rounded" color='primary' />
+     <Pagination count={tableData?.TokenSentData?.totalPages}
+                    onChange={(e, value) => setPage(value)} variant="outlined" shape="rounded" color='primary' />
    </Stack>
+    ) : (
+      ""
+    )}
             </div>
+          </form>
                 <div className="col-12" style={{marginTop:'5px'}}>
-                <Button  size="small"className="btn-cstm mx-1 mt-1 mb-3" style={{float:"right"}}>Export</Button>
+                <Button 
+                
+              onClick={()=>{dispatch(exportTokenSent())}}
+                size="small"className="btn-cstm mx-1 mt-1 mb-3" style={{float:"right"}}>Export</Button>
                
             
                 </div>
