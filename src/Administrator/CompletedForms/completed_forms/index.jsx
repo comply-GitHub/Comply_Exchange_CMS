@@ -188,7 +188,7 @@ export default function ContentManagement() {
                 </Button>
               </div>
             </div>
-            <div className=" row m-1  card p-2">
+            <div className=" row m-1 card">
               <div className="col-12 d-flex">
                 <table class="table table-hover table-striped">
                   <Paper>

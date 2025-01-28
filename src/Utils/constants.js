@@ -11,8 +11,8 @@ const api_error_code = {
 
 const environment = "dev";
 const $axios = axios.create({
-  baseURL: 'http://43.230.64.35:8088/api',
-  //baseURL: 'https://localhost:44319/api',
+  // baseURL: 'http://43.230.64.43:88/api',
+  baseURL: 'https://complyapi.dev.vinove.com/api',
   
   headers: {
     "Content-Type": "*/*",
